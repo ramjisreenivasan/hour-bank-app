@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
@@ -10,7 +10,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, NavigationComponent],
+  imports: [CommonModule, RouterModule, NavigationComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

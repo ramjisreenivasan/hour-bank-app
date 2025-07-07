@@ -148,7 +148,7 @@ import { errorLogger } from '../../utils/error-logger';
               <i class="fas fa-sign-in-alt"></i>
               Sign In
             </button>
-            <button (click)="goBack()" class="btn btn-secondary">
+            <button (click)="navigateToDashboard()" class="btn btn-secondary">
               <i class="fas fa-arrow-left"></i>
               Go Back
             </button>
@@ -162,7 +162,7 @@ import { errorLogger } from '../../utils/error-logger';
           <i class="fas fa-user-slash"></i>
           <h2>Profile Not Found</h2>
           <p>The requested user profile could not be found.</p>
-          <button (click)="goBack()" class="btn btn-primary">
+          <button (click)="navigateToDashboard()" class="btn btn-primary">
             <i class="fas fa-arrow-left"></i>
             Go Back
           </button>
@@ -407,6 +407,10 @@ export class ProfileComponent implements OnInit {
 
   browseAllServices() {
     this.router.navigate(['/services']);
+  }
+
+  navigateToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 
   private handleError(
