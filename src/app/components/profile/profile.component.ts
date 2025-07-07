@@ -23,6 +23,10 @@ export class ProfileComponent implements OnInit {
   loading = false;
   saving = false;
   
+  // Message properties for UI feedback
+  errorMessage: string = '';
+  successMessage: string = '';
+  
   // Error handling properties
   currentError: Error | string | null = null;
   errorContext: any = {};
@@ -268,6 +272,10 @@ export class ProfileComponent implements OnInit {
     this.currentError = error;
     this.errorSeverity = severity;
     this.errorCategory = category;
+    
+    // Set error message for UI display
+    this.errorMessage = typeof error === 'string' ? error : error.message;
+    
     this.errorContext = {
       userId: this.user?.id,
       operation,
@@ -280,7 +288,18 @@ export class ProfileComponent implements OnInit {
       }
     };
 
+    // Clear error message after 5 seconds
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 5000);
+
     // The ErrorHandlerComponent will handle the logging
+  }
+
+  clearError() {
+    this.currentError = null;
+    this.errorMessage = '';
+    this.errorContext = {};
   }
 
   private getChangedFields(): any {
@@ -409,9 +428,5 @@ export class ProfileComponent implements OnInit {
     } finally {
       this.isSaving = false;
     }
-  }
-
-  browseAllServices() {
-    this.router.navigate(['/services']);
   }
 }
