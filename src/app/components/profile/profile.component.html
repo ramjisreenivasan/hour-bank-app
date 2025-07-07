@@ -1,278 +1,346 @@
 <app-navigation></app-navigation>
 
-<div class="profile-container">
-  <!-- Header -->
-  <header class="profile-header">
-    <h1>My Profile</h1>
-    <p>Manage your personal information and services</p>
-  </header>
-
-  <!-- Messages -->
-  <div class="messages" *ngIf="errorMessage || successMessage">
-    <div class="error-message" *ngIf="errorMessage">
-      <span class="error-icon">⚠️</span>
+<div class="profile-page">
+  <!-- Alert Messages -->
+  <div class="alert-container" *ngIf="errorMessage || successMessage">
+    <div class="alert alert-error" *ngIf="errorMessage">
+      <i class="icon-alert-circle"></i>
       {{ errorMessage }}
     </div>
-    <div class="success-message" *ngIf="successMessage">
-      <span class="success-icon">✅</span>
+    <div class="alert alert-success" *ngIf="successMessage">
+      <i class="icon-check-circle"></i>
       {{ successMessage }}
     </div>
   </div>
 
-  <div class="profile-content" *ngIf="currentUser">
-    <!-- Profile Info Section -->
-    <section class="profile-info-section">
-      <div class="profile-card">
-        <div class="profile-header-info">
-          <div class="profile-avatar">
+  <!-- Main Layout -->
+  <div class="profile-layout" *ngIf="currentUser">
+    <!-- Left Sidebar -->
+    <aside class="profile-sidebar">
+      <!-- User Profile Card -->
+      <div class="user-card">
+        <div class="user-avatar">
+          <div class="avatar-circle">
             {{ (currentUser.firstName || currentUser.username).charAt(0).toUpperCase() }}
           </div>
-          <div class="profile-basic-info">
-            <h2>{{ currentUser.firstName }} {{ currentUser.lastName || currentUser.username }}</h2>
-            <p class="username">&#64;{{ currentUser.username }}</p>
-            <p class="email">{{ currentUser.email }}</p>
-          </div>
-          <button class="btn btn-outline" (click)="toggleEdit()" [disabled]="isSaving">
-            {{ isEditing ? 'Cancel' : 'Edit Profile' }}
-          </button>
+        </div>
+        
+        <div class="user-details">
+          <h2 class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName || currentUser.username }}</h2>
+          <p class="user-handle">@{{ currentUser.username }}</p>
+          <p class="user-email">{{ currentUser.email }}</p>
         </div>
 
-        <!-- Edit Form -->
-        <form *ngIf="isEditing" class="edit-form" (ngSubmit)="saveProfile()">
-          <div class="form-row">
+        <button class="btn-edit" (click)="toggleEdit()" [disabled]="isSaving">
+          <i class="icon-edit"></i>
+          {{ isEditing ? 'Cancel Edit' : 'Edit Profile' }}
+        </button>
+      </div>
+
+      <!-- Stats Overview -->
+      <div class="stats-section">
+        <h3 class="section-title">Account Overview</h3>
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-icon">⏰</div>
+            <div class="stat-content">
+              <div class="stat-value">{{ currentUser.bankHours }}</div>
+              <div class="stat-label">Bank Hours</div>
+            </div>
+          </div>
+          
+          <div class="stat-card success">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+              <div class="stat-value">{{ currentUser.rating.toFixed(1) }}</div>
+              <div class="stat-label">Rating</div>
+            </div>
+          </div>
+          
+          <div class="stat-card info">
+            <div class="stat-icon">🤝</div>
+            <div class="stat-content">
+              <div class="stat-value">{{ currentUser.totalTransactions }}</div>
+              <div class="stat-label">Completed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h3 class="section-title">Quick Actions</h3>
+        <div class="action-buttons">
+          <button class="action-btn" (click)="browseAllServices()">
+            <i class="icon-search"></i>
+            Browse Services
+          </button>
+          <button class="action-btn" (click)="toggleAddService()">
+            <i class="icon-plus"></i>
+            Add Service
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="profile-main">
+      <!-- Edit Profile Section -->
+      <div *ngIf="isEditing" class="content-section">
+        <div class="section-header">
+          <h2>Edit Profile</h2>
+          <p>Update your personal information and skills</p>
+        </div>
+        
+        <form class="profile-form" (ngSubmit)="saveEditedProfile()">
+          <div class="form-grid">
             <div class="form-group">
-              <label for="firstName">First Name *</label>
+              <label for="firstName">First Name</label>
               <input
                 type="text"
                 id="firstName"
                 [(ngModel)]="editForm.firstName"
                 name="firstName"
-                placeholder="Enter your first name"
-                required
+                class="form-control"
                 [disabled]="isSaving"
-              />
+                required>
             </div>
+            
             <div class="form-group">
-              <label for="lastName">Last Name *</label>
+              <label for="lastName">Last Name</label>
               <input
                 type="text"
                 id="lastName"
                 [(ngModel)]="editForm.lastName"
                 name="lastName"
-                placeholder="Enter your last name"
-                required
-                [disabled]="isSaving"
-              />
+                class="form-control"
+                [disabled]="isSaving">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="bio">Bio</label>
+            <label for="bio">About Me</label>
             <textarea
               id="bio"
               [(ngModel)]="editForm.bio"
               name="bio"
-              placeholder="Tell us about yourself..."
+              class="form-control"
+              placeholder="Tell others about yourself, your experience, and what you're passionate about..."
               rows="4"
-              [disabled]="isSaving"
-            ></textarea>
+              [disabled]="isSaving"></textarea>
           </div>
 
           <div class="form-group">
-            <label>Skills</label>
-            <div class="skills-input">
+            <label>Skills & Expertise</label>
+            <div class="skills-input-group">
               <input
                 type="text"
                 [(ngModel)]="newSkill"
                 name="newSkill"
-                placeholder="Add a skill"
+                placeholder="Add a skill (e.g., Web Development, Photography)"
+                class="form-control"
                 (keyup.enter)="addSkill()"
-                [disabled]="isSaving"
-              />
-              <button type="button" class="btn btn-sm" (click)="addSkill()" [disabled]="isSaving">Add</button>
+                [disabled]="isSaving">
+              <button type="button" class="btn btn-secondary" (click)="addSkill()" [disabled]="isSaving">
+                Add Skill
+              </button>
             </div>
-            <div class="skills-list" *ngIf="editForm.skills.length > 0">
-              <span class="skill-tag" *ngFor="let skill of editForm.skills">
+            
+            <div class="skills-display" *ngIf="editForm.skills.length > 0">
+              <span class="skill-chip" *ngFor="let skill of editForm.skills">
                 {{ skill }}
-                <button type="button" class="remove-skill" (click)="removeSkill(skill)" [disabled]="isSaving">×</button>
+                <button type="button" class="skill-remove" (click)="removeSkill(skill)" [disabled]="isSaving">
+                  ×
+                </button>
               </span>
             </div>
           </div>
 
           <div class="form-actions">
             <button type="submit" class="btn btn-primary" [disabled]="isSaving">
-              {{ isSaving ? 'Saving...' : 'Save Changes' }}
+              <i class="icon-save"></i>
+              {{ isSaving ? 'Saving Changes...' : 'Save Changes' }}
             </button>
-          </div>
-        </form>
-
-        <!-- Profile Stats (when not editing) -->
-        <div *ngIf="!isEditing" class="profile-stats">
-          <div class="stat">
-            <span class="stat-value">{{ currentUser.bankHours }}</span>
-            <span class="stat-label">Bank Hours</span>
-          </div>
-          <div class="stat">
-            <span class="stat-value">{{ currentUser.rating.toFixed(1) }}</span>
-            <span class="stat-label">Rating</span>
-          </div>
-          <div class="stat">
-            <span class="stat-value">{{ currentUser.totalTransactions }}</span>
-            <span class="stat-label">Transactions</span>
-          </div>
-        </div>
-
-        <!-- Bio Display -->
-        <div *ngIf="!isEditing && currentUser.bio" class="profile-bio">
-          <h3>About</h3>
-          <p>{{ currentUser.bio }}</p>
-        </div>
-
-        <!-- Skills Display -->
-        <div *ngIf="!isEditing && currentUser.skills.length > 0" class="profile-skills">
-          <h3>Skills</h3>
-          <div class="skills-list">
-            <span class="skill-tag" *ngFor="let skill of currentUser.skills">{{ skill }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services-section">
-      <div class="section-header">
-        <h2>My Services</h2>
-        <div class="section-actions">
-          <button class="btn btn-secondary btn-browse-services" (click)="browseAllServices()">
-            🔍 Browse All Services
-          </button>
-          <button class="btn btn-primary" (click)="toggleAddService()" [disabled]="isSaving">
-            {{ isAddingService ? 'Cancel' : '+ Add Service' }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Add Service Form -->
-      <div *ngIf="isAddingService" class="service-form-card">
-        <h3>Add New Service</h3>
-        <form class="service-form" (ngSubmit)="saveService()">
-          <div class="form-group">
-            <label for="serviceTitle">Service Title *</label>
-            <input
-              type="text"
-              id="serviceTitle"
-              [(ngModel)]="newService.title"
-              name="serviceTitle"
-              placeholder="e.g., Web Development, Guitar Lessons"
-              required
-              [disabled]="isSaving"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="serviceDescription">Description *</label>
-            <textarea
-              id="serviceDescription"
-              [(ngModel)]="newService.description"
-              name="serviceDescription"
-              placeholder="Describe your service in detail..."
-              rows="4"
-              required
-              [disabled]="isSaving"
-            ></textarea>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="serviceCategory">Category *</label>
-              <select
-                id="serviceCategory"
-                [(ngModel)]="newService.category"
-                name="serviceCategory"
-                required
-                [disabled]="isSaving"
-              >
-                <option value="">Select a category</option>
-                <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="hourlyRate">Hourly Rate (Bank Hours) *</label>
-              <input
-                type="number"
-                id="hourlyRate"
-                [(ngModel)]="newService.hourlyRate"
-                name="hourlyRate"
-                min="1"
-                step="0.5"
-                required
-                [disabled]="isSaving"
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Tags</label>
-            <div class="tags-input">
-              <input
-                type="text"
-                [(ngModel)]="newTag"
-                name="newTag"
-                placeholder="Add a tag"
-                (keyup.enter)="addTag()"
-                [disabled]="isSaving"
-              />
-              <button type="button" class="btn btn-sm" (click)="addTag()" [disabled]="isSaving">Add</button>
-            </div>
-            <div class="tags-list" *ngIf="newService.tags.length > 0">
-              <span class="tag" *ngFor="let tag of newService.tags">
-                {{ tag }}
-                <button type="button" class="remove-tag" (click)="removeTag(tag)" [disabled]="isSaving">×</button>
-              </span>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary" [disabled]="isSaving">
-              {{ isSaving ? 'Adding...' : 'Add Service' }}
+            <button type="button" class="btn btn-outline" (click)="toggleEdit()" [disabled]="isSaving">
+              Cancel
             </button>
           </div>
         </form>
       </div>
 
-      <!-- Services List -->
-      <div class="services-grid">
-        <div class="service-card" *ngFor="let service of userServices">
-          <div class="service-header">
-            <h3>{{ service.title }}</h3>
-            <div class="service-status">
-              <span class="status-badge" [class.active]="service.isActive" [class.inactive]="!service.isActive">
-                {{ service.isActive ? 'Active' : 'Inactive' }}
+      <!-- Profile Information Display -->
+      <div *ngIf="!isEditing" class="content-sections">
+        <!-- About Section -->
+        <div class="content-section" *ngIf="currentUser.bio">
+          <div class="section-header">
+            <h2>About Me</h2>
+          </div>
+          <div class="section-content">
+            <p class="bio-text">{{ currentUser.bio }}</p>
+          </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="content-section" *ngIf="currentUser.skills.length > 0">
+          <div class="section-header">
+            <h2>Skills & Expertise</h2>
+            <span class="skill-count">{{ currentUser.skills.length }} skills</span>
+          </div>
+          <div class="section-content">
+            <div class="skills-display">
+              <span class="skill-chip" *ngFor="let skill of currentUser.skills">
+                {{ skill }}
               </span>
-              <button 
-                class="btn btn-sm btn-outline" 
-                (click)="toggleServiceStatus(service)"
-                [disabled]="isSaving"
-              >
-                {{ service.isActive ? 'Deactivate' : 'Activate' }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Services Section -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2>My Services</h2>
+            <div class="section-actions">
+              <button class="btn btn-outline" (click)="browseAllServices()">
+                <i class="icon-search"></i>
+                Browse All Services
+              </button>
+              <button class="btn btn-primary" (click)="toggleAddService()" [disabled]="isSaving">
+                <i class="icon-plus"></i>
+                {{ isAddingService ? 'Cancel' : 'Add Service' }}
               </button>
             </div>
           </div>
-          <p class="service-description">{{ service.description }}</p>
-          <div class="service-meta">
-            <span class="category">{{ service.category }}</span>
-            <span class="rate">{{ service.hourlyRate }} hours/hour</span>
-          </div>
-          <div class="service-tags" *ngIf="service.tags.length > 0">
-            <span class="tag" *ngFor="let tag of service.tags">{{ tag }}</span>
-          </div>
-        </div>
 
-        <div *ngIf="userServices.length === 0" class="no-services">
-          <p>You haven't added any services yet.</p>
-          <p>Click "Add Service" to get started!</p>
+          <!-- Add Service Form -->
+          <div *ngIf="isAddingService" class="service-form-card">
+            <h3>Add New Service</h3>
+            <form class="service-form" (ngSubmit)="saveService()">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="serviceTitle">Service Title *</label>
+                  <input
+                    type="text"
+                    id="serviceTitle"
+                    [(ngModel)]="newService.title"
+                    name="serviceTitle"
+                    placeholder="e.g., Web Development, Guitar Lessons"
+                    class="form-control"
+                    required
+                    [disabled]="isSaving">
+                </div>
+
+                <div class="form-group">
+                  <label for="serviceCategory">Category *</label>
+                  <select
+                    id="serviceCategory"
+                    [(ngModel)]="newService.category"
+                    name="serviceCategory"
+                    class="form-control"
+                    required
+                    [disabled]="isSaving">
+                    <option value="">Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="serviceDescription">Description *</label>
+                <textarea
+                  id="serviceDescription"
+                  [(ngModel)]="newService.description"
+                  name="serviceDescription"
+                  placeholder="Describe your service in detail..."
+                  rows="4"
+                  class="form-control"
+                  required
+                  [disabled]="isSaving"></textarea>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="hourlyRate">Hourly Rate (hours) *</label>
+                  <input
+                    type="number"
+                    id="hourlyRate"
+                    [(ngModel)]="newService.hourlyRate"
+                    name="hourlyRate"
+                    min="1"
+                    class="form-control"
+                    required
+                    [disabled]="isSaving">
+                </div>
+
+                <div class="form-group">
+                  <label>Tags</label>
+                  <div class="skills-input-group">
+                    <input
+                      type="text"
+                      [(ngModel)]="newTag"
+                      name="newTag"
+                      placeholder="Add a tag"
+                      class="form-control"
+                      (keyup.enter)="addTag()"
+                      [disabled]="isSaving">
+                    <button type="button" class="btn btn-secondary" (click)="addTag()" [disabled]="isSaving">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skills-display" *ngIf="newService.tags.length > 0">
+                <span class="skill-chip" *ngFor="let tag of newService.tags">
+                  {{ tag }}
+                  <button type="button" class="skill-remove" (click)="removeTag(tag)" [disabled]="isSaving">×</button>
+                </span>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+                  {{ isSaving ? 'Adding...' : 'Add Service' }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Services List -->
+          <div class="services-grid">
+            <div class="service-card" *ngFor="let service of userServices">
+              <div class="service-header">
+                <h3>{{ service.title }}</h3>
+                <div class="service-status">
+                  <span class="status-badge" [class.active]="service.isActive" [class.inactive]="!service.isActive">
+                    {{ service.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                  <button 
+                    class="btn btn-sm btn-outline" 
+                    (click)="toggleServiceStatus(service)"
+                    [disabled]="isSaving">
+                    {{ service.isActive ? 'Deactivate' : 'Activate' }}
+                  </button>
+                </div>
+              </div>
+              <p class="service-description">{{ service.description }}</p>
+              <div class="service-meta">
+                <span class="category">{{ service.category }}</span>
+                <span class="rate">{{ service.hourlyRate }} hours/hour</span>
+              </div>
+              <div class="service-tags" *ngIf="service.tags.length > 0">
+                <span class="tag" *ngFor="let tag of service.tags">{{ tag }}</span>
+              </div>
+            </div>
+
+            <div *ngIf="userServices.length === 0" class="no-services">
+              <div class="empty-state">
+                <i class="icon-service"></i>
+                <h3>No Services Yet</h3>
+                <p>You haven't added any services yet. Click "Add Service" to get started!</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </main>
   </div>
 </div>
