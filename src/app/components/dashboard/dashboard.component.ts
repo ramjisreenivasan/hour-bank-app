@@ -143,4 +143,8 @@ export class DashboardComponent implements OnInit {
   navigateToTransactions(): void {
     this.router.navigate(['/transactions']);
   }
+
+  browseServices(): void {
+    this.router.navigate(['/services']);
+  }
 }

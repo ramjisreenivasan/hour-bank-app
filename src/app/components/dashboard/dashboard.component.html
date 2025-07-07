@@ -46,8 +46,11 @@
     <!-- Available Services -->
     <section class="services-section">
       <div class="section-header">
-        <h2>Available Services</h2>
-        <p>Discover skills and services offered by other members</p>
+        <div class="section-title">
+          <h2>Available Services</h2>
+          <p>Discover skills and services offered by other members</p>
+        </div>
+        <button class="btn btn-outline" (click)="browseServices()">Browse Services</button>
       </div>
       
       <div class="services-grid" *ngIf="availableServices.length > 0; else noServices">
