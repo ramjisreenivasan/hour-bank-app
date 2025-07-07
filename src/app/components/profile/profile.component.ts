@@ -14,162 +14,7 @@ import { errorLogger } from '../../utils/error-logger';
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule, FormsModule, ErrorHandlerComponent, NavigationComponent],
-  template: `
-    <div class="profile-container">
-      <div class="profile-header">
-        <h1>User Profile</h1>
-      </div>
-
-      <!-- Error Handler Component -->
-      <app-error-handler
-        [error]="currentError"
-        [context]="errorContext"
-        [severity]="errorSeverity"
-        [category]="errorCategory"
-        [retryable]="true"
-        [onRetry]="retryLastAction.bind(this)"
-        [onDismiss]="clearError.bind(this)">
-      </app-error-handler>
-
-      <!-- Loading State -->
-      <div *ngIf="loading" class="loading-container">
-        <div class="spinner"></div>
-        <p>Loading profile...</p>
-      </div>
-
-      <!-- Profile Content -->
-      <div *ngIf="!loading && user" class="profile-content">
-        <div class="profile-form">
-          <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              [(ngModel)]="user.firstName"
-              class="form-control"
-              (blur)="validateField('firstName')"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              [(ngModel)]="user.lastName"
-              class="form-control"
-              (blur)="validateField('lastName')"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              [(ngModel)]="user.email"
-              class="form-control"
-              (blur)="validateField('email')"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="bio">Bio</label>
-            <textarea
-              id="bio"
-              [(ngModel)]="user.bio"
-              class="form-control"
-              rows="4"
-              (blur)="validateField('bio')"
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="skills">Skills (comma-separated)</label>
-            <input
-              type="text"
-              id="skills"
-              [value]="user.skills.join(', ')"
-              (input)="updateSkills($event)"
-              class="form-control"
-              placeholder="JavaScript, React, Node.js"
-            />
-          </div>
-
-          <div class="form-actions">
-            <button
-              type="button"
-              (click)="saveProfile()"
-              [disabled]="saving"
-              class="btn btn-primary"
-            >
-              <i class="fas fa-save"></i>
-              {{ saving ? 'Saving...' : 'Save Profile' }}
-            </button>
-
-            <button
-              type="button"
-              (click)="resetForm()"
-              class="btn btn-secondary"
-            >
-              <i class="fas fa-undo"></i>
-              Reset
-            </button>
-          </div>
-        </div>
-
-        <div class="profile-stats">
-          <h3>Account Statistics</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-value">{{ user.bankHours }}</span>
-              <span class="stat-label">Bank Hours</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">{{ user.rating }}</span>
-              <span class="stat-label">Rating</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">{{ user.totalTransactions }}</span>
-              <span class="stat-label">Transactions</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Authentication Required State -->
-      <div *ngIf="!loading && !user && currentError && errorCategory === 'auth'" class="auth-required-container">
-        <div class="auth-required-content">
-          <i class="fas fa-user-lock"></i>
-          <h2>Sign In Required</h2>
-          <p>Please sign in to view your profile or access user profiles.</p>
-          <div class="auth-actions">
-            <button (click)="navigateToAuth()" class="btn btn-primary">
-              <i class="fas fa-sign-in-alt"></i>
-              Sign In
-            </button>
-            <button (click)="navigateToDashboard()" class="btn btn-secondary">
-              <i class="fas fa-arrow-left"></i>
-              Go Back
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- No User Found State -->
-      <div *ngIf="!loading && !user && !currentError" class="no-user-container">
-        <div class="no-user-content">
-          <i class="fas fa-user-slash"></i>
-          <h2>Profile Not Found</h2>
-          <p>The requested user profile could not be found.</p>
-          <button (click)="navigateToDashboard()" class="btn btn-primary">
-            <i class="fas fa-arrow-left"></i>
-            Go Back
-          </button>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
@@ -457,5 +302,116 @@ export class ProfileComponent implements OnInit {
   private isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  // Service Management Methods
+  isAddingService = false;
+  isSaving = false;
+  userServices: any[] = [];
+  newService = {
+    title: '',
+    description: '',
+    category: '',
+    hourlyRate: 1,
+    tags: [] as string[],
+    isActive: true
+  };
+  newTag = '';
+  serviceCategories = [
+    'Technology',
+    'Education',
+    'Creative',
+    'Health & Wellness',
+    'Home & Garden',
+    'Business',
+    'Transportation',
+    'Other'
+  ];
+
+  toggleAddService() {
+    this.isAddingService = !this.isAddingService;
+    if (!this.isAddingService) {
+      this.resetServiceForm();
+    }
+  }
+
+  resetServiceForm() {
+    this.newService = {
+      title: '',
+      description: '',
+      category: '',
+      hourlyRate: 1,
+      tags: [],
+      isActive: true
+    };
+    this.newTag = '';
+  }
+
+  addTag() {
+    if (this.newTag.trim() && !this.newService.tags.includes(this.newTag.trim())) {
+      this.newService.tags.push(this.newTag.trim());
+      this.newTag = '';
+    }
+  }
+
+  removeTag(tag: string) {
+    this.newService.tags = this.newService.tags.filter(t => t !== tag);
+  }
+
+  async saveService() {
+    if (!this.newService.title || !this.newService.description || !this.newService.category) {
+      this.handleError(new Error('Please fill in all required fields'), 'saveService');
+      return;
+    }
+
+    this.isSaving = true;
+    try {
+      // Create service object
+      const serviceData = {
+        ...this.newService,
+        id: Date.now().toString(), // Temporary ID generation
+        userId: this.user?.id,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      // Add to user services (in a real app, this would be an API call)
+      this.userServices.push(serviceData);
+      
+      this.successMessage = 'Service added successfully!';
+      this.resetServiceForm();
+      this.isAddingService = false;
+      
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
+
+    } catch (error) {
+      this.handleError(error as Error, 'saveService');
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
+  toggleServiceStatus(service: any) {
+    this.isSaving = true;
+    try {
+      service.isActive = !service.isActive;
+      service.updatedAt = new Date().toISOString();
+      
+      this.successMessage = `Service ${service.isActive ? 'activated' : 'deactivated'} successfully!`;
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
+
+    } catch (error) {
+      this.handleError(error as Error, 'toggleServiceStatus');
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
+  browseAllServices() {
+    this.router.navigate(['/services']);
   }
 }
