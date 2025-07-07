@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
 import { UserDisplayService } from '../../services/user-display.service';
+import { UserMappingService } from '../../services/user-mapping.service';
 import { User, Service, Transaction } from '../../models/user.model';
 import { NavigationComponent } from '../navigation/navigation.component';
 
@@ -28,6 +30,7 @@ export class DashboardComponent implements OnInit {
     private userGraphQLService: UserGraphQLService,
     private transactionGraphQLService: TransactionGraphQLService,
     private userDisplayService: UserDisplayService,
+    private userMappingService: UserMappingService,
     private router: Router
   ) {}
 
@@ -36,14 +39,38 @@ export class DashboardComponent implements OnInit {
   }
 
   private async loadDashboardData(): Promise<void> {
-    this.currentUser = this.authService.getCurrentUser();
-    
-    if (!this.currentUser) {
+    // Check if user is authenticated first
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/auth']);
       return;
     }
 
     try {
+      // Get the current user's DynamoDB ID through mapping service
+      const dynamoDbUserId = await firstValueFrom(this.userMappingService.getCurrentUserDynamoDbId());
+      
+      console.log('Dashboard: DynamoDB User ID:', dynamoDbUserId);
+      
+      if (!dynamoDbUserId) {
+        console.error('No DynamoDB user ID found');
+        this.router.navigate(['/auth']);
+        return;
+      }
+
+      // Load the full user profile from DynamoDB
+      this.currentUser = await this.userGraphQLService.getUserById(dynamoDbUserId);
+      
+      console.log('Dashboard: Loaded current user:', this.currentUser);
+      
+      if (!this.currentUser) {
+        console.error('User profile not found in DynamoDB');
+        this.router.navigate(['/auth']);
+        return;
+      }
+
+      // Add current user to cache for helper methods
+      this.usersCache.set(this.currentUser.id, this.currentUser);
+
       // Load available services from GraphQL
       const services = await this.userGraphQLService.getServices();
       this.availableServices = services.filter(service => 
