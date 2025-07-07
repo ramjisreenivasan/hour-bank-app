@@ -1,0 +1,133 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.main-nav {
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    
+    app-logo {
+      cursor: pointer;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-normal);
+      
+      &:hover {
+        color: var(--text-primary);
+        background-color: var(--background-hover);
+      }
+      
+      &.active {
+        color: var(--primary-color);
+        background-color: var(--primary-light);
+      }
+      
+      &.nav-cta {
+        background-color: var(--primary-color);
+        color: white;
+        
+        &:hover {
+          background-color: var(--primary-dark);
+          color: white;
+        }
+      }
+    }
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.875rem;
+      
+      .user-greeting {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+      
+      .user-name {
+        color: var(--text-secondary);
+      }
+    }
+    
+    .btn-sm {
+      padding: var(--spacing-xs) var(--spacing-md);
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .main-nav {
+    .nav-container {
+      padding: 0 var(--spacing-md);
+      height: 56px;
+    }
+    
+    .nav-links {
+      gap: var(--spacing-md);
+      
+      .nav-link {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.875rem;
+      }
+    }
+    
+    .nav-actions {
+      .user-info {
+        display: none; // Hide user info on mobile to save space
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .main-nav {
+    .nav-links {
+      display: none; // Hide navigation links on very small screens
+    }
+    
+    .nav-actions {
+      gap: var(--spacing-sm);
+    }
+  }
+}

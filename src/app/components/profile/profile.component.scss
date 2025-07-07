@@ -6,11 +6,27 @@
 
 .profile-header {
   margin-bottom: 2rem;
+  text-align: center;
   
   h1 {
-    color: #333;
+    color: var(--text-primary);
     font-size: 2rem;
     font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin: 0;
+    
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 }
 

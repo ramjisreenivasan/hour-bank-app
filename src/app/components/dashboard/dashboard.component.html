@@ -1,18 +1,13 @@
+<app-navigation></app-navigation>
+
 <div class="dashboard-container" *ngIf="!loading">
-  <!-- Header -->
-  <header class="dashboard-header">
-    <div class="header-content">
-      <div class="logo-section">
-        <h1>hOurBank</h1>
-        <p>Welcome back, {{ currentUser?.firstName || currentUser?.username }}!</p>
-      </div>
-      <div class="user-actions">
-        <button class="btn btn-outline" (click)="navigateToProfile()">Profile</button>
-        <button class="btn btn-outline" (click)="navigateToTransactions()">Transactions</button>
-        <button class="btn btn-secondary" (click)="signOut()">Sign Out</button>
-      </div>
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1>Welcome back, {{ currentUser?.firstName || currentUser?.username }}!</h1>
+      <p>Manage your services, track transactions, and connect with the community.</p>
     </div>
-  </header>
+  </div>
 
   <!-- Stats Cards -->
   <div class="stats-section">

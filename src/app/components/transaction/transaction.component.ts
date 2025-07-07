@@ -7,10 +7,11 @@ import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { User, Transaction, TransactionStatus } from '../../models/user.model';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-transaction',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavigationComponent],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
 })
@@ -237,9 +238,5 @@ export class TransactionComponent implements OnInit {
 
   getStatusClass(status: TransactionStatus): string {
     return `status-${status.toLowerCase().replace('_', '-')}`;
-  }
-
-  goBack(): void {
-    this.router.navigate(['/dashboard']);
   }
 }

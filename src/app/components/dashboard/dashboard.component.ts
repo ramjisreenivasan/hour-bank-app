@@ -6,10 +6,11 @@ import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { User, Service, Transaction } from '../../models/user.model';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, NavigationComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -129,19 +130,6 @@ export class DashboardComponent implements OnInit {
   getUserRating(userId: string): number {
     const user = this.getUserFromCache(userId);
     return user?.rating || 0;
-  }
-
-  async signOut(): Promise<void> {
-    await this.authService.signOut();
-    this.router.navigate(['/auth']);
-  }
-
-  navigateToProfile(): void {
-    this.router.navigate(['/profile']);
-  }
-
-  navigateToTransactions(): void {
-    this.router.navigate(['/transactions']);
   }
 
   browseServices(): void {

@@ -7,12 +7,13 @@ import { AuthService } from '../../services/auth.service';
 import { UserMappingService } from '../../services/user-mapping.service';
 import { User } from '../../models/user.model';
 import { ErrorHandlerComponent } from '../error-handler/error-handler.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 import { errorLogger } from '../../utils/error-logger';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ErrorHandlerComponent],
+  imports: [CommonModule, FormsModule, ErrorHandlerComponent, NavigationComponent],
   template: `
     <div class="profile-container">
       <div class="profile-header">
@@ -406,10 +407,6 @@ export class ProfileComponent implements OnInit {
 
   browseAllServices() {
     this.router.navigate(['/services']);
-  }
-
-  goBack() {
-    window.history.back();
   }
 
   private handleError(

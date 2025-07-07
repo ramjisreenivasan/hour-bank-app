@@ -1,0 +1,35 @@
+<nav class="main-nav" [class.authenticated]="isAuthenticated">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <app-logo [size]="32" [showText]="true"></app-logo>
+    </div>
+    
+    <div class="nav-links">
+      <!-- Main navigation links -->
+      <a routerLink="/services" class="nav-link" routerLinkActive="active">Browse Services</a>
+      <a routerLink="/how-it-works" class="nav-link" routerLinkActive="active">How It Works</a>
+      <a routerLink="/about" class="nav-link" routerLinkActive="active">About</a>
+      
+      <!-- Authenticated user links -->
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/dashboard" class="nav-link" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/profile" class="nav-link" routerLinkActive="active">Profile</a>
+        <a routerLink="/transactions" class="nav-link" routerLinkActive="active">Transactions</a>
+      </ng-container>
+    </div>
+
+    <div class="nav-actions">
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/auth" class="nav-link nav-cta">Get Started</a>
+      </ng-container>
+      
+      <ng-container *ngIf="isAuthenticated">
+        <div class="user-info" *ngIf="currentUser">
+          <span class="user-greeting">{{ currentUser.bankHours || 0 }} hrs</span>
+          <span class="user-name">{{ currentUser.firstName || currentUser.username }}</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" (click)="signOut()">Sign Out</button>
+      </ng-container>
+    </div>
+  </div>
+</nav>
