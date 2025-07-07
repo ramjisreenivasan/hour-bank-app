@@ -1,0 +1,29 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hourbankapp-dev-283b6-authRole",
+      "UnauthRoleArn": "arn:aws:iam::019056670560:role/amplify-hourbankapp-dev-283b6-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::019056670560:role/amplify-hourbankapp-dev-283b6-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hourbankapp-dev-283b6-deployment",
+      "UnauthRoleName": "amplify-hourbankapp-dev-283b6-unauthRole",
+      "StackName": "amplify-hourbankapp-dev-283b6",
+      "StackId": "arn:aws:cloudformation:us-east-1:019056670560:stack/amplify-hourbankapp-dev-283b6/e8c077b0-58e8-11f0-a50b-0e6906661d7d",
+      "AmplifyAppId": "d28saavnbxir8q"
+    },
+    "categories": {
+      "auth": {
+        "hourbankapp488f170c": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d28saavnbxir8q",
+          "type": "manual"
+        }
+      },
+      "api": {
+        "hourbankapp": {}
+      }
+    }
+  }
+}

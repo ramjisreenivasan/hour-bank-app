@@ -1,0 +1,488 @@
+# HourBank GraphQL Schema
+# This schema defines the data models for the skill exchange platform
+
+# User Model - Core user profile and account information
+type User @model @auth(rules: [
+  { allow: owner, ownerField: "id" }
+  { allow: private, operations: [read] }
+]) {
+  id: ID!
+  email: String! @index(name: "byEmail")
+  username: String! @index(name: "byUsername")
+  firstName: String!
+  lastName: String!
+  bankHours: Float!
+  skills: [String!]!
+  bio: String
+  profilePicture: String
+  rating: Float!
+  totalTransactions: Int!
+  
+  # Relationships
+  services: [Service] @hasMany(indexName: "byUserId", fields: ["id"])
+  providedTransactions: [Transaction] @hasMany(indexName: "byProviderId", fields: ["id"])
+  consumedTransactions: [Transaction] @hasMany(indexName: "byConsumerId", fields: ["id"])
+  givenRatings: [Rating] @hasMany(indexName: "byRaterId", fields: ["id"])
+  receivedRatings: [Rating] @hasMany(indexName: "byRatedUserId", fields: ["id"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Service Model - Services offered by users
+type Service @model @auth(rules: [
+  { allow: owner, ownerField: "userId" }
+  { allow: private, operations: [read] }
+]) {
+  id: ID!
+  userId: ID! @index(name: "byUserId")
+  title: String!
+  description: String!
+  category: String! @index(name: "byCategory")
+  hourlyRate: Float!
+  isActive: Boolean! @index(name: "byActiveStatus")
+  tags: [String!]!
+  
+  # Scheduling fields
+  requiresScheduling: Boolean! # Whether this service requires time slot booking
+  minBookingHours: Float # Minimum hours that can be booked at once
+  maxBookingHours: Float # Maximum hours that can be booked at once
+  advanceBookingDays: Int # How many days in advance can be booked
+  cancellationHours: Int # Hours before start time that cancellation is allowed
+  
+  # Relationships
+  user: User @belongsTo(fields: ["userId"])
+  transactions: [Transaction] @hasMany(indexName: "byServiceId", fields: ["id"])
+  schedules: [ServiceSchedule] @hasMany(indexName: "byServiceId", fields: ["id"])
+  bookings: [Booking] @hasMany(indexName: "byServiceId", fields: ["id"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# ServiceSchedule Model - Defines when a service is available
+type ServiceSchedule @model @auth(rules: [
+  { allow: owner, ownerField: "userId" }
+  { allow: private, operations: [read] }
+]) {
+  id: ID!
+  serviceId: ID! @index(name: "byServiceId")
+  userId: ID! @index(name: "byUserId") # For easier querying
+  dayOfWeek: Int! # 0 = Sunday, 1 = Monday, etc.
+  startTime: String! # Format: "HH:MM" (24-hour format)
+  endTime: String! # Format: "HH:MM" (24-hour format)
+  isActive: Boolean!
+  
+  # Relationships
+  service: Service @belongsTo(fields: ["serviceId"])
+  user: User @belongsTo(fields: ["userId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Booking Model - Individual time slot bookings
+type Booking @model @auth(rules: [
+  { allow: owner, ownerField: "providerId" }
+  { allow: owner, ownerField: "consumerId" }
+]) {
+  id: ID!
+  serviceId: ID! @index(name: "byServiceId")
+  providerId: ID! @index(name: "byProviderId")
+  consumerId: ID! @index(name: "byConsumerId")
+  
+  # Booking details
+  bookingDate: AWSDate! @index(name: "byBookingDate")
+  startTime: String! # Format: "HH:MM"
+  endTime: String! # Format: "HH:MM"
+  duration: Float! # Duration in hours
+  totalCost: Float! # Total bank hours cost
+  
+  # Status and metadata
+  status: BookingStatus! @index(name: "byStatus")
+  notes: String # Consumer notes for the booking
+  providerNotes: String # Provider notes
+  cancellationReason: String
+  
+  # Relationships
+  service: Service @belongsTo(fields: ["serviceId"])
+  provider: User @belongsTo(fields: ["providerId"])
+  consumer: User @belongsTo(fields: ["consumerId"])
+  transaction: Transaction @hasOne # Links to the actual transaction when service is completed
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  confirmedAt: AWSDateTime
+  cancelledAt: AWSDateTime
+  completedAt: AWSDateTime
+  updatedAt: AWSDateTime!
+}
+
+# Booking Status Enum
+enum BookingStatus {
+  PENDING # Waiting for provider confirmation
+  CONFIRMED # Provider has confirmed the booking
+  IN_PROGRESS # Service is currently being provided
+  COMPLETED # Service completed successfully
+  CANCELLED_BY_CONSUMER # Consumer cancelled the booking
+  CANCELLED_BY_PROVIDER # Provider cancelled the booking
+  NO_SHOW_CONSUMER # Consumer didn't show up
+  NO_SHOW_PROVIDER # Provider didn't show up
+}
+
+# ScheduleException Model - For handling one-time schedule changes
+type ScheduleException @model @auth(rules: [
+  { allow: owner, ownerField: "userId" }
+]) {
+  id: ID!
+  serviceId: ID! @index(name: "byServiceId")
+  userId: ID! @index(name: "byUserId")
+  
+  # Exception details
+  exceptionDate: AWSDate! @index(name: "byExceptionDate")
+  exceptionType: ScheduleExceptionType!
+  startTime: String # For CUSTOM_HOURS type
+  endTime: String # For CUSTOM_HOURS type
+  reason: String
+  
+  # Relationships
+  service: Service @belongsTo(fields: ["serviceId"])
+  user: User @belongsTo(fields: ["userId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Schedule Exception Type Enum
+enum ScheduleExceptionType {
+  UNAVAILABLE # Provider is not available on this date
+  CUSTOM_HOURS # Provider has different hours on this date
+  HOLIDAY # Special holiday hours or closure
+}
+
+# Transaction Model - Records of service exchanges
+type Transaction @model @auth(rules: [
+  { allow: owner, ownerField: "providerId" }
+  { allow: owner, ownerField: "consumerId" }
+]) {
+  id: ID!
+  providerId: ID! @index(name: "byProviderId")
+  consumerId: ID! @index(name: "byConsumerId")
+  serviceId: ID! @index(name: "byServiceId")
+  bookingId: ID @index(name: "byBookingId") # Links to booking if scheduled
+  hoursSpent: Float!
+  status: TransactionStatus! @index(name: "byStatus")
+  description: String!
+  rating: Float
+  feedback: String
+  
+  # Relationships
+  provider: User @belongsTo(fields: ["providerId"])
+  consumer: User @belongsTo(fields: ["consumerId"])
+  service: Service @belongsTo(fields: ["serviceId"])
+  booking: Booking @belongsTo(fields: ["bookingId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  completedAt: AWSDateTime
+  updatedAt: AWSDateTime!
+}
+
+# Transaction Status Enum
+enum TransactionStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+# Category Model - Service categories for organization
+type Category @model @auth(rules: [
+  { allow: private, operations: [read] }
+  { allow: groups, groups: ["admin"] }
+]) {
+  id: ID!
+  name: String! @index(name: "byName")
+  description: String
+  icon: String
+  color: String
+  isActive: Boolean!
+  
+  # Relationships
+  services: [Service] @hasMany(indexName: "byCategory", fields: ["name"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Rating Model - Detailed rating system
+type Rating @model @auth(rules: [
+  { allow: owner, ownerField: "raterId" }
+  { allow: owner, ownerField: "ratedUserId", operations: [read] }
+]) {
+  id: ID!
+  transactionId: ID! @index(name: "byTransactionId")
+  raterId: ID! @index(name: "byRaterId")
+  ratedUserId: ID! @index(name: "byRatedUserId")
+  rating: Float!
+  feedback: String
+  categories: [String!] # e.g., ["communication", "quality", "timeliness"]
+  
+  # Relationships
+  transaction: Transaction @belongsTo(fields: ["transactionId"])
+  rater: User @belongsTo(fields: ["raterId"])
+  ratedUser: User @belongsTo(fields: ["ratedUserId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Notification Model - System notifications
+type Notification @model @auth(rules: [
+  { allow: owner, ownerField: "userId" }
+]) {
+  id: ID!
+  userId: ID! @index(name: "byUserId")
+  type: NotificationType!
+  title: String!
+  message: String!
+  isRead: Boolean! @index(name: "byReadStatus")
+  relatedId: String # ID of related transaction, service, etc.
+  
+  # Relationships
+  user: User @belongsTo(fields: ["userId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Notification Type Enum
+enum NotificationType {
+  TRANSACTION_REQUEST
+  TRANSACTION_ACCEPTED
+  TRANSACTION_COMPLETED
+  RATING_RECEIVED
+  SERVICE_INQUIRY
+  SYSTEM_UPDATE
+}
+
+# Message Model - Direct messaging between users
+type Message @model @auth(rules: [
+  { allow: owner, ownerField: "senderId" }
+  { allow: owner, ownerField: "receiverId" }
+]) {
+  id: ID!
+  senderId: ID! @index(name: "bySenderId")
+  receiverId: ID! @index(name: "byReceiverId")
+  conversationId: ID! @index(name: "byConversationId")
+  content: String!
+  isRead: Boolean!
+  messageType: MessageType!
+  
+  # Relationships
+  sender: User @belongsTo(fields: ["senderId"])
+  receiver: User @belongsTo(fields: ["receiverId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Message Type Enum
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  SYSTEM
+}
+
+# Conversation Model - Message threads between users
+type Conversation @model @auth(rules: [
+  { allow: owner, ownerField: "user1Id" }
+  { allow: owner, ownerField: "user2Id" }
+]) {
+  id: ID!
+  user1Id: ID! @index(name: "byUser1Id")
+  user2Id: ID! @index(name: "byUser2Id")
+  lastMessageId: ID
+  lastMessageAt: AWSDateTime
+  
+  # Relationships
+  user1: User @belongsTo(fields: ["user1Id"])
+  user2: User @belongsTo(fields: ["user2Id"])
+  messages: [Message] @hasMany(indexName: "byConversationId", fields: ["id"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Skill Model - Predefined skills for consistency
+type Skill @model @auth(rules: [
+  { allow: private, operations: [read] }
+  { allow: groups, groups: ["admin"] }
+]) {
+  id: ID!
+  name: String! @index(name: "byName")
+  category: String! @index(name: "byCategory")
+  description: String
+  isActive: Boolean!
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+# Report Model - User reports for moderation
+type Report @model @auth(rules: [
+  { allow: owner, ownerField: "reporterId" }
+  { allow: groups, groups: ["admin", "moderator"] }
+]) {
+  id: ID!
+  reporterId: ID! @index(name: "byReporterId")
+  reportedUserId: ID! @index(name: "byReportedUserId")
+  transactionId: ID @index(name: "byTransactionId")
+  reason: ReportReason!
+  description: String!
+  status: ReportStatus! @index(name: "byStatus")
+  adminNotes: String
+  
+  # Relationships
+  reporter: User @belongsTo(fields: ["reporterId"])
+  reportedUser: User @belongsTo(fields: ["reportedUserId"])
+  transaction: Transaction @belongsTo(fields: ["transactionId"])
+  
+  # Timestamps
+  createdAt: AWSDateTime!
+  resolvedAt: AWSDateTime
+  updatedAt: AWSDateTime!
+}
+
+# Report Reason Enum
+enum ReportReason {
+  INAPPROPRIATE_BEHAVIOR
+  POOR_SERVICE_QUALITY
+  NO_SHOW
+  PAYMENT_DISPUTE
+  SPAM
+  HARASSMENT
+  OTHER
+}
+
+# Report Status Enum
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  DISMISSED
+}
+
+# Custom Queries and Mutations
+
+# Search services by various criteria
+type Query {
+  searchServices(
+    query: String
+    category: String
+    minRating: Float
+    maxHourlyRate: Float
+    tags: [String]
+    isActive: Boolean
+    limit: Int
+    nextToken: String
+  ): ServiceSearchResult
+  
+  # Get user statistics
+  getUserStats(userId: ID!): UserStats
+  
+  # Get trending services
+  getTrendingServices(limit: Int): [Service]
+  
+  # Get recommended services for a user
+  getRecommendedServices(userId: ID!, limit: Int): [Service]
+  
+  # Scheduling queries
+  getAvailableTimeSlots(
+    serviceId: ID!
+    date: AWSDate!
+    duration: Float!
+  ): [TimeSlot]
+  
+  getProviderSchedule(
+    providerId: ID!
+    startDate: AWSDate!
+    endDate: AWSDate!
+  ): [ProviderAvailability]
+  
+  getBookingsByDateRange(
+    userId: ID!
+    startDate: AWSDate!
+    endDate: AWSDate!
+    role: BookingRole! # PROVIDER or CONSUMER
+  ): [Booking]
+}
+
+# Custom types for scheduling
+type TimeSlot {
+  startTime: String!
+  endTime: String!
+  isAvailable: Boolean!
+  conflictReason: String
+}
+
+type ProviderAvailability {
+  date: AWSDate!
+  dayOfWeek: Int!
+  schedules: [ServiceSchedule!]!
+  exceptions: [ScheduleException!]!
+  bookings: [Booking!]!
+  isAvailable: Boolean!
+}
+
+enum BookingRole {
+  PROVIDER
+  CONSUMER
+}
+
+# Custom types for search results
+type ServiceSearchResult {
+  items: [Service]
+  nextToken: String
+  total: Int
+}
+
+type UserStats {
+  totalHoursProvided: Float
+  totalHoursConsumed: Float
+  averageRating: Float
+  totalRatings: Int
+  activeServices: Int
+  completedTransactions: Int
+  joinedDate: AWSDateTime
+}
+
+# Subscriptions for real-time updates
+type Subscription {
+  onTransactionUpdate(userId: ID!): Transaction
+    @aws_subscribe(mutations: ["createTransaction", "updateTransaction"])
+  
+  onNewMessage(userId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+  
+  onNewNotification(userId: ID!): Notification
+    @aws_subscribe(mutations: ["createNotification"])
+  
+  # Booking subscriptions
+  onBookingUpdate(userId: ID!): Booking
+    @aws_subscribe(mutations: ["createBooking", "updateBooking"])
+  
+  onScheduleUpdate(serviceId: ID!): ServiceSchedule
+    @aws_subscribe(mutations: ["createServiceSchedule", "updateServiceSchedule", "deleteServiceSchedule"])
+}

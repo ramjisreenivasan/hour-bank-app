@@ -1,0 +1,139 @@
+<div class="dashboard-container" *ngIf="!loading">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>hOurBank</h1>
+        <p>Welcome back, {{ currentUser?.firstName || currentUser?.username }}!</p>
+      </div>
+      <div class="user-actions">
+        <button class="btn btn-outline" (click)="navigateToProfile()">Profile</button>
+        <button class="btn btn-outline" (click)="navigateToTransactions()">Transactions</button>
+        <button class="btn btn-secondary" (click)="signOut()">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Cards -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card bank-hours">
+        <div class="stat-icon">⏰</div>
+        <div class="stat-content">
+          <h3>{{ currentUser?.bankHours || 0 }}</h3>
+          <p>Bank Hours</p>
+        </div>
+      </div>
+      <div class="stat-card rating">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-content">
+          <h3>{{ currentUser?.rating || 0 }}</h3>
+          <p>Rating</p>
+        </div>
+      </div>
+      <div class="stat-card transactions">
+        <div class="stat-icon">🔄</div>
+        <div class="stat-content">
+          <h3>{{ currentUser?.totalTransactions || 0 }}</h3>
+          <p>Transactions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Available Services -->
+    <section class="services-section">
+      <div class="section-header">
+        <h2>Available Services</h2>
+        <p>Discover skills and services offered by other members</p>
+      </div>
+      
+      <div class="services-grid" *ngIf="availableServices.length > 0; else noServices">
+        <div class="service-card" *ngFor="let service of availableServices">
+          <div class="service-header">
+            <h3>{{ service.title }}</h3>
+            <div class="service-rate">{{ service.hourlyRate }} hrs</div>
+          </div>
+          <p class="service-description">{{ service.description }}</p>
+          <div class="service-meta">
+            <div class="service-provider">
+              <strong>{{ getUserUsername(service.userId) }}</strong>
+              <span class="provider-rating">
+                ⭐ {{ getUserRating(service.userId) }}
+              </span>
+            </div>
+            <div class="service-category">{{ service.category }}</div>
+          </div>
+          <div class="service-tags">
+            <span class="tag" *ngFor="let tag of service.tags">{{ tag }}</span>
+          </div>
+          <button 
+            class="btn btn-primary service-request-btn"
+            (click)="requestService(service)"
+            [disabled]="(currentUser?.bankHours || 0) < service.hourlyRate"
+          >
+            {{ (currentUser?.bankHours || 0) < service.hourlyRate ? 'Insufficient Hours' : 'Request Service' }}
+          </button>
+        </div>
+      </div>
+
+      <ng-template #noServices>
+        <div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>No Services Available</h3>
+          <p>Be the first to offer a service to the community!</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Recent Transactions -->
+    <section class="transactions-section">
+      <div class="section-header">
+        <h2>Recent Activity</h2>
+        <button class="btn btn-outline" (click)="navigateToTransactions()">View All</button>
+      </div>
+
+      <div class="transactions-list" *ngIf="recentTransactions.length > 0; else noTransactions">
+        <div class="transaction-item" *ngFor="let transaction of recentTransactions">
+          <div class="transaction-info">
+            <div class="transaction-title">
+              {{ getServiceById(transaction.serviceId)?.title }}
+            </div>
+            <div class="transaction-meta">
+              <span class="transaction-type">
+                {{ transaction.providerId === currentUser?.id ? 'Provided to' : 'Received from' }}
+                {{ transaction.providerId === currentUser?.id ? 
+                    getUserUsername(transaction.consumerId) : 
+                    getUserUsername(transaction.providerId) }}
+              </span>
+              <span class="transaction-date">
+                {{ transaction.createdAt | date:'short' }}
+              </span>
+            </div>
+          </div>
+          <div class="transaction-details">
+            <div class="transaction-hours">{{ transaction.hoursSpent }}h</div>
+            <div class="transaction-status" [class]="'status-' + transaction.status.toLowerCase()">
+              {{ transaction.status }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noTransactions>
+        <div class="empty-state">
+          <div class="empty-icon">📝</div>
+          <h3>No Recent Activity</h3>
+          <p>Start by requesting a service or offering your skills!</p>
+        </div>
+      </ng-template>
+    </section>
+  </div>
+</div>
+
+<div class="loading-container" *ngIf="loading">
+  <div class="loading-spinner"></div>
+  <p>Loading dashboard...</p>
+</div>

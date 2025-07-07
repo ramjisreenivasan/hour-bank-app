@@ -1,0 +1,97 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo">
+        <app-logo [size]="40" [showText]="true" containerClass="large"></app-logo>
+      </div>
+      <h2>{{ isSignUp ? 'Create Account' : 'Welcome Back' }}</h2>
+      <p>{{ isSignUp ? 'Join the skill exchange community' : 'Sign in to your account' }}</p>
+    </div>
+
+    <!-- Social Login Section -->
+    <app-social-login></app-social-login>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()" #authForm="ngForm">
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="form-group" *ngIf="isSignUp">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <div class="form-group" *ngIf="isSignUp">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm your password"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="loading || !authForm.valid"
+      >
+        <div class="loading-spinner" *ngIf="loading"></div>
+        {{ loading ? 'Please wait...' : (isSignUp ? 'Create Account' : 'Sign In') }}
+      </button>
+
+      <!-- Clear Session Button - shown when there's an auth error -->
+      <button
+        type="button"
+        class="clear-session-btn"
+        (click)="forceSignOut()"
+        [disabled]="loading"
+        *ngIf="error && error.includes('signed in user')"
+      >
+        Clear Previous Session
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>
+        {{ isSignUp ? 'Already have an account?' : "Don't have an account?" }}
+      </p>
+      <button type="button" class="toggle-btn" (click)="toggleMode()">
+        {{ isSignUp ? 'Sign In' : 'Sign Up' }}
+      </button>
+    </div>
+  </div>
+</div>

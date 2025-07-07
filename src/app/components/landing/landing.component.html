@@ -1,0 +1,205 @@
+<!-- Navigation -->
+<nav class="landing-nav">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <app-logo [size]="32" [showText]="true"></app-logo>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/services" class="nav-link">Browse Services</a>
+      <a routerLink="/how-it-works" class="nav-link">How It Works</a>
+      <a routerLink="/about" class="nav-link">About</a>
+      <a routerLink="/auth" class="nav-link nav-cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Your Skills Have Value.<br>
+        <span class="highlight">Your Time is Currency.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Join a community where everyone's time is valued equally. 
+        Exchange skills, build connections, and create positive impact—one hour at a time.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/auth" class="btn btn-primary">Start Exchanging</a>
+        <a routerLink="/about" class="btn btn-secondary">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">10K+</span>
+          <span class="stat-label">Hours Exchanged</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">2.5K+</span>
+          <span class="stat-label">Active Members</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Skills Available</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="skill-exchange-demo">
+        <div class="exchange-card provider">
+          <div class="user-avatar">👨‍💻</div>
+          <div class="user-info">
+            <div class="user-name">Alex</div>
+            <div class="user-skill">Web Development</div>
+          </div>
+          <div class="hours-badge">+3 hours</div>
+        </div>
+        <div class="exchange-arrow">⇄</div>
+        <div class="exchange-card consumer">
+          <div class="user-avatar">👩‍🎨</div>
+          <div class="user-info">
+            <div class="user-name">Maria</div>
+            <div class="user-skill">Graphic Design</div>
+          </div>
+          <div class="hours-badge">-3 hours</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">How hOurBank Works</h2>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="process">
+  <div class="container">
+    <h2 class="section-title">Simple as 1-2-3</h2>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Share Your Skills</h3>
+        <p class="step-description">List what you can teach or help with—from coding to cooking, everyone has valuable skills.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Earn Time Credits</h3>
+        <p class="step-description">Help others and earn hours in your time bank. One hour of service = one hour credit.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Get What You Need</h3>
+        <p class="step-description">Use your earned hours to access services from other community members.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title">What Our Community Says</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+        <div class="testimonial-content">
+          <p class="testimonial-quote">"{{ testimonial.quote }}"</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">{{ testimonial.avatar }}</div>
+          <div class="author-info">
+            <div class="author-name">{{ testimonial.name }}</div>
+            <div class="author-role">{{ testimonial.role }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Section -->
+<section class="impact">
+  <div class="container">
+    <div class="impact-content">
+      <div class="impact-text">
+        <h2 class="impact-title">Building a Better Economy</h2>
+        <p class="impact-description">
+          hOurBank isn't just about exchanging services—it's about creating a more 
+          equitable, sustainable, and connected world where everyone's contributions matter.
+        </p>
+        <div class="impact-benefits">
+          <div class="benefit">
+            <span class="benefit-icon">🌍</span>
+            <span class="benefit-text">Reduce environmental impact through sharing</span>
+          </div>
+          <div class="benefit">
+            <span class="benefit-icon">🤝</span>
+            <span class="benefit-text">Strengthen community connections</span>
+          </div>
+          <div class="benefit">
+            <span class="benefit-icon">💡</span>
+            <span class="benefit-text">Unlock human potential and creativity</span>
+          </div>
+        </div>
+      </div>
+      <div class="impact-visual">
+        <div class="community-circle">
+          <div class="center-node">
+            <span class="center-text">You</span>
+          </div>
+          <div class="connection-node node-1">🎨</div>
+          <div class="connection-node node-2">💻</div>
+          <div class="connection-node node-3">🍳</div>
+          <div class="connection-node node-4">🔧</div>
+          <div class="connection-node node-5">📚</div>
+          <div class="connection-node node-6">🧘</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Join the Movement?</h2>
+      <p class="cta-subtitle">
+        Start building a better economy today. Your skills are needed, 
+        your time is valuable, and your community is waiting.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/auth" class="btn btn-primary btn-large">Get Started Free</a>
+      </div>
+      <p class="cta-note">Join thousands of people already making a difference</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <app-logo [size]="28" [showText]="true" containerClass="small"></app-logo>
+      </div>
+      <div class="footer-links">
+        <a routerLink="/about" class="footer-link">About</a>
+        <a routerLink="/auth" class="footer-link">Sign Up</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 hOurBank. Building a better economy, one hour at a time.</p>
+    </div>
+  </div>
+</footer>

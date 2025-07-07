@@ -1,0 +1,276 @@
+<div class="profile-container">
+  <!-- Header -->
+  <header class="profile-header">
+    <button class="back-btn" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Profile</h1>
+  </header>
+
+  <!-- Messages -->
+  <div class="messages" *ngIf="errorMessage || successMessage">
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠️</span>
+      {{ errorMessage }}
+    </div>
+    <div class="success-message" *ngIf="successMessage">
+      <span class="success-icon">✅</span>
+      {{ successMessage }}
+    </div>
+  </div>
+
+  <div class="profile-content" *ngIf="currentUser">
+    <!-- Profile Info Section -->
+    <section class="profile-info-section">
+      <div class="profile-card">
+        <div class="profile-header-info">
+          <div class="profile-avatar">
+            {{ (currentUser.firstName || currentUser.username).charAt(0).toUpperCase() }}
+          </div>
+          <div class="profile-basic-info">
+            <h2>{{ currentUser.firstName }} {{ currentUser.lastName || currentUser.username }}</h2>
+            <p class="username">&#64;{{ currentUser.username }}</p>
+            <p class="email">{{ currentUser.email }}</p>
+          </div>
+          <button class="btn btn-outline" (click)="toggleEdit()" [disabled]="isSaving">
+            {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+          </button>
+        </div>
+
+        <!-- Edit Form -->
+        <form *ngIf="isEditing" class="edit-form" (ngSubmit)="saveProfile()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input
+                type="text"
+                id="firstName"
+                [(ngModel)]="editForm.firstName"
+                name="firstName"
+                placeholder="Enter your first name"
+                required
+                [disabled]="isSaving"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input
+                type="text"
+                id="lastName"
+                [(ngModel)]="editForm.lastName"
+                name="lastName"
+                placeholder="Enter your last name"
+                required
+                [disabled]="isSaving"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea
+              id="bio"
+              [(ngModel)]="editForm.bio"
+              name="bio"
+              placeholder="Tell us about yourself..."
+              rows="4"
+              [disabled]="isSaving"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Skills</label>
+            <div class="skills-input">
+              <input
+                type="text"
+                [(ngModel)]="newSkill"
+                name="newSkill"
+                placeholder="Add a skill"
+                (keyup.enter)="addSkill()"
+                [disabled]="isSaving"
+              />
+              <button type="button" class="btn btn-sm" (click)="addSkill()" [disabled]="isSaving">Add</button>
+            </div>
+            <div class="skills-list" *ngIf="editForm.skills.length > 0">
+              <span class="skill-tag" *ngFor="let skill of editForm.skills">
+                {{ skill }}
+                <button type="button" class="remove-skill" (click)="removeSkill(skill)" [disabled]="isSaving">×</button>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+              {{ isSaving ? 'Saving...' : 'Save Changes' }}
+            </button>
+          </div>
+        </form>
+
+        <!-- Profile Stats (when not editing) -->
+        <div *ngIf="!isEditing" class="profile-stats">
+          <div class="stat">
+            <span class="stat-value">{{ currentUser.bankHours }}</span>
+            <span class="stat-label">Bank Hours</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ currentUser.rating.toFixed(1) }}</span>
+            <span class="stat-label">Rating</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ currentUser.totalTransactions }}</span>
+            <span class="stat-label">Transactions</span>
+          </div>
+        </div>
+
+        <!-- Bio Display -->
+        <div *ngIf="!isEditing && currentUser.bio" class="profile-bio">
+          <h3>About</h3>
+          <p>{{ currentUser.bio }}</p>
+        </div>
+
+        <!-- Skills Display -->
+        <div *ngIf="!isEditing && currentUser.skills.length > 0" class="profile-skills">
+          <h3>Skills</h3>
+          <div class="skills-list">
+            <span class="skill-tag" *ngFor="let skill of currentUser.skills">{{ skill }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+      <div class="section-header">
+        <h2>My Services</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary btn-browse-services" (click)="browseAllServices()">
+            🔍 Browse All Services
+          </button>
+          <button class="btn btn-primary" (click)="toggleAddService()" [disabled]="isSaving">
+            {{ isAddingService ? 'Cancel' : '+ Add Service' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Add Service Form -->
+      <div *ngIf="isAddingService" class="service-form-card">
+        <h3>Add New Service</h3>
+        <form class="service-form" (ngSubmit)="saveService()">
+          <div class="form-group">
+            <label for="serviceTitle">Service Title *</label>
+            <input
+              type="text"
+              id="serviceTitle"
+              [(ngModel)]="newService.title"
+              name="serviceTitle"
+              placeholder="e.g., Web Development, Guitar Lessons"
+              required
+              [disabled]="isSaving"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="serviceDescription">Description *</label>
+            <textarea
+              id="serviceDescription"
+              [(ngModel)]="newService.description"
+              name="serviceDescription"
+              placeholder="Describe your service in detail..."
+              rows="4"
+              required
+              [disabled]="isSaving"
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="serviceCategory">Category *</label>
+              <select
+                id="serviceCategory"
+                [(ngModel)]="newService.category"
+                name="serviceCategory"
+                required
+                [disabled]="isSaving"
+              >
+                <option value="">Select a category</option>
+                <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="hourlyRate">Hourly Rate (Bank Hours) *</label>
+              <input
+                type="number"
+                id="hourlyRate"
+                [(ngModel)]="newService.hourlyRate"
+                name="hourlyRate"
+                min="1"
+                step="0.5"
+                required
+                [disabled]="isSaving"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tags</label>
+            <div class="tags-input">
+              <input
+                type="text"
+                [(ngModel)]="newTag"
+                name="newTag"
+                placeholder="Add a tag"
+                (keyup.enter)="addTag()"
+                [disabled]="isSaving"
+              />
+              <button type="button" class="btn btn-sm" (click)="addTag()" [disabled]="isSaving">Add</button>
+            </div>
+            <div class="tags-list" *ngIf="newService.tags.length > 0">
+              <span class="tag" *ngFor="let tag of newService.tags">
+                {{ tag }}
+                <button type="button" class="remove-tag" (click)="removeTag(tag)" [disabled]="isSaving">×</button>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+              {{ isSaving ? 'Adding...' : 'Add Service' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Services List -->
+      <div class="services-grid">
+        <div class="service-card" *ngFor="let service of userServices">
+          <div class="service-header">
+            <h3>{{ service.title }}</h3>
+            <div class="service-status">
+              <span class="status-badge" [class.active]="service.isActive" [class.inactive]="!service.isActive">
+                {{ service.isActive ? 'Active' : 'Inactive' }}
+              </span>
+              <button 
+                class="btn btn-sm btn-outline" 
+                (click)="toggleServiceStatus(service)"
+                [disabled]="isSaving"
+              >
+                {{ service.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+            </div>
+          </div>
+          <p class="service-description">{{ service.description }}</p>
+          <div class="service-meta">
+            <span class="category">{{ service.category }}</span>
+            <span class="rate">{{ service.hourlyRate }} hours/hour</span>
+          </div>
+          <div class="service-tags" *ngIf="service.tags.length > 0">
+            <span class="tag" *ngFor="let tag of service.tags">{{ tag }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="userServices.length === 0" class="no-services">
+          <p>You haven't added any services yet.</p>
+          <p>Click "Add Service" to get started!</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

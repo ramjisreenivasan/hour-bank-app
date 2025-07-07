@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-07-04T17:49:40.378Z",
+  "totalFiles": 6,
+  "totalSize": 41013,
+  "largestFile": {
+    "path": "src/styles.scss",
+    "size": 11517,
+    "lines": 561,
+    "rules": 116,
+    "mediaQueries": 9
+  },
+  "averageSize": 6835.5,
+  "files": [
+    {
+      "path": "src/app/app.component.scss",
+      "size": 2157,
+      "sizeFormatted": "2.11 kB",
+      "rules": 21,
+      "mediaQueries": 4
+    },
+    {
+      "path": "src/app/components/auth/auth.component.scss",
+      "size": 3829,
+      "sizeFormatted": "3.74 kB",
+      "rules": 27,
+      "mediaQueries": 1
+    },
+    {
+      "path": "src/app/components/dashboard/dashboard.component.scss",
+      "size": 8079,
+      "sizeFormatted": "7.89 kB",
+      "rules": 69,
+      "mediaQueries": 6
+    },
+    {
+      "path": "src/app/components/profile/profile.component.scss",
+      "size": 7755,
+      "sizeFormatted": "7.57 kB",
+      "rules": 66,
+      "mediaQueries": 5
+    },
+    {
+      "path": "src/app/components/transaction/transaction.component.scss",
+      "size": 7676,
+      "sizeFormatted": "7.50 kB",
+      "rules": 79,
+      "mediaQueries": 6
+    },
+    {
+      "path": "src/styles.scss",
+      "size": 11517,
+      "sizeFormatted": "11.25 kB",
+      "rules": 116,
+      "mediaQueries": 9
+    }
+  ]
+}

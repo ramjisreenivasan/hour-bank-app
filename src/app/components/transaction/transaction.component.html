@@ -1,0 +1,210 @@
+<div class="transaction-container">
+  <!-- Header -->
+  <header class="transaction-header">
+    <button class="back-btn" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Transactions</h1>
+  </header>
+
+  <div class="transaction-content">
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="statusFilter">Status</label>
+          <select 
+            id="statusFilter" 
+            [(ngModel)]="statusFilter" 
+            (change)="onStatusFilterChange()"
+          >
+            <option *ngFor="let option of statusOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="typeFilter">Type</label>
+          <select 
+            id="typeFilter" 
+            [(ngModel)]="typeFilter" 
+            (change)="onTypeFilterChange()"
+          >
+            <option *ngFor="let option of typeOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="results-count">
+        {{ filteredTransactions.length }} transaction(s) found
+      </div>
+    </div>
+
+    <!-- Transactions List -->
+    <div class="transactions-section">
+      <div class="transactions-list" *ngIf="filteredTransactions.length > 0; else noTransactions">
+        <div class="transaction-card" *ngFor="let transaction of filteredTransactions">
+          <div class="transaction-header">
+            <div class="transaction-info">
+              <h3>{{ getServiceById(transaction.serviceId)?.title }}</h3>
+              <div class="transaction-meta">
+                <span class="transaction-type" 
+                      [class.type-provided]="transaction.providerId === currentUser?.id"
+                      [class.type-received]="transaction.consumerId === currentUser?.id">
+                  {{ getTransactionTypeLabel(transaction) }}
+                </span>
+                <span class="transaction-party">
+                  {{ transaction.providerId === currentUser?.id ? 'to' : 'from' }}
+                  <strong>{{ getOtherPartyUsername(transaction) }}</strong>
+                </span>
+              </div>
+            </div>
+            <div class="transaction-status">
+              <span class="status-badge" [class]="getStatusClass(transaction.status)">
+                {{ transaction.status.replace('_', ' ') }}
+              </span>
+            </div>
+          </div>
+
+          <div class="transaction-body">
+            <p class="transaction-description">{{ transaction.description }}</p>
+            
+            <div class="transaction-details">
+              <div class="detail-item">
+                <span class="label">Hours:</span>
+                <span class="value">{{ transaction.hoursSpent }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Rate:</span>
+                <span class="value">{{ getServiceById(transaction.serviceId)?.hourlyRate }} hrs</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Total Cost:</span>
+                <span class="value">{{ transaction.hoursSpent * (getServiceById(transaction.serviceId)?.hourlyRate || 0) }} hrs</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Date:</span>
+                <span class="value">{{ transaction.createdAt | date:'medium' }}</span>
+              </div>
+              <div class="detail-item" *ngIf="transaction.completedAt">
+                <span class="label">Completed:</span>
+                <span class="value">{{ transaction.completedAt | date:'medium' }}</span>
+              </div>
+            </div>
+
+            <!-- Rating Display -->
+            <div class="rating-section" *ngIf="transaction.rating">
+              <div class="rating-display">
+                <span class="rating-stars">
+                  <span *ngFor="let star of [1,2,3,4,5]" 
+                        class="star" 
+                        [class.filled]="star <= transaction.rating!">
+                    ⭐
+                  </span>
+                </span>
+                <span class="rating-value">{{ transaction.rating }}/5</span>
+              </div>
+              <p class="feedback" *ngIf="transaction.feedback">
+                "{{ transaction.feedback }}"
+              </p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="transaction-actions">
+            <!-- Status Update Buttons -->
+            <button 
+              *ngIf="canUpdateStatus(transaction, TransactionStatus.IN_PROGRESS)"
+              class="btn btn-primary btn-sm"
+              (click)="updateTransactionStatus(transaction, TransactionStatus.IN_PROGRESS)"
+            >
+              Start Work
+            </button>
+            
+            <button 
+              *ngIf="canUpdateStatus(transaction, TransactionStatus.COMPLETED)"
+              class="btn btn-success btn-sm"
+              (click)="updateTransactionStatus(transaction, TransactionStatus.COMPLETED)"
+            >
+              Mark Complete
+            </button>
+            
+            <button 
+              *ngIf="canUpdateStatus(transaction, TransactionStatus.CANCELLED)"
+              class="btn btn-secondary btn-sm"
+              (click)="updateTransactionStatus(transaction, TransactionStatus.CANCELLED)"
+            >
+              Cancel
+            </button>
+
+            <!-- Rating Button -->
+            <button 
+              *ngIf="canRate(transaction)"
+              class="btn btn-outline btn-sm"
+              (click)="openRatingModal(transaction)"
+            >
+              Rate Service
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noTransactions>
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <h3>No Transactions Found</h3>
+          <p>{{ statusFilter === 'ALL' && typeFilter === 'ALL' ? 
+              'You haven\'t made any transactions yet.' : 
+              'No transactions match your current filters.' }}</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Rating Modal -->
+<div class="modal-overlay" *ngIf="showRatingModal" (click)="closeRatingModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Rate Service</h2>
+      <button class="close-btn" (click)="closeRatingModal()">×</button>
+    </div>
+    
+    <div class="modal-body" *ngIf="selectedTransaction">
+      <div class="service-info">
+        <h3>{{ getServiceById(selectedTransaction.serviceId)?.title }}</h3>
+        <p>Provided by <strong>{{ getOtherPartyUsername(selectedTransaction) }}</strong></p>
+      </div>
+
+      <div class="rating-input">
+        <label>Rating</label>
+        <div class="star-rating">
+          <button 
+            *ngFor="let star of [1,2,3,4,5]" 
+            type="button"
+            class="star-btn"
+            [class.active]="star <= rating"
+            (click)="rating = star"
+          >
+            ⭐
+          </button>
+        </div>
+        <span class="rating-text">{{ rating }}/5</span>
+      </div>
+
+      <div class="feedback-input">
+        <label for="feedback">Feedback (Optional)</label>
+        <textarea
+          id="feedback"
+          [(ngModel)]="feedback"
+          placeholder="Share your experience..."
+          rows="4"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="closeRatingModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="submitRating()">Submit Rating</button>
+    </div>
+  </div>
+</div>

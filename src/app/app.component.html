@@ -1,0 +1,38 @@
+<div class="app-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar" *ngIf="showNavigation">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a routerLink="/dashboard" class="brand-link">
+          <app-logo [size]="28" [showText]="true"></app-logo>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a routerLink="/dashboard" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{exact: true}"
+           class="nav-link">
+          Dashboard
+        </a>
+        <a routerLink="/profile" 
+           routerLinkActive="active" 
+           class="nav-link">
+          Profile
+        </a>
+        <a routerLink="/transactions" 
+           routerLinkActive="active" 
+           class="nav-link">
+          Transactions
+        </a>
+        <button class="btn btn-outline btn-sm" (click)="signOut()">
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content" [class.with-nav]="showNavigation">
+    <router-outlet></router-outlet>
+  </main>
+</div>

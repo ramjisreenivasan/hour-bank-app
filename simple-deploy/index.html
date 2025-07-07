@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HourBank - Live!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { font-size: 3rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; margin: 1rem 0; }
+        .status { background: rgba(0,255,0,0.2); padding: 1rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 HourBank is Live!</h1>
+        <p>Your skill exchange platform is successfully deployed on AWS Amplify</p>
+        <div class="status">
+            <h3>Deployment Status: SUCCESS ✅</h3>
+            <p>URL: https://dev.d28saavnbxir8q.amplifyapp.com</p>
+            <p>Environment: Development</p>
+            <p>Timestamp: $(date)</p>
+        </div>
+        <p>The full Angular application will be deployed once the build environment is configured.</p>
+    </div>
+</body>
+</html>

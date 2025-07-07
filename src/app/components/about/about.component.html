@@ -1,0 +1,254 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Reimagining Value Through 
+        <span class="highlight">Time & Skills</span>
+      </h1>
+      <p class="hero-subtitle">
+        hOurBank is more than an app—it's a movement toward a sustainable, 
+        equitable economy where everyone's time is valued and every skill matters.
+      </p>
+      <div class="hero-stats">
+        <div class="stat" *ngFor="let stat of stats">
+          <span class="stat-icon">{{ stat.icon }}</span>
+          <span class="stat-number">{{ stat.number }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-cards">
+        <div class="skill-card">💻 Web Development</div>
+        <div class="skill-card">🎨 Graphic Design</div>
+        <div class="skill-card">📚 Language Tutoring</div>
+        <div class="skill-card">🔧 Home Repair</div>
+        <div class="skill-card">🍳 Cooking Lessons</div>
+        <div class="skill-card">🧘 Wellness Coaching</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What is hOurBank Section -->
+<section class="what-section">
+  <div class="container">
+    <h2 class="section-title">What is hOurBank?</h2>
+    <div class="what-content">
+      <div class="what-text">
+        <p class="lead">
+          hOurBank is a revolutionary time-banking platform that enables people to exchange 
+          skills and services using time as currency. One hour of your time equals one hour 
+          of someone else's time—regardless of the service provided.
+        </p>
+        <p>
+          Whether you're a software developer, a gardener, a teacher, or a chef, your time 
+          has equal value in our community. This creates a truly democratic economy where 
+          everyone can contribute and benefit.
+        </p>
+        <div class="time-equation">
+          <span class="equation-part">1 Hour Teaching</span>
+          <span class="equals">=</span>
+          <span class="equation-part">1 Hour Coding</span>
+          <span class="equals">=</span>
+          <span class="equation-part">1 Hour Gardening</span>
+        </div>
+      </div>
+      <div class="what-visual">
+        <div class="time-bank-visual">
+          <div class="bank-icon">🏦</div>
+          <div class="time-flow">
+            <div class="flow-item">Give Skills ➡️</div>
+            <div class="flow-item">Earn Hours ➡️</div>
+            <div class="flow-item">Get Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why hOurBank Section -->
+<section class="why-section">
+  <div class="container">
+    <h2 class="section-title">Why hOurBank Matters</h2>
+    <p class="section-subtitle">
+      In a world of growing inequality and environmental challenges, 
+      we need new models for creating and sharing value.
+    </p>
+    
+    <div class="problems-solutions">
+      <div class="problem-solution">
+        <div class="problem">
+          <h3>🚫 The Problem</h3>
+          <ul>
+            <li>Skills go unused while needs go unmet</li>
+            <li>Economic barriers prevent access to services</li>
+            <li>Communities become disconnected</li>
+            <li>Waste increases as we buy instead of share</li>
+          </ul>
+        </div>
+        <div class="solution">
+          <h3>✅ Our Solution</h3>
+          <ul>
+            <li>Everyone can contribute their unique skills</li>
+            <li>Time-based currency removes financial barriers</li>
+            <li>Local connections strengthen communities</li>
+            <li>Sharing economy reduces environmental impact</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-section">
+  <div class="container">
+    <h2 class="section-title">How hOurBank Works</h2>
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Share Your Skills</h3>
+          <p>Create your profile and list the services you can offer. From professional skills to everyday tasks, every contribution matters.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Earn Time Credits</h3>
+          <p>Provide services to community members and earn bank hours. One hour of service = one hour credit, regardless of the task.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Access Services</h3>
+          <p>Use your earned hours to access services from other members. Get help with tasks, learn new skills, or find creative solutions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Build Community</h3>
+          <p>Rate experiences, build relationships, and contribute to a thriving local economy based on mutual support and shared prosperity.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Social Impact Section -->
+<section class="impact-section">
+  <div class="container">
+    <h2 class="section-title">Creating Lasting Social Impact</h2>
+    <p class="section-subtitle">
+      hOurBank isn't just changing how we exchange services—it's transforming communities 
+      and creating a more sustainable, equitable world.
+    </p>
+    
+    <div class="impact-areas">
+      <div class="impact-area" *ngFor="let area of impactAreas">
+        <h3 class="impact-title">{{ area.title }}</h3>
+        <p class="impact-description">{{ area.description }}</p>
+        <div class="impact-examples">
+          <div class="example" *ngFor="let example of area.examples">
+            <span class="example-icon">✨</span>
+            <span class="example-text">{{ example }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sustainability Section -->
+<section class="sustainability-section">
+  <div class="container">
+    <h2 class="section-title">Crowd Sustainability in Action</h2>
+    <div class="sustainability-content">
+      <div class="sustainability-text">
+        <h3>The Power of Collective Action</h3>
+        <p>
+          hOurBank harnesses the collective power of communities to create sustainable solutions. 
+          When thousands of people share their skills and time, we create a resilient ecosystem 
+          that benefits everyone while reducing our environmental footprint.
+        </p>
+        
+        <div class="sustainability-benefits">
+          <div class="benefit">
+            <h4>🌍 Environmental Benefits</h4>
+            <ul>
+              <li>Reduced consumption through skill sharing</li>
+              <li>Local solutions minimize transportation</li>
+              <li>Repair and reuse instead of replace</li>
+              <li>Knowledge sharing reduces resource waste</li>
+            </ul>
+          </div>
+          
+          <div class="benefit">
+            <h4>🤝 Social Benefits</h4>
+            <ul>
+              <li>Stronger community connections</li>
+              <li>Intergenerational knowledge transfer</li>
+              <li>Reduced social isolation</li>
+              <li>Cultural exchange and understanding</li>
+            </ul>
+          </div>
+          
+          <div class="benefit">
+            <h4>💰 Economic Benefits</h4>
+            <ul>
+              <li>Access to services without financial barriers</li>
+              <li>Local economic resilience</li>
+              <li>Skill development opportunities</li>
+              <li>Alternative to traditional employment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sustainability-visual">
+        <div class="circular-economy">
+          <div class="center-circle">
+            <span class="center-text">Sustainable<br>Community</span>
+          </div>
+          <div class="orbit-item orbit-1">🌱 Skills</div>
+          <div class="orbit-item orbit-2">⏰ Time</div>
+          <div class="orbit-item orbit-3">🤝 Trust</div>
+          <div class="orbit-item orbit-4">💡 Innovation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Join the Movement?</h2>
+      <p class="cta-subtitle">
+        Be part of a community that values your time, celebrates your skills, 
+        and creates positive change in the world.
+      </p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary">Get Started Today</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+      <div class="cta-stats">
+        <p>Join thousands of people already building a better economy, one hour at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>

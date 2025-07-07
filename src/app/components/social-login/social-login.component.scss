@@ -1,0 +1,222 @@
+.social-login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+
+  .social-login-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary, #1a1a1a);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #666);
+    }
+  }
+
+  .social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    min-height: 48px;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .social-icon {
+      flex-shrink: 0;
+    }
+
+    span {
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .loading-spinner {
+      position: absolute;
+      right: 1rem;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f4f6;
+      border-top: 2px solid #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    // Provider-specific styles
+    &.google-btn {
+      &:hover:not(:disabled) {
+        border-color: #4285f4;
+        background-color: #f8f9ff;
+      }
+    }
+
+    &.facebook-btn {
+      &:hover:not(:disabled) {
+        border-color: #1877f2;
+        background-color: #f0f4ff;
+      }
+    }
+
+    &.github-btn {
+      &:hover:not(:disabled) {
+        border-color: #333;
+        background-color: #f6f8fa;
+      }
+    }
+
+    &.apple-btn {
+      &:hover:not(:disabled) {
+        border-color: #000;
+        background-color: #f9f9f9;
+      }
+    }
+  }
+
+  .divider {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e1e5e9;
+    }
+
+    span {
+      background: white;
+      padding: 0 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #666);
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+
+    .error-icon {
+      flex-shrink: 0;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .social-login-container {
+    .social-btn {
+      padding: 0.875rem 1rem;
+      font-size: 0.8125rem;
+
+      .btn-content {
+        gap: 0.625rem;
+      }
+
+      .social-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .social-login-container {
+    .social-login-header {
+      h3 {
+        color: var(--text-primary-dark, #f9fafb);
+      }
+
+      p {
+        color: var(--text-secondary-dark, #9ca3af);
+      }
+    }
+
+    .social-btn {
+      background: var(--bg-secondary-dark, #374151);
+      border-color: var(--border-dark, #4b5563);
+
+      span {
+        color: var(--text-primary-dark, #f9fafb);
+      }
+
+      &:hover:not(:disabled) {
+        background: var(--bg-tertiary-dark, #4b5563);
+      }
+    }
+
+    .divider {
+      &::before {
+        background: var(--border-dark, #4b5563);
+      }
+
+      span {
+        background: var(--bg-primary-dark, #1f2937);
+        color: var(--text-secondary-dark, #9ca3af);
+      }
+    }
+  }
+}
