@@ -117,33 +117,110 @@
 <section class="how-section">
   <div class="container">
     <h2 class="section-title">How hOurBank Works</h2>
-    <div class="how-steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <h3>Share Your Skills</h3>
-          <p>Create your profile and list the services you can offer. From professional skills to everyday tasks, every contribution matters.</p>
+    <p class="section-subtitle">
+      Learn how our time-banking system creates value through skill exchange in 4 simple steps
+    </p>
+    
+    <div class="steps-grid">
+      <div class="step" *ngFor="let step of steps; let i = index">
+        <div class="step-number">{{ i + 1 }}</div>
+        <div class="step-icon">{{ step.icon }}</div>
+        <h3 class="step-title">{{ step.title }}</h3>
+        <p class="step-description">{{ step.description }}</p>
+        <div class="step-details">
+          <ul>
+            <li *ngFor="let detail of step.details">{{ detail }}</li>
+          </ul>
         </div>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3>Earn Time Credits</h3>
-          <p>Provide services to community members and earn bank hours. One hour of service = one hour credit, regardless of the task.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Time Banking Concept -->
+<section class="concept-section">
+  <div class="container">
+    <div class="concept-content">
+      <div class="concept-text">
+        <h2 class="concept-title">The Time Banking Concept</h2>
+        <p class="concept-description">
+          Time banking is based on the simple principle that everyone's time is equally valuable. 
+          Whether you're teaching coding or cooking, providing legal advice or gardening help, 
+          one hour of your time equals one hour of credit in the system.
+        </p>
+        
+        <div class="concept-benefits">
+          <div class="benefit">
+            <span class="benefit-icon">⚖️</span>
+            <div class="benefit-content">
+              <h4>Equal Value</h4>
+              <p>All hours are valued equally regardless of the service type</p>
+            </div>
+          </div>
+          <div class="benefit">
+            <span class="benefit-icon">🔄</span>
+            <div class="benefit-content">
+              <h4>Circular Economy</h4>
+              <p>Credits flow through the community, benefiting everyone</p>
+            </div>
+          </div>
+          <div class="benefit">
+            <span class="benefit-icon">🤝</span>
+            <div class="benefit-content">
+              <h4>Community Building</h4>
+              <p>Strengthen local connections through meaningful exchanges</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>Access Services</h3>
-          <p>Use your earned hours to access services from other members. Get help with tasks, learn new skills, or find creative solutions.</p>
+      
+      <div class="concept-visual">
+        <div class="time-equation">
+          <div class="equation-item">
+            <div class="service-example">
+              <span class="service-icon">💻</span>
+              <span class="service-text">1 Hour<br>Web Development</span>
+            </div>
+          </div>
+          <div class="equals">=</div>
+          <div class="equation-item">
+            <div class="service-example">
+              <span class="service-icon">🍳</span>
+              <span class="service-text">1 Hour<br>Cooking Lesson</span>
+            </div>
+          </div>
+          <div class="equals">=</div>
+          <div class="equation-item">
+            <div class="service-example">
+              <span class="service-icon">🎨</span>
+              <span class="service-text">1 Hour<br>Art Tutoring</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <h3>Build Community</h3>
-          <p>Rate experiences, build relationships, and contribute to a thriving local economy based on mutual support and shared prosperity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Examples Section -->
+<section class="examples-section">
+  <div class="container">
+    <h2 class="section-title">Real-World Examples</h2>
+    <div class="examples-grid">
+      <div class="example-card" *ngFor="let example of examples">
+        <div class="example-header">
+          <span class="example-icon">{{ example.icon }}</span>
+          <h3 class="example-title">{{ example.title }}</h3>
+        </div>
+        <p class="example-description">{{ example.description }}</p>
+        <div class="example-flow">
+          <div class="flow-step">
+            <strong>Gives:</strong> {{ example.gives }}
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <strong>Gets:</strong> {{ example.gets }}
+          </div>
         </div>
       </div>
     </div>
@@ -235,6 +312,19 @@
   </div>
 </section>
 
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="container">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item" *ngFor="let faq of faqs">
+        <h3 class="faq-question">{{ faq.question }}</h3>
+        <p class="faq-answer">{{ faq.answer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Call to Action Section -->
 <section class="cta-section">
   <div class="container">
@@ -245,8 +335,8 @@
         and creates positive change in the world.
       </p>
       <div class="cta-buttons">
-        <button class="btn btn-primary">Get Started Today</button>
-        <button class="btn btn-secondary">Learn More</button>
+        <a routerLink="/auth" class="btn btn-primary">Get Started Today</a>
+        <a routerLink="/services" class="btn btn-secondary">Browse Services</a>
       </div>
       <div class="cta-stats">
         <p>Join thousands of people already building a better economy, one hour at a time.</p>

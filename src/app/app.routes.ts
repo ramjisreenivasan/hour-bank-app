@@ -24,10 +24,6 @@ export const routes: Routes = [
     path: 'community', 
     loadComponent: () => import('./components/community/community-browse.component').then(m => m.CommunityBrowseComponent)
   },
-  { 
-    path: 'how-it-works', 
-    loadComponent: () => import('./components/how-it-works/how-it-works.component').then(m => m.HowItWorksComponent)
-  },
   
   // Authentication routes
   { 

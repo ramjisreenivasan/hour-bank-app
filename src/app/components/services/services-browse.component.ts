@@ -128,7 +128,7 @@ interface Service {
             <p>Start offering your skills or request services from our amazing community</p>
             <div class="cta-buttons">
               <a routerLink="/auth" class="btn btn-primary">Sign Up Now</a>
-              <a routerLink="/how-it-works" class="btn btn-secondary">Learn How It Works</a>
+              <a routerLink="/about" class="btn btn-secondary">Learn How It Works</a>
             </div>
           </div>
         </div>
