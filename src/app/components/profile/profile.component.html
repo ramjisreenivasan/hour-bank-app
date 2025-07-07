@@ -27,7 +27,7 @@
         
         <div class="user-details">
           <h2 class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName || currentUser.username }}</h2>
-          <p class="user-handle">@{{ currentUser.username }}</p>
+          <p class="user-handle">{{ '@' + currentUser.username }}</p>
           <p class="user-email">{{ currentUser.email }}</p>
         </div>
 
