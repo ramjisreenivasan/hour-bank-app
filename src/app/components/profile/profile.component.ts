@@ -6,14 +6,13 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { UserMappingService } from '../../services/user-mapping.service';
 import { User } from '../../models/user.model';
-import { ErrorHandlerComponent } from '../error-handler/error-handler.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { errorLogger } from '../../utils/error-logger';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ErrorHandlerComponent, NavigationComponent],
+  imports: [CommonModule, FormsModule, NavigationComponent],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -26,6 +25,33 @@ export class ProfileComponent implements OnInit {
   // Message properties for UI feedback
   errorMessage: string = '';
   successMessage: string = '';
+  
+  // Template properties (currentUser is an alias for user for template consistency)
+  get currentUser() { return this.user; }
+  
+  // Edit mode properties
+  isEditing = false;
+  editForm: any = {
+    firstName: '',
+    lastName: '',
+    bio: '',
+    skills: []
+  };
+  
+  // Skills management
+  newSkill = '';
+  
+  // Service categories
+  categories = [
+    'Technology',
+    'Education', 
+    'Creative',
+    'Health & Wellness',
+    'Home & Garden',
+    'Business',
+    'Transportation',
+    'Other'
+  ];
   
   // Error handling properties
   currentError: Error | string | null = null;
@@ -245,17 +271,67 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  clearError() {
-    this.currentError = null;
-    this.errorContext = {};
-  }
-
   navigateToAuth() {
     this.router.navigate(['/auth']);
   }
 
   browseAllServices() {
     this.router.navigate(['/services']);
+  }
+
+  // Edit mode methods
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+    if (this.isEditing && this.user) {
+      // Initialize edit form with current user data
+      this.editForm = {
+        firstName: this.user.firstName || '',
+        lastName: this.user.lastName || '',
+        bio: this.user.bio || '',
+        skills: [...(this.user.skills || [])]
+      };
+    }
+  }
+
+  // Skills management methods
+  addSkill() {
+    if (this.newSkill.trim() && !this.editForm.skills.includes(this.newSkill.trim())) {
+      this.editForm.skills.push(this.newSkill.trim());
+      this.newSkill = '';
+    }
+  }
+
+  removeSkill(skill: string) {
+    this.editForm.skills = this.editForm.skills.filter((s: string) => s !== skill);
+  }
+
+  // Save edited profile
+  async saveEditedProfile() {
+    if (!this.user) return;
+    
+    this.saving = true;
+    try {
+      // Update user object with edited values
+      this.user.firstName = this.editForm.firstName;
+      this.user.lastName = this.editForm.lastName;
+      this.user.bio = this.editForm.bio;
+      this.user.skills = this.editForm.skills;
+      
+      // Call existing saveProfile method
+      await this.saveProfile();
+      
+      this.isEditing = false;
+      this.successMessage = 'Profile updated successfully!';
+      
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
+      
+    } catch (error) {
+      this.handleError(error as Error, 'saveEditedProfile');
+    } finally {
+      this.saving = false;
+    }
   }
 
   navigateToDashboard(): void {
