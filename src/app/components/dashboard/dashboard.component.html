@@ -4,7 +4,7 @@
   <!-- Welcome Section -->
   <div class="welcome-section">
     <div class="welcome-content">
-      <h1>Welcome back, {{ currentUser?.firstName || currentUser?.username }}!</h1>
+      <h1>Welcome back, {{ getWelcomeDisplayName() }}!</h1>
       <p>Manage your services, track transactions, and connect with the community.</p>
     </div>
   </div>
@@ -57,7 +57,7 @@
           <p class="service-description">{{ service.description }}</p>
           <div class="service-meta">
             <div class="service-provider">
-              <strong>{{ getUserUsername(service.userId) }}</strong>
+              <strong>{{ getUserFullName(service.userId) }}</strong>
               <span class="provider-rating">
                 ⭐ {{ getUserRating(service.userId) }}
               </span>
@@ -103,8 +103,8 @@
               <span class="transaction-type">
                 {{ transaction.providerId === currentUser?.id ? 'Provided to' : 'Received from' }}
                 {{ transaction.providerId === currentUser?.id ? 
-                    getUserUsername(transaction.consumerId) : 
-                    getUserUsername(transaction.providerId) }}
+                    getUserFullName(transaction.consumerId) : 
+                    getUserFullName(transaction.providerId) }}
               </span>
               <span class="transaction-date">
                 {{ transaction.createdAt | date:'short' }}

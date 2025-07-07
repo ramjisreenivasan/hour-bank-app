@@ -122,6 +122,11 @@ export class DashboardComponent implements OnInit {
     return this.userDisplayService.getDisplayName(user);
   }
 
+  getUserFullName(userId: string): string {
+    const user = this.getUserFromCache(userId);
+    return this.userDisplayService.getFullNameOrUsername(user);
+  }
+
   getUserUsername(userId: string): string {
     const user = this.getUserFromCache(userId);
     return this.userDisplayService.getUsername(user);
@@ -130,6 +135,20 @@ export class DashboardComponent implements OnInit {
   getUserRating(userId: string): number {
     const user = this.getUserFromCache(userId);
     return user?.rating || 0;
+  }
+
+  getWelcomeDisplayName(): string {
+    if (!this.currentUser) return 'User';
+    
+    if (this.currentUser.firstName && this.currentUser.lastName) {
+      return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
+    
+    if (this.currentUser.firstName) {
+      return this.currentUser.firstName;
+    }
+    
+    return this.currentUser.username || 'User';
   }
 
   browseServices(): void {
