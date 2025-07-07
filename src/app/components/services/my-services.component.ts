@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ScheduleManagementComponent } from '../schedule-management/schedule-management.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 interface Service {
   id: string;
@@ -28,8 +29,9 @@ interface Service {
 @Component({
   selector: 'app-my-services',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScheduleManagementComponent],
+  imports: [CommonModule, FormsModule, ScheduleManagementComponent, NavigationComponent],
   template: `
+    <app-navigation></app-navigation>
     <div class="my-services-container">
       <!-- Header Section -->
       <div class="page-header">
