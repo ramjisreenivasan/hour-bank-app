@@ -130,5 +130,17 @@ jspm_packages/
 # DynamoDB Local files
 .dynamodb/
 
+# Angular specific
+/e2e/test-output/
+/.angular/
+.angular/
+
+# Angular CLI and build artefacts
+/.angular-cli.json
+/.ng/
+
+# TypeScript cache
+*.tsbuildinfo
+
 # Zone.Identifier files (Windows)
 *:Zone.Identifier
