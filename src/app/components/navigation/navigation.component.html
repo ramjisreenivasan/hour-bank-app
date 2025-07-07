@@ -23,10 +23,6 @@
       </ng-container>
       
       <ng-container *ngIf="isAuthenticated">
-        <div class="user-info" *ngIf="currentUser">
-          <span class="user-greeting">{{ currentUser.bankHours || 0 }} hrs</span>
-          <span class="user-name">{{ currentUser.firstName || currentUser.username }}</span>
-        </div>
         <button class="btn btn-secondary btn-sm" (click)="signOut()">Sign Out</button>
       </ng-container>
     </div>
