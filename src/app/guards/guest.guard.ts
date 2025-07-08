@@ -16,7 +16,7 @@ export class GuestGuard implements CanActivate {
     return this.authService.isAuthenticated$.pipe(
       map(isAuthenticated => {
         if (isAuthenticated) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/']); // Redirect to landing page instead of dashboard
           return false;
         }
         return true;
