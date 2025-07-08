@@ -46,7 +46,7 @@ export class AuthComponent {
         this.isSignUp = false;
       } else {
         await this.authService.signIn(this.email, this.password);
-        this.router.navigate(['/']); // Redirect to landing page instead of dashboard
+        this.router.navigate(['/dashboard']); // Redirect to dashboard after successful sign in
       }
     } catch (error: any) {
       // Handle specific error messages
@@ -55,7 +55,7 @@ export class AuthComponent {
         // The auth service will handle the retry automatically
         try {
           await this.authService.signIn(this.email, this.password);
-          this.router.navigate(['/']); // Redirect to landing page instead of dashboard
+          this.router.navigate(['/dashboard']); // Redirect to dashboard after successful retry
         } catch (retryError: any) {
           this.error = retryError.message || 'Sign in failed. Please try again.';
         }
