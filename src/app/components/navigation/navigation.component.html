@@ -31,7 +31,7 @@
       <ng-container *ngIf="isAuthenticated">
         <span class="user-info" *ngIf="currentUser">
           <i class="fas fa-user"></i>
-          {{ currentUser.username }}
+          {{ getUserDisplayName() }}
           <span *ngIf="isAdmin" class="admin-badge">ADMIN</span>
         </span>
         <button class="btn btn-secondary btn-sm" (click)="signOut()">Sign Out</button>

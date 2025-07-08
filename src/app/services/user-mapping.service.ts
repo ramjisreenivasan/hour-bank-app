@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { Observable, from, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { errorLogger } from '../utils/error-logger';
@@ -74,15 +74,34 @@ export class UserMappingService {
    */
   getCurrentCognitoUser(): Observable<CognitoUserInfo | null> {
     return from(getCurrentUser()).pipe(
-      map((cognitoUser) => {
+      switchMap(async (cognitoUser) => {
         if (!cognitoUser) return null;
         
-        return {
-          userId: cognitoUser.userId,
-          username: cognitoUser.username,
-          email: cognitoUser.signInDetails?.loginId,
-          emailVerified: true // Assume verified if they can sign in
-        };
+        try {
+          // Get user attributes to access preferred_username
+          const session = await fetchAuthSession();
+          const userAttributes = session.tokens?.idToken?.payload;
+          
+          // Use preferred_username if available, otherwise fall back to username
+          const displayUsername = userAttributes?.['preferred_username'] || 
+                                 userAttributes?.['cognito:username'] || 
+                                 cognitoUser.username;
+          
+          return {
+            userId: cognitoUser.userId,
+            username: displayUsername,
+            email: cognitoUser.signInDetails?.loginId || userAttributes?.['email'],
+            emailVerified: true // Assume verified if they can sign in
+          };
+        } catch (error) {
+          // Fallback to basic user info if session fetch fails
+          return {
+            userId: cognitoUser.userId,
+            username: cognitoUser.username,
+            email: cognitoUser.signInDetails?.loginId,
+            emailVerified: true
+          };
+        }
       }),
       catchError((error) => {
         errorLogger.logAuthError('getCurrentCognitoUser', error, undefined, {

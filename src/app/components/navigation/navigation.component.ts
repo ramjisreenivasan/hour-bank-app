@@ -80,6 +80,28 @@ export class NavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+  getUserDisplayName(): string {
+    if (!this.currentUser) return '';
+    
+    // Try to use first name and last name if available
+    if (this.currentUser.firstName && this.currentUser.lastName) {
+      return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
+    
+    // Try to use just first name if available
+    if (this.currentUser.firstName) {
+      return this.currentUser.firstName;
+    }
+    
+    // Use username from DynamoDB (should be the actual username, not ID)
+    if (this.currentUser.username) {
+      return this.currentUser.username;
+    }
+    
+    // Final fallback
+    return 'User';
+  }
+
   async signOut(): Promise<void> {
     try {
       await this.authService.signOut();

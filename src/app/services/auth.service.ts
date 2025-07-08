@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { signUp, signIn, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { User } from '../models/user.model';
 import { UserMappingService } from './user-mapping.service';
+import { UserService } from './user.service';
 import { errorLogger } from '../utils/error-logger';
 
 @Injectable({
@@ -14,7 +16,10 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private userMappingService: UserMappingService) {
+  constructor(
+    private userMappingService: UserMappingService,
+    private userService: UserService
+  ) {
     this.checkAuthStatus();
   }
 
@@ -25,24 +30,56 @@ export class AuthService {
         // Sync user mapping and get DynamoDB user data
         this.userMappingService.syncUserMapping(cognitoUser).subscribe({
           next: (mapping) => {
-            // Create User object with DynamoDB ID
-            const userData: User = {
-              id: mapping.dynamoDbUserId,  // Use DynamoDB ID
-              email: mapping.email,
-              username: mapping.username,
-              firstName: '',
-              lastName: '',
-              bankHours: 10, // Starting balance
-              skills: [],
-              rating: 0,
-              totalTransactions: 0,
-              cognitoId: mapping.cognitoUserId,  // Store Cognito ID for reference
-              createdAt: new Date(mapping.createdAt),
-              updatedAt: new Date(mapping.lastSyncAt)
-            };
-            
-            this.currentUserSubject.next(userData);
-            this.isAuthenticatedSubject.next(true);
+            // Fetch complete user data from DynamoDB using the mapped ID
+            this.userService.getUser(mapping.dynamoDbUserId).subscribe({
+              next: (dynamoUser) => {
+                if (dynamoUser) {
+                  // Use the complete user data from DynamoDB
+                  this.currentUserSubject.next(dynamoUser);
+                  this.isAuthenticatedSubject.next(true);
+                } else {
+                  // Fallback: create minimal user object if DynamoDB fetch fails
+                  const userData: User = {
+                    id: mapping.dynamoDbUserId,
+                    email: mapping.email,
+                    username: mapping.username,
+                    firstName: '',
+                    lastName: '',
+                    bankHours: 10,
+                    skills: [],
+                    rating: 0,
+                    totalTransactions: 0,
+                    cognitoId: mapping.cognitoUserId,
+                    createdAt: new Date(mapping.createdAt),
+                    updatedAt: new Date(mapping.lastSyncAt)
+                  };
+                  
+                  this.currentUserSubject.next(userData);
+                  this.isAuthenticatedSubject.next(true);
+                }
+              },
+              error: (error) => {
+                console.error('Failed to fetch user from DynamoDB:', error);
+                // Fallback: create minimal user object
+                const userData: User = {
+                  id: mapping.dynamoDbUserId,
+                  email: mapping.email,
+                  username: mapping.username,
+                  firstName: '',
+                  lastName: '',
+                  bankHours: 10,
+                  skills: [],
+                  rating: 0,
+                  totalTransactions: 0,
+                  cognitoId: mapping.cognitoUserId,
+                  createdAt: new Date(mapping.createdAt),
+                  updatedAt: new Date(mapping.lastSyncAt)
+                };
+                
+                this.currentUserSubject.next(userData);
+                this.isAuthenticatedSubject.next(true);
+              }
+            });
           },
           error: (error) => {
             this.isAuthenticatedSubject.next(false);
@@ -203,5 +240,35 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSubject.value;
+  }
+
+  /**
+   * Refresh current user data from DynamoDB
+   * Useful after profile updates
+   */
+  refreshCurrentUser(): Observable<User | null> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return new Observable(observer => {
+        observer.next(null);
+        observer.complete();
+      });
+    }
+
+    return this.userService.getUser(currentUser.id).pipe(
+      map((updatedUser) => {
+        if (updatedUser) {
+          this.currentUserSubject.next(updatedUser);
+        }
+        return updatedUser;
+      }),
+      catchError((error) => {
+        console.error('Failed to refresh user data:', error);
+        return new Observable(observer => {
+          observer.next(currentUser); // Return current user if refresh fails
+          observer.complete();
+        });
+      })
+    );
   }
 }
