@@ -27,7 +27,7 @@ export interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyRate: number; // in bank hours
+  hourlyDuration: number; // in bank hours
   isActive: boolean;
   tags: string[];
   

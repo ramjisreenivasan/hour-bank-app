@@ -9,7 +9,7 @@ interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyRate: number;
+  hourlyDuration: number;
   tags: string[];
   requiresScheduling: boolean;
   minBookingHours?: number;
@@ -55,7 +55,7 @@ interface Service {
               <h1 class="service-title">{{ service.title }}</h1>
               <div class="service-meta">
                 <span class="category-badge">{{ service.category }}</span>
-                <span class="rate-display">{{ service.hourlyRate }} bank hours/hour</span>
+                <span class="rate-display">{{ service.hourlyDuration }} bank hours/hour</span>
               </div>
             </div>
             
@@ -112,7 +112,7 @@ interface Service {
               </div>
               <div class="detail-item">
                 <span class="detail-label">Rate</span>
-                <span class="detail-value">{{ service.hourlyRate }} bank hours/hour</span>
+                <span class="detail-value">{{ service.hourlyDuration }} bank hours/hour</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Available</span>
@@ -216,7 +216,7 @@ export class ServiceDetailComponent implements OnInit {
         title: 'Full-Stack Web Development',
         description: 'I create modern, responsive websites and web applications using React, Angular, Node.js, and cloud technologies. With over 5 years of experience, I can help you build everything from simple landing pages to complex web applications.',
         category: 'Technology',
-        hourlyRate: this.getRandomHours(),
+        hourlyDuration: this.getRandomHours(),
         tags: ['React', 'Angular', 'Node.js', 'AWS', 'TypeScript', 'JavaScript', 'HTML/CSS'],
         requiresScheduling: false,
         isActive: true,

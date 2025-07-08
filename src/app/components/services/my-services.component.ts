@@ -11,7 +11,7 @@ interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyRate: number;
+  hourlyDuration: number;
   tags: string[];
   isActive: boolean;
   requiresScheduling: boolean;
@@ -130,12 +130,12 @@ interface Service {
             </div>
 
             <div class="form-group">
-              <label for="hourlyRate">Hourly Rate (Hours) *</label>
+              <label for="hourlyDuration">Duration (Hours) *</label>
               <input 
                 type="number" 
-                id="hourlyRate"
-                [(ngModel)]="newService.hourlyRate" 
-                name="hourlyRate"
+                id="hourlyDuration"
+                [(ngModel)]="newService.hourlyDuration" 
+                name="hourlyDuration"
                 min="1"
                 placeholder="1"
                 required
@@ -215,7 +215,7 @@ interface Service {
             <div class="service-stats">
               <div class="stat">
                 <span class="stat-label">Rate:</span>
-                <span class="stat-value">{{ service.hourlyRate }} hr/hr</span>
+                <span class="stat-value">{{ service.hourlyDuration }} hr/hr</span>
               </div>
               <div class="stat">
                 <span class="stat-label">Bookings:</span>
@@ -296,7 +296,7 @@ export class MyServicesComponent implements OnInit {
     title: '',
     description: '',
     category: '',
-    hourlyRate: 1,
+    hourlyDuration: 1,
     tagsString: ''
   };
 
@@ -322,7 +322,7 @@ export class MyServicesComponent implements OnInit {
         title: 'Full-Stack Web Development',
         description: 'I create modern, responsive websites and web applications using React, Angular, Node.js, and cloud technologies.',
         category: 'Technology',
-        hourlyRate: this.getRandomHours(),
+        hourlyDuration: this.getRandomHours(),
         tags: ['React', 'Angular', 'Node.js', 'AWS', 'TypeScript'],
         isActive: true,
         requiresScheduling: false,
@@ -338,7 +338,7 @@ export class MyServicesComponent implements OnInit {
         title: 'UI/UX Design Consultation',
         description: 'Help improve your app or website user experience with modern design principles and user research.',
         category: 'Creative',
-        hourlyRate: this.getRandomHours(),
+        hourlyDuration: this.getRandomHours(),
         tags: ['UI Design', 'UX Research', 'Figma', 'Prototyping'],
         isActive: true,
         requiresScheduling: true,
@@ -354,7 +354,7 @@ export class MyServicesComponent implements OnInit {
         title: 'Photography Lessons',
         description: 'Learn photography basics, composition, and photo editing. Perfect for beginners and hobbyists.',
         category: 'Creative',
-        hourlyRate: this.getRandomHours(),
+        hourlyDuration: this.getRandomHours(),
         tags: ['Photography', 'Lightroom', 'Composition', 'Portrait'],
         isActive: false,
         requiresScheduling: true,
@@ -395,7 +395,7 @@ export class MyServicesComponent implements OnInit {
       title: this.newService.title,
       description: this.newService.description,
       category: this.newService.category,
-      hourlyRate: this.newService.hourlyRate,
+      hourlyDuration: this.newService.hourlyDuration,
       tags: this.newService.tagsString ? this.newService.tagsString.split(',').map(t => t.trim()) : [],
       isActive: true,
       requiresScheduling: false,
@@ -421,7 +421,7 @@ export class MyServicesComponent implements OnInit {
       title: '',
       description: '',
       category: '',
-      hourlyRate: 1,
+      hourlyDuration: 1,
       tagsString: ''
     };
   }

@@ -172,7 +172,7 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
                 <div class="service-category">
                   <span class="category-badge">{{ service.category }}</span>
                 </div>
-                <div class="service-rate">{{ service.hourlyRate }} hrs</div>
+                <div class="service-rate">{{ service.hourlyDuration }} hrs</div>
               </div>
 
               <div class="card-content">
@@ -222,7 +222,7 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
               <div class="list-item-content">
                 <div class="list-item-header">
                   <h3 class="service-title">{{ service.title }}</h3>
-                  <div class="service-rate">{{ service.hourlyRate }} hrs/hour</div>
+                  <div class="service-rate">{{ service.hourlyDuration }} hrs/hour</div>
                 </div>
                 
                 <p class="service-description">{{ service.description }}</p>
@@ -465,140 +465,140 @@ export class ServicesBrowseComponent implements OnInit {
       {
         id: '1', userId: 'mock-user-1', title: 'Professional Web Development',
         description: 'Full-stack web development using modern technologies like React, Node.js, and AWS. I specialize in creating responsive, scalable applications.',
-        category: 'Technology', hourlyRate: this.getRandomHours(), tags: ['web-development', 'react', 'nodejs', 'aws'],
+        category: 'Technology', hourlyDuration: this.getRandomHours(), tags: ['web-development', 'react', 'nodejs', 'aws'],
         provider: { firstName: 'Ramji', lastName: 'Sreenivasan', rating: 4.9, totalTransactions: 15 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '2', userId: 'mock-user-2', title: 'UI/UX Design Services',
         description: 'Creative design solutions for web and mobile applications. From wireframes to high-fidelity prototypes.',
-        category: 'Creative', hourlyRate: this.getRandomHours(), tags: ['ui-design', 'ux-design', 'figma', 'prototyping'],
+        category: 'Creative', hourlyDuration: this.getRandomHours(), tags: ['ui-design', 'ux-design', 'figma', 'prototyping'],
         provider: { firstName: 'Sarah', lastName: 'Chen', rating: 4.8, totalTransactions: 23 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '3', userId: 'mock-user-3', title: 'Digital Marketing Strategy',
         description: 'Comprehensive digital marketing services including SEO, content strategy, and social media management.',
-        category: 'Business', hourlyRate: this.getRandomHours(), tags: ['digital-marketing', 'seo', 'content-strategy'],
+        category: 'Business', hourlyDuration: this.getRandomHours(), tags: ['digital-marketing', 'seo', 'content-strategy'],
         provider: { firstName: 'Mike', lastName: 'Johnson', rating: 4.7, totalTransactions: 31 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '4', userId: 'mock-user-4', title: 'Spanish Language Tutoring',
         description: 'Native Spanish speaker offering personalized language lessons for all levels.',
-        category: 'Education', hourlyRate: this.getRandomHours(), tags: ['spanish', 'language-tutoring', 'conversation'],
+        category: 'Education', hourlyDuration: this.getRandomHours(), tags: ['spanish', 'language-tutoring', 'conversation'],
         provider: { firstName: 'Maria', lastName: 'Rodriguez', rating: 4.9, totalTransactions: 18 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '5', userId: 'mock-user-5', title: 'Personal Fitness Training',
         description: 'Certified personal trainer offering customized workout plans and nutrition guidance.',
-        category: 'Health & Wellness', hourlyRate: this.getRandomHours(), tags: ['fitness', 'personal-training', 'nutrition'],
+        category: 'Health & Wellness', hourlyDuration: this.getRandomHours(), tags: ['fitness', 'personal-training', 'nutrition'],
         provider: { firstName: 'David', lastName: 'Kim', rating: 4.6, totalTransactions: 27 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '6', userId: 'mock-user-6', title: 'Home Cooking Classes',
         description: 'Learn to cook delicious and healthy meals with hands-on cooking instruction.',
-        category: 'Other', hourlyRate: this.getRandomHours(), tags: ['cooking', 'healthy-eating', 'recipes'],
+        category: 'Other', hourlyDuration: this.getRandomHours(), tags: ['cooking', 'healthy-eating', 'recipes'],
         provider: { firstName: 'Emily', lastName: 'Watson', rating: 4.8, totalTransactions: 12 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '7', userId: 'mock-user-7', title: 'Photography Services',
         description: 'Professional photography for events, portraits, and commercial projects.',
-        category: 'Creative', hourlyRate: this.getRandomHours(), tags: ['photography', 'portraits', 'events'],
+        category: 'Creative', hourlyDuration: this.getRandomHours(), tags: ['photography', 'portraits', 'events'],
         provider: { firstName: 'Lisa', lastName: 'Park', rating: 4.9, totalTransactions: 25 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '8', userId: 'mock-user-8', title: 'Data Analysis & Visualization',
         description: 'Turn your data into actionable insights with advanced analytics and visualization.',
-        category: 'Technology', hourlyRate: this.getRandomHours(), tags: ['data-analysis', 'python', 'visualization'],
+        category: 'Technology', hourlyDuration: this.getRandomHours(), tags: ['data-analysis', 'python', 'visualization'],
         provider: { firstName: 'James', lastName: 'Wilson', rating: 4.8, totalTransactions: 22 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '9', userId: 'mock-user-9', title: 'Guitar Lessons',
         description: 'Learn to play guitar with personalized lessons for all skill levels.',
-        category: 'Education', hourlyRate: this.getRandomHours(), tags: ['guitar', 'music-lessons', 'beginner'],
+        category: 'Education', hourlyDuration: this.getRandomHours(), tags: ['guitar', 'music-lessons', 'beginner'],
         provider: { firstName: 'Carlos', lastName: 'Martinez', rating: 4.6, totalTransactions: 14 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '10', userId: 'mock-user-10', title: 'Mobile App Development',
         description: 'Native and cross-platform mobile app development for iOS and Android.',
-        category: 'Technology', hourlyRate: this.getRandomHours(), tags: ['mobile-development', 'ios', 'android'],
+        category: 'Technology', hourlyDuration: this.getRandomHours(), tags: ['mobile-development', 'ios', 'android'],
         provider: { firstName: 'Priya', lastName: 'Patel', rating: 4.9, totalTransactions: 28 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '11', userId: 'mock-user-11', title: 'Content Writing & Copywriting',
         description: 'Professional content writing for websites, blogs, and marketing materials.',
-        category: 'Creative', hourlyRate: this.getRandomHours(), tags: ['content-writing', 'copywriting', 'blogging'],
+        category: 'Creative', hourlyDuration: this.getRandomHours(), tags: ['content-writing', 'copywriting', 'blogging'],
         provider: { firstName: 'Rachel', lastName: 'Green', rating: 4.7, totalTransactions: 33 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '12', userId: 'mock-user-12', title: 'Business Consulting',
         description: 'Strategic business advice and planning for startups and small businesses.',
-        category: 'Business', hourlyRate: this.getRandomHours(), tags: ['consulting', 'strategy', 'planning'],
+        category: 'Business', hourlyDuration: this.getRandomHours(), tags: ['consulting', 'strategy', 'planning'],
         provider: { firstName: 'Alex', lastName: 'Thompson', rating: 4.8, totalTransactions: 19 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '13', userId: 'mock-user-13', title: 'Yoga & Meditation Classes',
         description: 'Certified yoga instructor offering classes for stress relief and flexibility.',
-        category: 'Health & Wellness', hourlyRate: this.getRandomHours(), tags: ['yoga', 'meditation', 'wellness'],
+        category: 'Health & Wellness', hourlyDuration: this.getRandomHours(), tags: ['yoga', 'meditation', 'wellness'],
         provider: { firstName: 'Sophia', lastName: 'Lee', rating: 4.9, totalTransactions: 21 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '14', userId: 'mock-user-14', title: 'Home Organization Services',
         description: 'Professional organizing services to declutter and optimize your living space.',
-        category: 'Home & Garden', hourlyRate: this.getRandomHours(), tags: ['organization', 'decluttering', 'home-improvement'],
+        category: 'Home & Garden', hourlyDuration: this.getRandomHours(), tags: ['organization', 'decluttering', 'home-improvement'],
         provider: { firstName: 'Jennifer', lastName: 'Brown', rating: 4.7, totalTransactions: 16 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '15', userId: 'mock-user-15', title: 'French Language Tutoring',
         description: 'Native French speaker offering conversational and academic French lessons.',
-        category: 'Education', hourlyRate: this.getRandomHours(), tags: ['french', 'language-tutoring', 'conversation'],
+        category: 'Education', hourlyDuration: this.getRandomHours(), tags: ['french', 'language-tutoring', 'conversation'],
         provider: { firstName: 'Pierre', lastName: 'Dubois', rating: 4.8, totalTransactions: 13 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '16', userId: 'mock-user-16', title: 'Graphic Design & Branding',
         description: 'Creative graphic design services for logos, branding, and marketing materials.',
-        category: 'Creative', hourlyRate: this.getRandomHours(), tags: ['graphic-design', 'branding', 'logos'],
+        category: 'Creative', hourlyDuration: this.getRandomHours(), tags: ['graphic-design', 'branding', 'logos'],
         provider: { firstName: 'Anna', lastName: 'Smith', rating: 4.6, totalTransactions: 24 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '17', userId: 'mock-user-17', title: 'Piano Lessons',
         description: 'Classical and contemporary piano instruction for students of all ages.',
-        category: 'Education', hourlyRate: this.getRandomHours(), tags: ['piano', 'music-lessons', 'classical'],
+        category: 'Education', hourlyDuration: this.getRandomHours(), tags: ['piano', 'music-lessons', 'classical'],
         provider: { firstName: 'Michael', lastName: 'Chang', rating: 4.9, totalTransactions: 17 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '18', userId: 'mock-user-18', title: 'Social Media Management',
         description: 'Complete social media management including content creation and strategy.',
-        category: 'Business', hourlyRate: this.getRandomHours(), tags: ['social-media', 'content-creation', 'marketing'],
+        category: 'Business', hourlyDuration: this.getRandomHours(), tags: ['social-media', 'content-creation', 'marketing'],
         provider: { firstName: 'Jessica', lastName: 'Taylor', rating: 4.7, totalTransactions: 20 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '19', userId: 'mock-user-19', title: 'Garden Design & Landscaping',
         description: 'Professional garden design and landscaping services for residential properties.',
-        category: 'Home & Garden', hourlyRate: this.getRandomHours(), tags: ['landscaping', 'garden-design', 'plants'],
+        category: 'Home & Garden', hourlyDuration: this.getRandomHours(), tags: ['landscaping', 'garden-design', 'plants'],
         provider: { firstName: 'Robert', lastName: 'Miller', rating: 4.8, totalTransactions: 15 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       },
       {
         id: '20', userId: 'mock-user-20', title: 'Video Editing & Production',
         description: 'Professional video editing and production services for content creators.',
-        category: 'Creative', hourlyRate: this.getRandomHours(), tags: ['video-editing', 'production', 'content-creation'],
+        category: 'Creative', hourlyDuration: this.getRandomHours(), tags: ['video-editing', 'production', 'content-creation'],
         provider: { firstName: 'Kevin', lastName: 'Davis', rating: 4.9, totalTransactions: 26 },
         isActive: true, requiresScheduling: false, createdAt: new Date(), updatedAt: new Date()
       }
@@ -658,10 +658,10 @@ export class ServicesBrowseComponent implements OnInit {
         this.filteredServices.sort((a, b) => (b.provider?.rating || 0) - (a.provider?.rating || 0));
         break;
       case 'price-low':
-        this.filteredServices.sort((a, b) => a.hourlyRate - b.hourlyRate);
+        this.filteredServices.sort((a, b) => a.hourlyDuration - b.hourlyDuration);
         break;
       case 'price-high':
-        this.filteredServices.sort((a, b) => b.hourlyRate - a.hourlyRate);
+        this.filteredServices.sort((a, b) => b.hourlyDuration - a.hourlyDuration);
         break;
       case 'popular':
         this.filteredServices.sort((a, b) => (b.provider?.totalTransactions || 0) - (a.provider?.totalTransactions || 0));
