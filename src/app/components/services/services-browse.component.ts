@@ -31,17 +31,16 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
           <div class="hero-content">
             <h1 class="hero-title">Discover Amazing Services</h1>
             <p class="hero-subtitle">
-              Connect with skilled professionals in our time-based marketplace. 
-              Exchange hours, build community, and get things done.
+              Connect with skilled professionals in our time-based marketplace
             </p>
-            <div class="hero-stats">
+            <div class="hero-stats" *ngIf="!loading">
               <div class="stat">
                 <div class="stat-number">{{ totalServices }}</div>
-                <div class="stat-label">Active Services</div>
+                <div class="stat-label">Services</div>
               </div>
               <div class="stat">
                 <div class="stat-number">{{ uniqueProviders }}</div>
-                <div class="stat-label">Service Providers</div>
+                <div class="stat-label">Providers</div>
               </div>
               <div class="stat">
                 <div class="stat-number">{{ categories.length - 1 }}</div>
