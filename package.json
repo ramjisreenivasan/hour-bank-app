@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "add-services": "node scripts/add-services-simple.js",
+    "add-services:ramji": "node scripts/add-services-simple.js de5d0750-d4b5-4ac7-8888-57344a6b5019",
+    "list-users": "node scripts/list-users.js"
   },
   "private": true,
   "dependencies": {

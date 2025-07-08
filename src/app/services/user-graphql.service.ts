@@ -287,6 +287,11 @@ export class UserGraphQLService {
                 hourlyRate
                 isActive
                 tags
+                requiresScheduling
+                minBookingHours
+                maxBookingHours
+                advanceBookingDays
+                cancellationHours
                 createdAt
                 updatedAt
               }
@@ -296,11 +301,59 @@ export class UserGraphQLService {
       }) as any;
       
       const services = result.data.listServices.items;
-      this.servicesSubject.next(services);
-      return services;
+      
+      // Handle services with missing requiresScheduling field
+      const processedServices = services.map((service: any) => ({
+        ...service,
+        requiresScheduling: service.requiresScheduling ?? false, // Default to false if null
+        minBookingHours: service.minBookingHours ?? undefined,
+        maxBookingHours: service.maxBookingHours ?? undefined,
+        advanceBookingDays: service.advanceBookingDays ?? undefined,
+        cancellationHours: service.cancellationHours ?? undefined,
+        tags: service.tags || [] // Ensure tags is always an array
+      }));
+      
+      this.servicesSubject.next(processedServices);
+      return processedServices;
     } catch (error) {
       console.error('Error fetching services:', error);
-      return [];
+      
+      // If the query fails due to schema issues, try a fallback query without scheduling fields
+      try {
+        console.log('Attempting fallback query without scheduling fields...');
+        const fallbackResult = await this.client.graphql({
+          query: `
+            query ListServices {
+              listServices {
+                items {
+                  id
+                  userId
+                  title
+                  description
+                  category
+                  hourlyRate
+                  isActive
+                  tags
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          `
+        }) as any;
+        
+        const fallbackServices = fallbackResult.data.listServices.items.map((service: any) => ({
+          ...service,
+          requiresScheduling: false, // Default value
+          tags: service.tags || []
+        }));
+        
+        this.servicesSubject.next(fallbackServices);
+        return fallbackServices;
+      } catch (fallbackError) {
+        console.error('Fallback query also failed:', fallbackError);
+        return [];
+      }
     }
   }
 
@@ -319,6 +372,11 @@ export class UserGraphQLService {
                 hourlyRate
                 isActive
                 tags
+                requiresScheduling
+                minBookingHours
+                maxBookingHours
+                advanceBookingDays
+                cancellationHours
                 createdAt
                 updatedAt
               }
@@ -328,10 +386,53 @@ export class UserGraphQLService {
         variables: { userId }
       }) as any;
       
-      return result.data.listServices.items;
+      const services = result.data.listServices.items.map((service: any) => ({
+        ...service,
+        requiresScheduling: service.requiresScheduling ?? false,
+        minBookingHours: service.minBookingHours ?? undefined,
+        maxBookingHours: service.maxBookingHours ?? undefined,
+        advanceBookingDays: service.advanceBookingDays ?? undefined,
+        cancellationHours: service.cancellationHours ?? undefined,
+        tags: service.tags || []
+      }));
+      
+      return services;
     } catch (error) {
       console.error('Error fetching services by user:', error);
-      return [];
+      
+      // Fallback query without scheduling fields
+      try {
+        const fallbackResult = await this.client.graphql({
+          query: `
+            query ListServicesByUser($userId: ID!) {
+              listServices(filter: { userId: { eq: $userId } }) {
+                items {
+                  id
+                  userId
+                  title
+                  description
+                  category
+                  hourlyRate
+                  isActive
+                  tags
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          `,
+          variables: { userId }
+        }) as any;
+        
+        return fallbackResult.data.listServices.items.map((service: any) => ({
+          ...service,
+          requiresScheduling: false,
+          tags: service.tags || []
+        }));
+      } catch (fallbackError) {
+        console.error('Fallback query for user services failed:', fallbackError);
+        return [];
+      }
     }
   }
 

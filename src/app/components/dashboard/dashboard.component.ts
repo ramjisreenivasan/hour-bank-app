@@ -72,10 +72,25 @@ export class DashboardComponent implements OnInit {
       this.usersCache.set(this.currentUser.id, this.currentUser);
 
       // Load available services from GraphQL
+      console.log('Dashboard: Loading services...');
       const services = await this.userGraphQLService.getServices();
+      console.log('Dashboard: Total services loaded:', services.length);
+      
       this.availableServices = services.filter(service => 
         service.isActive && service.userId !== this.currentUser?.id
       );
+      console.log('Dashboard: Available services after filtering:', this.availableServices.length);
+      console.log('Dashboard: Current user ID for filtering:', this.currentUser?.id);
+      
+      // Debug: Show some sample services
+      if (services.length > 0) {
+        console.log('Dashboard: Sample services:', services.slice(0, 3).map(s => ({
+          id: s.id,
+          title: s.title,
+          userId: s.userId,
+          isActive: s.isActive
+        })));
+      }
 
       // Load users for the services to populate cache
       const userIds = [...new Set(this.availableServices.map(s => s.userId))];
