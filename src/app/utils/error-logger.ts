@@ -22,7 +22,7 @@ export interface ErrorLogEntry {
   error: Error | string;
   context: ErrorContext;
   severity: 'low' | 'medium' | 'high' | 'critical';
-  category: 'user' | 'service' | 'transaction' | 'booking' | 'auth' | 'api' | 'ui' | 'system';
+  category: 'user' | 'service' | 'transaction' | 'booking' | 'auth' | 'api' | 'ui' | 'system' | 'admin';
 }
 
 export class ErrorLogger {
