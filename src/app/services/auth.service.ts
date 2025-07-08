@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { signUp, signIn, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { User } from '../models/user.model';
@@ -249,14 +249,11 @@ export class AuthService {
   refreshCurrentUser(): Observable<User | null> {
     const currentUser = this.getCurrentUser();
     if (!currentUser) {
-      return new Observable(observer => {
-        observer.next(null);
-        observer.complete();
-      });
+      return of(null);
     }
 
-    return (this.userService.getUser(currentUser.id) as Observable<User | null>).pipe(
-      map((updatedUser) => {
+    return this.userService.getUser(currentUser.id).pipe(
+      map((updatedUser: User | null) => {
         if (updatedUser) {
           this.currentUserSubject.next(updatedUser);
         }
@@ -264,10 +261,7 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error('Failed to refresh user data:', error);
-        return new Observable(observer => {
-          observer.next(currentUser); // Return current user if refresh fails
-          observer.complete();
-        });
+        return of(currentUser); // Return current user if refresh fails
       })
     );
   }

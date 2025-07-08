@@ -23,7 +23,7 @@ export class UserService {
       query: queries.getUser,
       variables: { id: userId }
     })).pipe(
-      map((result: any) => {
+      map((result: any): User | null => {
         if (!result.data?.getUser) {
           // Log "User not found" error with context
           errorLogger.logUserNotFound(

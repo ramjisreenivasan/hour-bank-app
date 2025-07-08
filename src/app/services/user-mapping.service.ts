@@ -74,7 +74,7 @@ export class UserMappingService {
    */
   getCurrentCognitoUser(): Observable<CognitoUserInfo | null> {
     return from(getCurrentUser()).pipe(
-      switchMap(async (cognitoUser) => {
+      switchMap(async (cognitoUser): Promise<CognitoUserInfo | null> => {
         if (!cognitoUser) return null;
         
         try {
@@ -82,33 +82,34 @@ export class UserMappingService {
           const session = await fetchAuthSession();
           const userAttributes = session.tokens?.idToken?.payload;
           
-          // Safely extract username with proper type casting
-          const preferredUsername = userAttributes?.['preferred_username'];
-          const cognitoUsername = userAttributes?.['cognito:username'];
-          const email = userAttributes?.['email'];
+          // Helper function to safely extract string from token payload
+          const extractString = (value: any): string | null => {
+            return typeof value === 'string' ? value : null;
+          };
+          
+          // Safely extract username with proper type handling
+          const preferredUsername = extractString(userAttributes?.['preferred_username']);
+          const cognitoUsername = extractString(userAttributes?.['cognito:username']);
+          const email = extractString(userAttributes?.['email']);
           
           // Use preferred_username if available, otherwise fall back to username
-          const displayUsername = (typeof preferredUsername === 'string' ? preferredUsername : null) ||
-                                 (typeof cognitoUsername === 'string' ? cognitoUsername : null) ||
-                                 cognitoUser.username;
-          
-          const userEmail = (typeof email === 'string' ? email : null) ||
-                           cognitoUser.signInDetails?.loginId;
+          const displayUsername = preferredUsername || cognitoUsername || cognitoUser.username;
+          const userEmail = email || cognitoUser.signInDetails?.loginId || null;
           
           return {
             userId: cognitoUser.userId,
             username: displayUsername,
             email: userEmail,
             emailVerified: true // Assume verified if they can sign in
-          } as CognitoUserInfo;
+          };
         } catch (error) {
           // Fallback to basic user info if session fetch fails
           return {
             userId: cognitoUser.userId,
             username: cognitoUser.username,
-            email: cognitoUser.signInDetails?.loginId,
+            email: cognitoUser.signInDetails?.loginId || null,
             emailVerified: true
-          } as CognitoUserInfo;
+          };
         }
       }),
       catchError((error) => {
