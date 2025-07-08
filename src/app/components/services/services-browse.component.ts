@@ -9,7 +9,7 @@ import { Service, User } from '../../models/user.model';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-interface ServiceWithProvider extends Service {
+interface ServiceWithProvider extends Omit<Service, 'provider'> {
   provider?: {
     firstName: string;
     lastName: string;

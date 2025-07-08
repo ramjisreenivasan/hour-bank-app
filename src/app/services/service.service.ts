@@ -168,10 +168,10 @@ export class ServiceService {
           errorLogger.logError({
             error: new Error(`Failed to get services for category: ${category}`),
             context: {
-              category,
               operation: 'getServicesByCategory',
               component: 'ServiceService',
               additionalData: {
+                category,
                 queryParams: { category, limit, nextToken },
                 timestamp: new Date().toISOString()
               }
