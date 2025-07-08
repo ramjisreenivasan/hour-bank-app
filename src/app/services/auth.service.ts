@@ -255,7 +255,7 @@ export class AuthService {
       });
     }
 
-    return this.userService.getUser(currentUser.id).pipe(
+    return (this.userService.getUser(currentUser.id) as Observable<User | null>).pipe(
       map((updatedUser) => {
         if (updatedUser) {
           this.currentUserSubject.next(updatedUser);

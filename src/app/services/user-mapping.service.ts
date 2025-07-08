@@ -19,7 +19,7 @@ export interface UserMapping {
 export interface CognitoUserInfo {
   userId: string;           // Cognito User Pool ID
   username: string;
-  email?: string;
+  email?: string | null;
   emailVerified?: boolean;
 }
 
@@ -82,17 +82,25 @@ export class UserMappingService {
           const session = await fetchAuthSession();
           const userAttributes = session.tokens?.idToken?.payload;
           
+          // Safely extract username with proper type casting
+          const preferredUsername = userAttributes?.['preferred_username'];
+          const cognitoUsername = userAttributes?.['cognito:username'];
+          const email = userAttributes?.['email'];
+          
           // Use preferred_username if available, otherwise fall back to username
-          const displayUsername = userAttributes?.['preferred_username'] || 
-                                 userAttributes?.['cognito:username'] || 
+          const displayUsername = (typeof preferredUsername === 'string' ? preferredUsername : null) ||
+                                 (typeof cognitoUsername === 'string' ? cognitoUsername : null) ||
                                  cognitoUser.username;
+          
+          const userEmail = (typeof email === 'string' ? email : null) ||
+                           cognitoUser.signInDetails?.loginId;
           
           return {
             userId: cognitoUser.userId,
             username: displayUsername,
-            email: cognitoUser.signInDetails?.loginId || userAttributes?.['email'],
+            email: userEmail,
             emailVerified: true // Assume verified if they can sign in
-          };
+          } as CognitoUserInfo;
         } catch (error) {
           // Fallback to basic user info if session fetch fails
           return {
@@ -100,7 +108,7 @@ export class UserMappingService {
             username: cognitoUser.username,
             email: cognitoUser.signInDetails?.loginId,
             emailVerified: true
-          };
+          } as CognitoUserInfo;
         }
       }),
       catchError((error) => {
