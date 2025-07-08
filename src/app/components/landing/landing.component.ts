@@ -14,90 +14,113 @@ export class LandingComponent {
   
   features = [
     {
-      icon: '🏠',
-      title: 'Real Estate Focused',
-      description: 'Designed specifically for real estate professionals with industry-relevant services and expertise.'
-    },
-    {
-      icon: '💰',
-      title: 'Cost-Effective',
-      description: 'Access premium services without the premium price tag. Save thousands on professional services.'
+      icon: '🌱',
+      title: 'Sustainable Economy',
+      description: 'Build a circular economy where everyone contributes and benefits, reducing waste and maximizing human potential.'
     },
     {
       icon: '🤝',
-      title: 'Professional Network',
-      description: 'Connect with vetted real estate professionals and build valuable business relationships.'
+      title: 'Community Building',
+      description: 'Connect neighbors, professionals, and learners in meaningful exchanges that strengthen local communities.'
     },
     {
-      icon: '⚡',
-      title: 'Quick Turnaround',
-      description: 'Get services completed faster through our motivated professional community.'
+      icon: '💡',
+      title: 'Skill Development',
+      description: 'Learn new skills while teaching others, creating a continuous cycle of growth and knowledge sharing.'
+    },
+    {
+      icon: '⚖️',
+      title: 'Equal Opportunity',
+      description: 'Everyone\'s time is valued equally, creating fair exchanges regardless of traditional economic barriers.'
     }
   ];
 
   popularServices = [
     {
-      icon: '📸',
-      title: 'Property Photography',
-      description: 'Professional real estate photography and virtual tours',
-      rate: '2-4'
+      icon: '💻',
+      title: 'Web Development',
+      description: 'Website creation, coding lessons, and technical consulting',
+      rate: 'Popular Exchange'
     },
     {
       icon: '🎨',
-      title: 'Home Staging',
-      description: 'Expert staging consultation and setup services',
-      rate: '3-6'
+      title: 'Graphic Design',
+      description: 'Logo design, branding, and creative visual solutions',
+      rate: 'High Demand'
     },
     {
-      icon: '📊',
-      title: 'Market Analysis',
-      description: 'Comprehensive market research and CMA reports',
-      rate: '2-3'
+      icon: '📚',
+      title: 'Language Tutoring',
+      description: 'Language lessons, conversation practice, and cultural exchange',
+      rate: 'Always Needed'
     },
     {
-      icon: '⚖️',
-      title: 'Legal Review',
-      description: 'Contract review and legal consultation services',
-      rate: '1-2'
+      icon: '🔧',
+      title: 'Home Repair',
+      description: 'Handyman services, maintenance, and DIY guidance',
+      rate: 'Community Favorite'
     },
     {
-      icon: '📱',
-      title: 'Digital Marketing',
-      description: 'Social media management and online advertising',
-      rate: '2-5'
+      icon: '🍳',
+      title: 'Cooking Lessons',
+      description: 'Culinary skills, meal prep, and nutrition guidance',
+      rate: 'Growing Fast'
     },
     {
-      icon: '🏡',
-      title: 'Property Management',
-      description: 'Tenant screening and property maintenance coordination',
-      rate: '1-3'
+      icon: '🧘',
+      title: 'Wellness Coaching',
+      description: 'Fitness training, meditation, and mental health support',
+      rate: 'Trending Now'
     }
   ];
 
-  testimonials = [
+  steps = [
     {
-      name: 'Jennifer Martinez',
-      role: 'Luxury Real Estate Agent',
-      quote: 'I traded my staging expertise for professional photography services. Saved me $2,000 and built great relationships!',
-      avatar: '🏡'
+      icon: '👤',
+      title: 'Create Your Profile',
+      description: 'Sign up and tell us about your skills, interests, and what services you can offer to the community.'
     },
     {
-      name: 'David Thompson',
-      role: 'Commercial Broker',
-      quote: 'The market analysis I received through hOurBank was better than what I used to pay $500 for. Amazing network!',
-      avatar: '📊'
+      icon: '🛠️',
+      title: 'List Your Services',
+      description: 'Create service listings for the skills you want to share and set your availability preferences.'
     },
     {
-      name: 'Lisa Chen',
-      role: 'Property Manager',
-      quote: 'I help with tenant screening and get legal reviews in return. It\'s transformed how I run my business.',
-      avatar: '🔑'
+      icon: '⏰',
+      title: 'Earn Time Credits',
+      description: 'Provide services to other members and earn hours in your time bank account for future use.'
     },
     {
-      name: 'Robert Williams',
-      role: 'Real Estate Attorney',
-      quote: 'Providing legal services earned me hours for marketing help. My practice has grown significantly!',
-      avatar: '⚖️'
+      icon: '🎯',
+      title: 'Use Your Credits',
+      description: 'Spend your earned hours to access services you need from other community members.'
+    }
+  ];
+
+  successStories = [
+    {
+      name: 'Sarah Chen',
+      role: 'Graphic Designer',
+      avatar: '👩‍🎨',
+      quote: 'I traded my design skills for coding lessons and now I can build my own websites. The community is amazing!',
+      gave: '5 hours of logo design',
+      got: '5 hours of web development tutoring'
+    },
+    {
+      name: 'Mike Rodriguez',
+      role: 'Professional Chef',
+      avatar: '👨‍🍳',
+      quote: 'Teaching cooking classes earned me enough credits for home repairs. It\'s incredible how skills connect us.',
+      gave: '8 hours of cooking lessons',
+      got: '8 hours of handyman services'
+    },
+    {
+      name: 'Dr. Emily Watson',
+      role: 'Retired Teacher',
+      avatar: '👩‍🏫',
+      quote: 'I love tutoring students and using my credits for tech support. Everyone wins in this community!',
+      gave: '12 hours of math tutoring',
+      got: '12 hours of computer help'
     }
   ];
 
