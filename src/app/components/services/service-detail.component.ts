@@ -185,6 +185,13 @@ export class ServiceDetailComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  /**
+   * Generate random duration between 1-4 hours for services
+   */
+  private getRandomHours(): number {
+    return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
+  }
+
   ngOnInit() {
     this.checkAuthStatus();
     this.loadServiceDetails();
@@ -209,7 +216,7 @@ export class ServiceDetailComponent implements OnInit {
         title: 'Full-Stack Web Development',
         description: 'I create modern, responsive websites and web applications using React, Angular, Node.js, and cloud technologies. With over 5 years of experience, I can help you build everything from simple landing pages to complex web applications.',
         category: 'Technology',
-        hourlyRate: 1,
+        hourlyRate: this.getRandomHours(),
         tags: ['React', 'Angular', 'Node.js', 'AWS', 'TypeScript', 'JavaScript', 'HTML/CSS'],
         requiresScheduling: false,
         isActive: true,

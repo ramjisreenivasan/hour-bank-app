@@ -40,37 +40,37 @@ export class LandingComponent {
       icon: '💻',
       title: 'Web Development',
       description: 'Website creation, coding lessons, and technical consulting',
-      rate: 'Popular Exchange'
+      rate: this.getRandomHours() + ' hours'
     },
     {
       icon: '🎨',
       title: 'Graphic Design',
       description: 'Logo design, branding, and creative visual solutions',
-      rate: 'High Demand'
+      rate: this.getRandomHours() + ' hours'
     },
     {
       icon: '📚',
       title: 'Language Tutoring',
       description: 'Language lessons, conversation practice, and cultural exchange',
-      rate: 'Always Needed'
+      rate: this.getRandomHours() + ' hours'
     },
     {
       icon: '🔧',
       title: 'Home Repair',
       description: 'Handyman services, maintenance, and DIY guidance',
-      rate: 'Community Favorite'
+      rate: this.getRandomHours() + ' hours'
     },
     {
       icon: '🍳',
       title: 'Cooking Lessons',
       description: 'Culinary skills, meal prep, and nutrition guidance',
-      rate: 'Growing Fast'
+      rate: this.getRandomHours() + ' hours'
     },
     {
       icon: '🧘',
       title: 'Wellness Coaching',
       description: 'Fitness training, meditation, and mental health support',
-      rate: 'Trending Now'
+      rate: this.getRandomHours() + ' hours'
     }
   ];
 
@@ -103,26 +103,33 @@ export class LandingComponent {
       role: 'Graphic Designer',
       avatar: '👩‍🎨',
       quote: 'I traded my design skills for coding lessons and now I can build my own websites. The community is amazing!',
-      gave: '5 hours of logo design',
-      got: '5 hours of web development tutoring'
+      gave: this.getRandomHours() + ' hours of logo design',
+      got: this.getRandomHours() + ' hours of web development tutoring'
     },
     {
       name: 'Mike Rodriguez',
       role: 'Professional Chef',
       avatar: '👨‍🍳',
       quote: 'Teaching cooking classes earned me enough credits for home repairs. It\'s incredible how skills connect us.',
-      gave: '8 hours of cooking lessons',
-      got: '8 hours of handyman services'
+      gave: this.getRandomHours() + ' hours of cooking lessons',
+      got: this.getRandomHours() + ' hours of handyman services'
     },
     {
       name: 'Dr. Emily Watson',
       role: 'Retired Teacher',
       avatar: '👩‍🏫',
       quote: 'I love tutoring students and using my credits for tech support. Everyone wins in this community!',
-      gave: '12 hours of math tutoring',
-      got: '12 hours of computer help'
+      gave: this.getRandomHours() + ' hours of math tutoring',
+      got: this.getRandomHours() + ' hours of computer help'
     }
   ];
 
   constructor() { }
+
+  /**
+   * Generate random duration between 1-4 hours for services
+   */
+  private getRandomHours(): number {
+    return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
+  }
 }

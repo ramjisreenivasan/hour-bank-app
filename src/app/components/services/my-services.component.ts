@@ -302,6 +302,13 @@ export class MyServicesComponent implements OnInit {
 
   constructor(private router: Router) {}
 
+  /**
+   * Generate random duration between 1-4 hours for services
+   */
+  private getRandomHours(): number {
+    return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
+  }
+
   ngOnInit() {
     this.loadMyServices();
   }
@@ -315,7 +322,7 @@ export class MyServicesComponent implements OnInit {
         title: 'Full-Stack Web Development',
         description: 'I create modern, responsive websites and web applications using React, Angular, Node.js, and cloud technologies.',
         category: 'Technology',
-        hourlyRate: 1,
+        hourlyRate: this.getRandomHours(),
         tags: ['React', 'Angular', 'Node.js', 'AWS', 'TypeScript'],
         isActive: true,
         requiresScheduling: false,
@@ -331,7 +338,7 @@ export class MyServicesComponent implements OnInit {
         title: 'UI/UX Design Consultation',
         description: 'Help improve your app or website user experience with modern design principles and user research.',
         category: 'Creative',
-        hourlyRate: 1,
+        hourlyRate: this.getRandomHours(),
         tags: ['UI Design', 'UX Research', 'Figma', 'Prototyping'],
         isActive: true,
         requiresScheduling: true,
@@ -347,7 +354,7 @@ export class MyServicesComponent implements OnInit {
         title: 'Photography Lessons',
         description: 'Learn photography basics, composition, and photo editing. Perfect for beginners and hobbyists.',
         category: 'Creative',
-        hourlyRate: 1,
+        hourlyRate: this.getRandomHours(),
         tags: ['Photography', 'Lightroom', 'Composition', 'Portrait'],
         isActive: false,
         requiresScheduling: true,
