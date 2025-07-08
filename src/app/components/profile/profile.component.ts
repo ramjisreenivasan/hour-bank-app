@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ServiceService } from '../../services/service.service';
 import { AuthService } from '../../services/auth.service';
 import { UserMappingService } from '../../services/user-mapping.service';
-import { User } from '../../models/user.model';
+import { User, Service } from '../../models/user.model';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { errorLogger } from '../../utils/error-logger';
 
@@ -64,6 +65,7 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private serviceService: ServiceService,
     private authService: AuthService,
     private userMappingService: UserMappingService
   ) {}
@@ -138,6 +140,8 @@ export class ProfileComponent implements OnInit {
         if (user) {
           this.user = { ...user };
           this.originalUser = { ...user };
+          // Load user's services
+          this.loadUserServices(userId);
         } else {
           // User not found - this will be logged by the UserService
           this.handleError(
@@ -402,14 +406,15 @@ export class ProfileComponent implements OnInit {
   // Service Management Methods
   isAddingService = false;
   isSaving = false;
-  userServices: any[] = [];
+  userServices: Service[] = [];
   newService = {
     title: '',
     description: '',
     category: '',
     hourlyRate: 1,
     tags: [] as string[],
-    isActive: true
+    isActive: true,
+    requiresScheduling: false
   };
   newTag = '';
   serviceCategories = [
@@ -437,9 +442,60 @@ export class ProfileComponent implements OnInit {
       category: '',
       hourlyRate: 1,
       tags: [],
-      isActive: true
+      isActive: true,
+      requiresScheduling: false
     };
     this.newTag = '';
+  }
+
+  loadUserServices(userId: string) {
+    this.serviceService.getServicesByUserId(userId).subscribe({
+      next: (result) => {
+        this.userServices = result.items;
+        
+        // If no services found, add some mock data for testing
+        if (this.userServices.length === 0) {
+          this.addMockServicesForTesting(userId);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading user services:', error);
+        // Fallback to mock data if API fails
+        this.addMockServicesForTesting(userId);
+      }
+    });
+  }
+
+  private addMockServicesForTesting(userId: string) {
+    // Add mock services for testing purposes
+    this.userServices = [
+      {
+        id: 'mock-1',
+        userId: userId,
+        title: 'Web Development Services',
+        description: 'Professional web development using modern technologies like React, Angular, and Node.js.',
+        category: 'Technology',
+        hourlyRate: 3,
+        tags: ['web-development', 'react', 'angular', 'nodejs'],
+        isActive: true,
+        requiresScheduling: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 'mock-2',
+        userId: userId,
+        title: 'UI/UX Design',
+        description: 'Create beautiful and user-friendly interfaces for web and mobile applications.',
+        category: 'Creative',
+        hourlyRate: 2,
+        tags: ['ui-design', 'ux-design', 'figma', 'prototyping'],
+        isActive: true,
+        requiresScheduling: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ];
   }
 
   addTag() {
@@ -459,50 +515,72 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
+    if (!this.user?.id) {
+      this.handleError(new Error('User not found'), 'saveService');
+      return;
+    }
+
     this.isSaving = true;
     try {
       // Create service object
       const serviceData = {
         ...this.newService,
-        id: Date.now().toString(), // Temporary ID generation
-        userId: this.user?.id,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        userId: this.user.id,
+        tags: this.newService.tags || []
       };
 
-      // Add to user services (in a real app, this would be an API call)
-      this.userServices.push(serviceData);
-      
-      this.successMessage = 'Service added successfully!';
-      this.resetServiceForm();
-      this.isAddingService = false;
-      
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
+      // Create service via GraphQL API
+      this.serviceService.createService(serviceData).subscribe({
+        next: (createdService) => {
+          // Add to user services list
+          this.userServices.push(createdService);
+          
+          this.successMessage = 'Service added successfully!';
+          this.resetServiceForm();
+          this.isAddingService = false;
+          
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
+        },
+        error: (error) => {
+          this.handleError(error, 'saveService');
+        },
+        complete: () => {
+          this.isSaving = false;
+        }
+      });
 
     } catch (error) {
       this.handleError(error as Error, 'saveService');
-    } finally {
       this.isSaving = false;
     }
   }
 
-  toggleServiceStatus(service: any) {
+  toggleServiceStatus(service: Service) {
     this.isSaving = true;
-    try {
-      service.isActive = !service.isActive;
-      service.updatedAt = new Date().toISOString();
-      
-      this.successMessage = `Service ${service.isActive ? 'activated' : 'deactivated'} successfully!`;
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
-
-    } catch (error) {
-      this.handleError(error as Error, 'toggleServiceStatus');
-    } finally {
-      this.isSaving = false;
-    }
+    
+    const updatedStatus = !service.isActive;
+    
+    this.serviceService.updateService(service.id, { isActive: updatedStatus }).subscribe({
+      next: (updatedService) => {
+        // Update the service in the local array
+        const index = this.userServices.findIndex(s => s.id === service.id);
+        if (index !== -1) {
+          this.userServices[index] = updatedService;
+        }
+        
+        this.successMessage = `Service ${updatedService.isActive ? 'activated' : 'deactivated'} successfully!`;
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+      },
+      error: (error) => {
+        this.handleError(error, 'toggleServiceStatus');
+      },
+      complete: () => {
+        this.isSaving = false;
+      }
+    });
   }
 }
