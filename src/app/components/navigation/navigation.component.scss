@@ -44,6 +44,9 @@
       padding: var(--spacing-sm) var(--spacing-md);
       border-radius: var(--radius-md);
       transition: all var(--transition-normal);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       
       &:hover {
         color: var(--text-primary);
@@ -64,6 +67,28 @@
           color: white;
         }
       }
+
+      &.admin-link {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        font-weight: 600;
+        
+        &:hover {
+          background: linear-gradient(135deg, #c0392b, #a93226);
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        &.active {
+          background: linear-gradient(135deg, #a93226, #922b21);
+          color: white;
+        }
+
+        i {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
 
@@ -74,17 +99,25 @@
     
     .user-info {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 0.875rem;
+      color: var(--text-secondary);
       
-      .user-greeting {
+      i {
         color: var(--primary-color);
-        font-weight: 600;
       }
-      
-      .user-name {
-        color: var(--text-secondary);
+
+      .admin-badge {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        padding: 0.125rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-left: 0.5rem;
+        animation: pulse 2s infinite;
       }
     }
     
@@ -92,6 +125,18 @@
       padding: var(--spacing-xs) var(--spacing-md);
       font-size: 0.875rem;
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
   }
 }
 
@@ -109,12 +154,25 @@
       .nav-link {
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: 0.875rem;
+
+        &.admin-link {
+          padding: var(--spacing-xs) var(--spacing-sm);
+          
+          span {
+            display: none; // Hide "Admin" text on mobile, keep icon
+          }
+        }
       }
     }
     
     .nav-actions {
       .user-info {
-        display: none; // Hide user info on mobile to save space
+        font-size: 0.8rem;
+        
+        .admin-badge {
+          font-size: 0.6rem;
+          padding: 0.1rem 0.4rem;
+        }
       }
     }
   }
@@ -123,11 +181,27 @@
 @media (max-width: 640px) {
   .main-nav {
     .nav-links {
-      display: none; // Hide navigation links on very small screens
+      gap: var(--spacing-sm);
+      
+      .nav-link {
+        padding: var(--spacing-xs);
+        font-size: 0.8rem;
+        
+        // Hide text labels on very small screens, keep icons
+        span:not(.admin-badge) {
+          display: none;
+        }
+      }
     }
     
     .nav-actions {
       gap: var(--spacing-sm);
+      
+      .user-info {
+        .admin-badge {
+          display: none; // Hide admin badge on very small screens
+        }
+      }
     }
   }
 }

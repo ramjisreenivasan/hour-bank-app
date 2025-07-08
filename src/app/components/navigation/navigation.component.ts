@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { LogoComponent } from '../logo/logo.component';
+import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-navigation',
@@ -15,6 +16,7 @@ import { LogoComponent } from '../logo/logo.component';
 export class NavigationComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   currentUser: User | null = null;
+  isAdmin = false;
   private authSubscription?: Subscription;
 
   constructor(
@@ -26,17 +28,55 @@ export class NavigationComponent implements OnInit, OnDestroy {
     // Check initial authentication state
     this.currentUser = this.authService.getCurrentUser();
     this.isAuthenticated = !!this.currentUser;
+    
+    if (this.isAuthenticated) {
+      this.checkAdminStatus();
+    }
 
     // Subscribe to authentication state changes
     this.authSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.isAuthenticated = !!user;
+      
+      if (this.isAuthenticated) {
+        this.checkAdminStatus();
+      } else {
+        this.isAdmin = false;
+      }
     });
   }
 
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+  }
+
+  private async checkAdminStatus(): Promise<void> {
+    try {
+      const session = await fetchAuthSession();
+      const currentUser = await getCurrentUser();
+      
+      // Check for admin group membership in Cognito
+      const groups = session.tokens?.accessToken?.payload['cognito:groups'] as string[] || [];
+      const isAdminGroup = groups.includes('admin') || groups.includes('Admin');
+      
+      // Check for admin email patterns (backup method)
+      const adminEmails = [
+        'admin@hourbank.com',
+        'administrator@hourbank.com'
+      ];
+      const userEmail = currentUser.signInDetails?.loginId || '';
+      const isAdminEmail = adminEmails.includes(userEmail.toLowerCase());
+      
+      // Check for admin username patterns
+      const username = currentUser.username || '';
+      const isAdminUsername = username.toLowerCase().includes('admin');
+      
+      this.isAdmin = isAdminGroup || isAdminEmail || isAdminUsername;
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      this.isAdmin = false;
     }
   }
 
