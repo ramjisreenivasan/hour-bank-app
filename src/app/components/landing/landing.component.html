@@ -7,7 +7,7 @@
     <div class="nav-links">
       <a routerLink="/services" class="nav-link">Services</a>
       <a routerLink="/about" class="nav-link">About</a>
-      <a routerLink="/auth" class="nav-link nav-cta">Get Started</a>
+      <a routerLink="/auth" class="nav-link nav-cta">Join Network</a>
     </div>
   </div>
 </nav>
@@ -17,50 +17,50 @@
   <div class="hero-container">
     <div class="hero-content">
       <h1 class="hero-title">
-        Your Skills Have Value.<br>
-        <span class="highlight">Your Time is Currency.</span>
+        Real Estate Professionals.<br>
+        <span class="highlight">United by Time Banking.</span>
       </h1>
       <p class="hero-subtitle">
-        Join a community where everyone's time is valued equally. 
-        Exchange skills, build connections, and create positive impact—one hour at a time.
+        Connect with fellow real estate professionals to exchange services, share expertise, 
+        and grow your business—all through our innovative time-banking system.
       </p>
       <div class="hero-actions">
-        <a routerLink="/auth" class="btn btn-primary">Start Exchanging</a>
-        <a routerLink="/about" class="btn btn-secondary">Learn More</a>
+        <a routerLink="/auth" class="btn btn-primary">Join the Network</a>
+        <a routerLink="/about" class="btn btn-secondary">How It Works</a>
       </div>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-number">10K+</span>
-          <span class="stat-label">Hours Exchanged</span>
+          <span class="stat-number">5K+</span>
+          <span class="stat-label">Service Hours</span>
         </div>
         <div class="stat">
-          <span class="stat-number">2.5K+</span>
-          <span class="stat-label">Active Members</span>
+          <span class="stat-number">800+</span>
+          <span class="stat-label">RE Professionals</span>
         </div>
         <div class="stat">
-          <span class="stat-number">150+</span>
-          <span class="stat-label">Skills Available</span>
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Service Types</span>
         </div>
       </div>
     </div>
     <div class="hero-visual">
       <div class="skill-exchange-demo">
         <div class="exchange-card provider">
-          <div class="user-avatar">👨‍💻</div>
+          <div class="user-avatar">🏠</div>
           <div class="user-info">
-            <div class="user-name">Alex</div>
-            <div class="user-skill">Web Development</div>
+            <div class="user-name">Sarah</div>
+            <div class="user-skill">Property Photography</div>
           </div>
-          <div class="hours-badge">+3 hours</div>
+          <div class="hours-badge">+2 hours</div>
         </div>
         <div class="exchange-arrow">⇄</div>
         <div class="exchange-card consumer">
-          <div class="user-avatar">👩‍🎨</div>
+          <div class="user-avatar">📋</div>
           <div class="user-info">
-            <div class="user-name">Maria</div>
-            <div class="user-skill">Graphic Design</div>
+            <div class="user-name">Mike</div>
+            <div class="user-skill">Market Analysis</div>
           </div>
-          <div class="hours-badge">-3 hours</div>
+          <div class="hours-badge">-2 hours</div>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
 <!-- Features Section -->
 <section class="features">
   <div class="container">
-    <h2 class="section-title">How hOurBank Works</h2>
+    <h2 class="section-title">Why Real Estate Pros Choose hOurBank</h2>
     <div class="features-grid">
       <div class="feature-card" *ngFor="let feature of features">
         <div class="feature-icon">{{ feature.icon }}</div>
@@ -84,22 +84,37 @@
 <!-- Process Section -->
 <section class="process">
   <div class="container">
-    <h2 class="section-title">Simple as 1-2-3</h2>
+    <h2 class="section-title">Simple Professional Exchange</h2>
     <div class="process-steps">
       <div class="step">
         <div class="step-number">1</div>
-        <h3 class="step-title">Share Your Skills</h3>
-        <p class="step-description">List what you can teach or help with—from coding to cooking, everyone has valuable skills.</p>
+        <h3 class="step-title">List Your Expertise</h3>
+        <p class="step-description">Share your real estate skills—photography, staging, marketing, legal advice, or market analysis.</p>
       </div>
       <div class="step">
         <div class="step-number">2</div>
         <h3 class="step-title">Earn Time Credits</h3>
-        <p class="step-description">Help others and earn hours in your time bank. One hour of service = one hour credit.</p>
+        <p class="step-description">Help fellow professionals and earn hours. Every hour of service equals one hour credit.</p>
       </div>
       <div class="step">
         <div class="step-number">3</div>
-        <h3 class="step-title">Get What You Need</h3>
-        <p class="step-description">Use your earned hours to access services from other community members.</p>
+        <h3 class="step-title">Access Premium Services</h3>
+        <p class="step-description">Use your earned hours to get professional services that would normally cost hundreds of dollars.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-showcase">
+  <div class="container">
+    <h2 class="section-title">Popular Real Estate Services</h2>
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let service of popularServices">
+        <div class="service-icon">{{ service.icon }}</div>
+        <h3 class="service-title">{{ service.title }}</h3>
+        <p class="service-description">{{ service.description }}</p>
+        <div class="service-rate">{{ service.rate }} hours</div>
       </div>
     </div>
   </div>
@@ -108,7 +123,7 @@
 <!-- Testimonials Section -->
 <section class="testimonials">
   <div class="container">
-    <h2 class="section-title">What Our Community Says</h2>
+    <h2 class="section-title">Success Stories from Our Network</h2>
     <div class="testimonials-grid">
       <div class="testimonial-card" *ngFor="let testimonial of testimonials">
         <div class="testimonial-content">
@@ -131,23 +146,23 @@
   <div class="container">
     <div class="impact-content">
       <div class="impact-text">
-        <h2 class="impact-title">Building a Better Economy</h2>
+        <h2 class="impact-title">Transforming Real Estate Collaboration</h2>
         <p class="impact-description">
-          hOurBank isn't just about exchanging services—it's about creating a more 
-          equitable, sustainable, and connected world where everyone's contributions matter.
+          hOurBank creates a supportive ecosystem where real estate professionals can access 
+          premium services, build valuable relationships, and grow their business without the traditional cost barriers.
         </p>
         <div class="impact-benefits">
           <div class="benefit">
-            <span class="benefit-icon">🌍</span>
-            <span class="benefit-text">Reduce environmental impact through sharing</span>
+            <span class="benefit-icon">💰</span>
+            <span class="benefit-text">Save thousands on professional services</span>
           </div>
           <div class="benefit">
             <span class="benefit-icon">🤝</span>
-            <span class="benefit-text">Strengthen community connections</span>
+            <span class="benefit-text">Build lasting professional relationships</span>
           </div>
           <div class="benefit">
-            <span class="benefit-icon">💡</span>
-            <span class="benefit-text">Unlock human potential and creativity</span>
+            <span class="benefit-icon">📈</span>
+            <span class="benefit-text">Access expertise to grow your business</span>
           </div>
         </div>
       </div>
@@ -156,12 +171,12 @@
           <div class="center-node">
             <span class="center-text">You</span>
           </div>
-          <div class="connection-node node-1">🎨</div>
-          <div class="connection-node node-2">💻</div>
-          <div class="connection-node node-3">🍳</div>
-          <div class="connection-node node-4">🔧</div>
-          <div class="connection-node node-5">📚</div>
-          <div class="connection-node node-6">🧘</div>
+          <div class="connection-node node-1">📸</div>
+          <div class="connection-node node-2">🏡</div>
+          <div class="connection-node node-3">📊</div>
+          <div class="connection-node node-4">⚖️</div>
+          <div class="connection-node node-5">🎨</div>
+          <div class="connection-node node-6">📱</div>
         </div>
       </div>
     </div>
@@ -172,15 +187,15 @@
 <section class="cta">
   <div class="container">
     <div class="cta-content">
-      <h2 class="cta-title">Ready to Join the Movement?</h2>
+      <h2 class="cta-title">Ready to Transform Your Real Estate Business?</h2>
       <p class="cta-subtitle">
-        Start building a better economy today. Your skills are needed, 
-        your time is valuable, and your community is waiting.
+        Join hundreds of real estate professionals who are already saving money, 
+        building relationships, and growing their business through time banking.
       </p>
       <div class="cta-actions">
-        <a routerLink="/auth" class="btn btn-primary btn-large">Get Started Free</a>
+        <a routerLink="/auth" class="btn btn-primary btn-large">Join Free Today</a>
       </div>
-      <p class="cta-note">Join thousands of people already making a difference</p>
+      <p class="cta-note">Start with 10 free hours • No credit card required</p>
     </div>
   </div>
 </section>
@@ -194,11 +209,12 @@
       </div>
       <div class="footer-links">
         <a routerLink="/about" class="footer-link">About</a>
-        <a routerLink="/auth" class="footer-link">Sign Up</a>
+        <a routerLink="/services" class="footer-link">Services</a>
+        <a routerLink="/auth" class="footer-link">Join Network</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 hOurBank. Building a better economy, one hour at a time.</p>
+      <p>&copy; 2024 hOurBank. Empowering real estate professionals through time banking.</p>
     </div>
   </div>
 </footer>

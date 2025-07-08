@@ -1,3 +1,166 @@
+// Services Showcase Section
+.services-showcase {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+
+    .service-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-color: #3b82f6;
+      }
+
+      .service-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+
+      .service-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .service-description {
+        color: #4a5568;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+      }
+
+      .service-rate {
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        display: inline-block;
+        
+        &::before {
+          content: "⏱️ ";
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Enhanced Features Section for Real Estate
+.features {
+  .features-grid {
+    .feature-card {
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-left-color: #3b82f6;
+        transform: translateY(-5px) translateX(5px);
+      }
+
+      &:nth-child(1) .feature-icon { color: #e53e3e; }
+      &:nth-child(2) .feature-icon { color: #38a169; }
+      &:nth-child(3) .feature-icon { color: #3182ce; }
+      &:nth-child(4) .feature-icon { color: #d69e2e; }
+    }
+  }
+}
+
+// Enhanced Testimonials for Real Estate
+.testimonials {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  .section-title {
+    color: white;
+  }
+
+  .testimonials-grid {
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      .testimonial-content .testimonial-quote {
+        color: #2d3748;
+      }
+
+      .testimonial-author {
+        .author-info {
+          .author-name {
+            color: #1a202c;
+          }
+          
+          .author-role {
+            color: #3b82f6;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Real Estate Color Scheme Updates
+.hero {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #3b82f6 100%);
+  
+  .hero-title .highlight {
+    background: linear-gradient(45deg, #ffd700, #f6ad55);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.cta {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #3b82f6 100%);
+}
+
+// Responsive Design Enhancements
+@media (max-width: 768px) {
+  .services-showcase .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .services-showcase .service-card {
+    padding: 1.5rem;
+    
+    .service-icon {
+      font-size: 3rem;
+    }
+    
+    .service-title {
+      font-size: 1.25rem;
+    }
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 // Landing Page Styles
 * {
   margin: 0;

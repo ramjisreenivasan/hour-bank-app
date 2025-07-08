@@ -14,40 +14,90 @@ export class LandingComponent {
   
   features = [
     {
-      icon: '⏰',
-      title: 'Time-Based Currency',
-      description: 'One hour of your time equals one hour of anyone else\'s time. Fair and simple.'
+      icon: '🏠',
+      title: 'Real Estate Focused',
+      description: 'Designed specifically for real estate professionals with industry-relevant services and expertise.'
+    },
+    {
+      icon: '💰',
+      title: 'Cost-Effective',
+      description: 'Access premium services without the premium price tag. Save thousands on professional services.'
     },
     {
       icon: '🤝',
-      title: 'Community Driven',
-      description: 'Connect with neighbors and build stronger local communities through skill sharing.'
+      title: 'Professional Network',
+      description: 'Connect with vetted real estate professionals and build valuable business relationships.'
     },
     {
-      icon: '🌱',
-      title: 'Sustainable Impact',
-      description: 'Reduce waste, share resources, and create a more sustainable economy together.'
+      icon: '⚡',
+      title: 'Quick Turnaround',
+      description: 'Get services completed faster through our motivated professional community.'
+    }
+  ];
+
+  popularServices = [
+    {
+      icon: '📸',
+      title: 'Property Photography',
+      description: 'Professional real estate photography and virtual tours',
+      rate: '2-4'
+    },
+    {
+      icon: '🎨',
+      title: 'Home Staging',
+      description: 'Expert staging consultation and setup services',
+      rate: '3-6'
+    },
+    {
+      icon: '📊',
+      title: 'Market Analysis',
+      description: 'Comprehensive market research and CMA reports',
+      rate: '2-3'
+    },
+    {
+      icon: '⚖️',
+      title: 'Legal Review',
+      description: 'Contract review and legal consultation services',
+      rate: '1-2'
+    },
+    {
+      icon: '📱',
+      title: 'Digital Marketing',
+      description: 'Social media management and online advertising',
+      rate: '2-5'
+    },
+    {
+      icon: '🏡',
+      title: 'Property Management',
+      description: 'Tenant screening and property maintenance coordination',
+      rate: '1-3'
     }
   ];
 
   testimonials = [
     {
-      name: 'Sarah Chen',
-      role: 'Graphic Designer',
-      quote: 'I\'ve learned web development while teaching design. It\'s amazing how much we can achieve together!',
-      avatar: '👩‍🎨'
+      name: 'Jennifer Martinez',
+      role: 'Luxury Real Estate Agent',
+      quote: 'I traded my staging expertise for professional photography services. Saved me $2,000 and built great relationships!',
+      avatar: '🏡'
     },
     {
-      name: 'Mike Rodriguez',
-      role: 'Home Chef',
-      quote: 'Teaching cooking classes helped me get my garden designed. The community here is incredible.',
-      avatar: '👨‍🍳'
+      name: 'David Thompson',
+      role: 'Commercial Broker',
+      quote: 'The market analysis I received through hOurBank was better than what I used to pay $500 for. Amazing network!',
+      avatar: '📊'
     },
     {
-      name: 'Dr. Emily Watson',
-      role: 'Retired Teacher',
-      quote: 'I love tutoring students and getting help with technology. Everyone has something valuable to offer.',
-      avatar: '👩‍🏫'
+      name: 'Lisa Chen',
+      role: 'Property Manager',
+      quote: 'I help with tenant screening and get legal reviews in return. It\'s transformed how I run my business.',
+      avatar: '🔑'
+    },
+    {
+      name: 'Robert Williams',
+      role: 'Real Estate Attorney',
+      quote: 'Providing legal services earned me hours for marketing help. My practice has grown significantly!',
+      avatar: '⚖️'
     }
   ];
 
