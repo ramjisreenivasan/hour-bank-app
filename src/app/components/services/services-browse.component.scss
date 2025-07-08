@@ -46,6 +46,8 @@
     font-weight: 700;
     margin-bottom: 0.75rem;
     line-height: 1.1;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 
     @media (max-width: 768px) {
       font-size: 2rem;
@@ -55,12 +57,14 @@
 
   .hero-subtitle {
     font-size: 1.1rem;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 1.5rem;
     line-height: 1.5;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: 500;
 
     @media (max-width: 768px) {
       font-size: 1rem;
@@ -87,6 +91,8 @@
         font-weight: 700;
         display: block;
         margin-bottom: 0.25rem;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 
         @media (max-width: 768px) {
           font-size: 1.5rem;
@@ -95,9 +101,11 @@
 
       .stat-label {
         font-size: 0.8rem;
-        opacity: 0.8;
+        color: rgba(255, 255, 255, 0.9);
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       }
     }
   }
@@ -724,7 +732,7 @@
   p {
     font-size: 1rem;
     margin-bottom: 2rem;
-    opacity: 0.8;
+    color: #6b7280;
   }
 
   .btn-clear-filters {
@@ -819,6 +827,8 @@
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 
       @media (max-width: 768px) {
         font-size: 2rem;
@@ -828,8 +838,10 @@
     p {
       font-size: 1.125rem;
       margin-bottom: 2rem;
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.95);
       line-height: 1.6;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      font-weight: 500;
     }
 
     .cta-buttons {
@@ -900,6 +912,8 @@
       font-size: 0.95rem;
       margin-bottom: 1rem;
       line-height: 1.4;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     .hero-stats {
@@ -913,6 +927,7 @@
 
         .stat-label {
           font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.9);
         }
       }
     }
@@ -946,6 +961,8 @@
     .hero-subtitle {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     .hero-stats {
