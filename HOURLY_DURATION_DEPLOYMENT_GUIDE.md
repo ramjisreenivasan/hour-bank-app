@@ -1,166 +1,248 @@
 # HourlyDuration Standardization Deployment Guide
 
 ## Overview
-This guide covers the deployment of changes that standardize the application to use `hourlyDuration` instead of `hourlyRate` throughout the entire codebase.
+This guide covers the complete migration from `hourlyRate` to `hourlyDuration` throughout the entire HourBank application.
 
-## Changes Made
+## What's Being Changed
 
-### 1. GraphQL Schema Updates
-- **File**: `amplify/backend/api/hourbankapp/schema.graphql`
-- **Change**: Updated Service model to use `hourlyDuration: Float!` instead of `hourlyRate: Float!`
-- **Impact**: This is a breaking change that requires database migration
+### GraphQL Schema
+- **Service.hourlyRate** → **Service.hourlyDuration**
+- **searchServices.maxHourlyRate** → **searchServices.maxHourlyDuration**
 
-### 2. GraphQL Queries Updated
-- **File**: `src/app/graphql/queries.ts`
-- **Changes**: All service-related queries now use `hourlyDuration` field
-- **Queries Updated**:
-  - `getService`
-  - `listServices`
-  - `servicesByUserId`
-  - `servicesByCategory`
-
-### 3. TypeScript Interface Updated
-- **File**: `src/app/models/user.model.ts`
-- **Change**: Service interface now uses `hourlyDuration: number`
-- **Impact**: Ensures type consistency across the application
-
-### 4. Service Service Enhanced
-- **File**: `src/app/services/service.service.ts`
-- **Changes**: 
-  - Added comprehensive debugging for GraphQL calls
-  - Improved error handling
-  - Better fallback to empty results instead of throwing errors
+### Application Code
+- All GraphQL queries updated to use `hourlyDuration`
+- Service interface updated to use `hourlyDuration`
+- Profile component updated to use `hourlyDuration`
+- HTML templates updated to use `hourlyDuration`
 
 ## Deployment Steps
 
-### Step 1: Deploy Schema Changes
+### Step 1: Deploy GraphQL Schema Changes
+
+#### Option A: Automated Deployment (Recommended)
 ```bash
-# Configure AWS credentials first
+# Run the deployment script
+./deploy-hourly-duration-schema.sh
+```
+
+#### Option B: Manual Deployment
+```bash
+# Configure AWS credentials
 aws configure
 
-# Or set environment variables
-export AWS_ACCESS_KEY_ID=your_access_key
-export AWS_SECRET_ACCESS_KEY=your_secret_key
-export AWS_DEFAULT_REGION=us-east-1
-
-# Deploy the updated schema
+# Deploy schema changes
 amplify push --yes
 ```
 
-### Step 2: Handle Data Migration
-Since this is a breaking change, existing services in the database will have `hourlyRate` but the new schema expects `hourlyDuration`.
+### Step 2: Migrate Existing Data
 
-**Option A: Manual Migration (Recommended)**
+After the schema is deployed, migrate existing service data:
+
 ```bash
-# Create a migration script to update existing records
+# Run the data migration script
 node migrate-hourly-rate-to-duration.js
 ```
 
-**Option B: Fresh Start (Development Only)**
-```bash
-# Delete and recreate the API (WARNING: This will delete all data)
-amplify delete api
-amplify add api
-amplify push
-```
+This script will:
+- Find all services with `hourlyRate` values
+- Copy `hourlyRate` values to `hourlyDuration` field
+- Verify the migration was successful
 
-### Step 3: Verify Deployment
-1. Check that the GraphQL schema is updated in AWS AppSync console
-2. Test the `servicesByUserId` query with a valid user ID
-3. Verify that services display correctly in the profile page
+### Step 3: Test the Application
 
-## Testing the Fix
+1. **Navigate to Profile Page**
+   - Services should load correctly
+   - No GraphQL errors in console
+   - Service creation/editing should work
 
-### 1. Test GraphQL Query Directly
+2. **Check Browser Console**
+   - Look for successful GraphQL queries
+   - Verify no field undefined errors
+
+3. **Test Service Management**
+   - Create new service with hourlyDuration
+   - Edit existing services
+   - Verify data persistence
+
+## Verification Queries
+
+Test these queries in AWS AppSync Console:
+
+### Query 1: List Services with hourlyDuration
 ```graphql
-query TestServicesByUserId {
-  servicesByUserId(userId: "your-user-id", limit: 5) {
+query ListServices {
+  listServices(limit: 5) {
     items {
       id
       title
-      hourlyDuration
       category
+      hourlyDuration
       isActive
     }
   }
 }
 ```
 
-### 2. Test in Browser
-1. Navigate to the profile page
-2. Check browser console for debug messages
-3. Verify services are displayed correctly
+### Query 2: Services by User ID
+```graphql
+query ServicesByUserId($userId: ID!) {
+  servicesByUserId(userId: $userId, limit: 10) {
+    items {
+      id
+      title
+      category
+      hourlyDuration
+      isActive
+    }
+  }
+}
+```
 
-### 3. Expected Debug Output
+### Query 3: Test Service Creation
+```graphql
+mutation CreateService($input: CreateServiceInput!) {
+  createService(input: $input) {
+    id
+    title
+    category
+    hourlyDuration
+    isActive
+  }
+}
 ```
-🔍 DEBUG: ProfileComponent ngOnInit called
-🔍 DEBUG: Loading services for user: [userId]
-🔍 DEBUG: ServiceService.getServicesByUserId called with: {...}
-🔍 DEBUG: GraphQL raw response: {...}
-🔍 DEBUG: Services data found: {...}
+
+Variables:
+```json
+{
+  "input": {
+    "userId": "your-user-id",
+    "title": "Test Service",
+    "description": "Testing hourlyDuration field",
+    "category": "Technology",
+    "hourlyDuration": 2.5,
+    "isActive": true,
+    "tags": ["test"],
+    "requiresScheduling": false
+  }
+}
 ```
+
+## Expected Results
+
+### Before Migration
+- Services use `hourlyRate` field
+- GraphQL queries fail with "Field 'hourlyDuration' undefined"
+- Profile page shows errors or mock data
+
+### After Migration
+- Services use `hourlyDuration` field
+- GraphQL queries succeed
+- Profile page displays actual services
+- Service creation/editing works correctly
+
+## Troubleshooting
+
+### Issue: Schema deployment fails
+**Solution**: 
+- Check AWS credentials
+- Verify Amplify CLI is configured
+- Check for syntax errors in schema.graphql
+
+### Issue: Data migration fails
+**Solution**:
+- Verify GraphQL API is accessible
+- Check API key permissions
+- Run migration script with Node.js 18+
+
+### Issue: Services still not loading
+**Solution**:
+- Clear browser cache
+- Check browser console for errors
+- Verify schema deployment in AWS AppSync Console
+- Run verification queries manually
+
+### Issue: Mixed field names in data
+**Solution**:
+- Re-run the migration script
+- Check for services that weren't migrated
+- Manually update problematic records
 
 ## Rollback Plan
 
-If issues occur, you can rollback by:
+If issues occur, you can rollback:
 
-1. **Revert Git Changes**:
+### 1. Revert Application Code
 ```bash
-git revert 3b7b8b4
+git revert HEAD~1  # Revert the hourlyDuration changes
 git push origin main
 ```
 
-2. **Revert Schema**:
+### 2. Revert Schema Changes
 ```bash
-# Change hourlyDuration back to hourlyRate in schema.graphql
-# Then push the changes
+# Restore schema backup
+cp amplify/backend/api/hourbankapp/schema.graphql.backup amplify/backend/api/hourbankapp/schema.graphql
+
+# Deploy reverted schema
 amplify push --yes
 ```
 
-## Common Issues and Solutions
+### 3. Revert Data (if needed)
+```bash
+# Run reverse migration script (if created)
+node migrate-hourly-duration-to-rate.js
+```
 
-### Issue 1: "Field hourlyDuration not found"
-**Cause**: Schema not deployed or cached
-**Solution**: 
-- Clear browser cache
-- Verify schema deployment in AWS AppSync console
-- Wait a few minutes for propagation
+## Files Changed
 
-### Issue 2: Services not displaying
-**Cause**: Data migration not completed
-**Solution**:
-- Check if existing services have `hourlyRate` field
-- Run data migration script
-- Or create new test services
+### GraphQL Schema
+- `amplify/backend/api/hourbankapp/schema.graphql`
 
-### Issue 3: GraphQL errors in console
-**Cause**: Query/schema mismatch
-**Solution**:
-- Verify all queries use `hourlyDuration`
-- Check that mutations also use correct field name
-- Regenerate GraphQL code if needed
+### GraphQL Queries
+- `src/app/graphql/queries.ts`
 
-## Verification Checklist
+### TypeScript Models
+- `src/app/models/user.model.ts`
+
+### Components
+- `src/app/components/profile/profile.component.ts`
+- `src/app/components/profile/profile.component.html`
+
+### Migration Tools
+- `deploy-hourly-duration-schema.sh`
+- `migrate-hourly-rate-to-duration.js`
+
+## Post-Deployment Checklist
 
 - [ ] GraphQL schema deployed successfully
-- [ ] All existing services migrated to use `hourlyDuration`
-- [ ] Profile page displays services correctly
-- [ ] Service creation works with new field
-- [ ] Service editing preserves `hourlyDuration` values
-- [ ] Browse services page shows duration correctly
-- [ ] No console errors related to `hourlyRate`
+- [ ] Data migration completed without errors
+- [ ] Profile page loads services correctly
+- [ ] Service creation works with hourlyDuration
+- [ ] Service editing preserves hourlyDuration values
+- [ ] No GraphQL errors in browser console
+- [ ] All service components use hourlyDuration
+- [ ] Search functionality works (if implemented)
 
-## Post-Deployment Tasks
+## Benefits of This Change
 
-1. **Update Documentation**: Ensure all API documentation reflects `hourlyDuration`
-2. **Update Tests**: Modify any tests that reference `hourlyRate`
-3. **Monitor Logs**: Watch for any errors related to the field change
-4. **User Communication**: If this affects existing users, communicate the change
+1. **Consistency**: Single field name throughout the application
+2. **Clarity**: `hourlyDuration` better describes the field purpose
+3. **Maintainability**: Easier to understand and maintain code
+4. **Future-proofing**: Consistent naming for future features
 
-## Contact
+## Support
 
-If you encounter issues during deployment:
-1. Check the browser console for detailed error messages
-2. Verify AWS credentials and permissions
-3. Ensure all files are committed and pushed to git
-4. Review the debug logs for specific error details
+If you encounter issues:
+1. Check the troubleshooting section above
+2. Review browser console for specific errors
+3. Test GraphQL queries manually in AWS AppSync Console
+4. Verify AWS credentials and permissions
+5. Check Amplify deployment status
+
+## Success Criteria
+
+The migration is successful when:
+- ✅ Profile page displays actual services (not mock data)
+- ✅ Services show correct hourlyDuration values
+- ✅ Service creation/editing works normally
+- ✅ No GraphQL field undefined errors
+- ✅ All components use hourlyDuration consistently

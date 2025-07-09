@@ -27,7 +27,7 @@ export interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyRate: number; // Using hourlyRate to match the deployed GraphQL schema
+  hourlyDuration: number; // Standardized on hourlyDuration throughout the application
   isActive: boolean;
   tags: string[];
   
