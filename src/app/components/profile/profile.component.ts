@@ -91,22 +91,32 @@ export class ProfileComponent implements OnInit {
   }
 
   loadCurrentUserProfile() {
+    console.log('🔍 DEBUG: loadCurrentUserProfile called');
     this.lastAction = 'loadCurrentUserProfile';
     this.clearError();
 
+    // Debug the user mapping process
+    console.log('🔍 DEBUG: Getting current user DynamoDB ID...');
+    
     // Get current user's DynamoDB ID through mapping service
     this.userMappingService.getCurrentUserDynamoDbId().subscribe({
       next: (dynamoDbUserId) => {
+        console.log('🔍 DEBUG: DynamoDB User ID received:', dynamoDbUserId);
+        
         if (dynamoDbUserId) {
+          console.log('🔍 DEBUG: Loading user profile with DynamoDB ID:', dynamoDbUserId);
           // Load the current user's profile using DynamoDB ID
           this.loadUserProfile(dynamoDbUserId);
         } else {
+          console.log('🔍 DEBUG: No DynamoDB ID found, attempting to sync user mapping...');
           // User mapping not found - try to sync
           this.userMappingService.syncUserMapping().subscribe({
             next: (mapping) => {
+              console.log('🔍 DEBUG: User mapping synced:', mapping);
               this.loadUserProfile(mapping.dynamoDbUserId);
             },
             error: (error) => {
+              console.error('🔍 DEBUG: User mapping sync failed:', error);
               this.handleError(
                 new Error('Please sign in to view your profile'),
                 'loadCurrentUserProfile',
@@ -125,6 +135,7 @@ export class ProfileComponent implements OnInit {
         }
       },
       error: (error) => {
+        console.error('🔍 DEBUG: Error getting current user DynamoDB ID:', error);
         this.handleError(
           error,
           'loadCurrentUserProfile',
@@ -135,6 +146,9 @@ export class ProfileComponent implements OnInit {
         );
       }
     });
+    
+    // Also debug the user mapping service state
+    this.userMappingService.debugMapping();
   }
 
   loadUserProfile(userId: string) {
