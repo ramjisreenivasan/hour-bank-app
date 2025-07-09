@@ -113,22 +113,22 @@ export class AboutComponent {
       icon: '👩‍💻',
       title: 'Sarah the Designer',
       description: 'A graphic designer who wants to learn web development',
-      gives: this.getRandomHours() + ' hours of logo design',
-      gets: this.getRandomHours() + ' hours of coding lessons'
+      gives: '3 hours of logo design',
+      gets: '3 hours of coding lessons'
     },
     {
       icon: '👨‍🍳',
       title: 'Mike the Chef',
       description: 'A professional chef who needs help with his garden',
-      gives: this.getRandomHours() + ' hours of cooking classes',
-      gets: this.getRandomHours() + ' hours of gardening help'
+      gives: '4 hours of cooking classes',
+      gets: '4 hours of gardening help'
     },
     {
       icon: '👩‍🏫',
       title: 'Dr. Emily the Teacher',
       description: 'A retired teacher who wants tech support',
-      gives: this.getRandomHours() + ' hours of tutoring',
-      gets: this.getRandomHours() + ' hours of computer help'
+      gives: '2 hours of tutoring',
+      gets: '2 hours of computer help'
     }
   ];
 
@@ -160,11 +160,4 @@ export class AboutComponent {
   ];
 
   constructor() { }
-
-  /**
-   * Generate random duration between 1-4 hours for services
-   */
-  private getRandomHours(): number {
-    return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
-  }
 }
