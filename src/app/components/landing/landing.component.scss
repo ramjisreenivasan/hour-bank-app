@@ -710,7 +710,27 @@ section {
 .cta {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;
+  padding: 4rem 0;
   text-align: center;
+  position: relative;
+  
+  // Add subtle overlay for better text contrast
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1); // Subtle dark overlay for better text contrast
+    pointer-events: none;
+  }
+  
+  // Ensure content is above overlay
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 
   .cta-title {
     font-size: clamp(2rem, 4vw, 3rem);
@@ -721,10 +741,12 @@ section {
   .cta-subtitle {
     font-size: 1.25rem;
     margin-bottom: 2.5rem;
-    opacity: 0.9;
+    opacity: 1; // Improved from 0.9 for better contrast
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    color: rgba(255, 255, 255, 0.95); // Explicit high-contrast color
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // Subtle text shadow for better readability
   }
 
   .cta-actions {
@@ -732,8 +754,10 @@ section {
   }
 
   .cta-note {
-    opacity: 0.8;
+    opacity: 1; // Improved from 0.8 for better contrast
     font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9); // Explicit high-contrast color
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // Subtle text shadow for better readability
   }
 
   .btn-primary {
@@ -749,9 +773,10 @@ section {
 
 // Footer
 .footer {
-  background: var(--text-primary);
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d); // Darker gradient background for better contrast
   color: white;
   padding: 3rem 0 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); // Subtle top border for definition
 
   .footer-content {
     display: flex;
@@ -777,11 +802,13 @@ section {
       
       &:hover {
         opacity: 0.8;
+        filter: brightness(1.1); // Slight brightness increase on hover
       }
       
       &:focus {
-        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline: 2px solid rgba(255, 255, 255, 0.8); // Improved from 0.5 for better visibility
         outline-offset: 2px;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2); // Additional glow for better focus visibility
       }
     }
   }
@@ -797,21 +824,24 @@ section {
   }
 
   .footer-link {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9); // Improved from 0.8 for better contrast
     text-decoration: none;
     transition: var(--transition);
+    font-weight: 500; // Slightly bolder for better readability
 
     &:hover {
       color: white;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); // Subtle glow effect on hover
     }
   }
 
   .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.15); // Slightly more visible border
+    color: rgba(255, 255, 255, 0.85); // Improved from 0.7 for better contrast
     font-size: 0.9rem;
+    font-weight: 400; // Slightly bolder for better readability
   }
 }
 
