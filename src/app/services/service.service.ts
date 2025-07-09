@@ -113,7 +113,7 @@ export class ServiceService {
         // Log each GraphQL error in detail
         if (error.errors && Array.isArray(error.errors)) {
           console.error('🔍 DEBUG: GraphQL errors breakdown:');
-          error.errors.forEach((gqlError, index) => {
+          error.errors.forEach((gqlError: any, index: number) => {
             console.error(`  Error ${index + 1}:`, {
               message: gqlError.message,
               locations: gqlError.locations,
