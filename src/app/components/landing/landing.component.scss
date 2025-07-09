@@ -60,6 +60,24 @@
   .nav-brand {
     display: flex;
     align-items: center;
+    
+    .logo-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      transition: opacity var(--transition-normal);
+      border-radius: var(--radius-sm);
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+      }
+    }
   }
 
   .nav-links {
@@ -745,6 +763,26 @@ section {
       flex-direction: column;
       gap: 2rem;
       text-align: center;
+    }
+  }
+
+  .footer-brand {
+    .logo-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      transition: opacity var(--transition-normal);
+      border-radius: var(--radius-sm);
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+      }
     }
   }
 

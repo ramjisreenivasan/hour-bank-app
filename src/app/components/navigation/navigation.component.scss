@@ -23,6 +23,24 @@
     display: flex;
     align-items: center;
     
+    .logo-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      transition: opacity var(--transition-normal);
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+      }
+    }
+    
     app-logo {
       cursor: pointer;
       

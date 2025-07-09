@@ -2,7 +2,9 @@
   <div class="auth-card">
     <div class="auth-header">
       <div class="logo">
-        <app-logo [size]="40" [showText]="true" containerClass="large"></app-logo>
+        <a routerLink="/" class="logo-link">
+          <app-logo [size]="40" [showText]="true" containerClass="large"></app-logo>
+        </a>
       </div>
       <h2>{{ isSignUp ? 'Create Account' : 'Welcome Back' }}</h2>
       <p>{{ isSignUp ? 'Join the skill exchange community' : 'Sign in to your account' }}</p>

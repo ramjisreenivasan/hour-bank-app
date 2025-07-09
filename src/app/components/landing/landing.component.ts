@@ -132,4 +132,12 @@ export class LandingComponent {
   private getRandomHours(): number {
     return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
   }
+
+  /**
+   * Scroll to top of page when logo is clicked
+   */
+  scrollToTop(event: Event): void {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

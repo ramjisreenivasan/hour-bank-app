@@ -1,7 +1,9 @@
 <nav class="main-nav" [class.authenticated]="isAuthenticated">
   <div class="nav-container">
     <div class="nav-brand">
-      <app-logo [size]="32" [showText]="true"></app-logo>
+      <a routerLink="/" class="logo-link">
+        <app-logo [size]="32" [showText]="true"></app-logo>
+      </a>
     </div>
     
     <div class="nav-links">

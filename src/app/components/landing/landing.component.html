@@ -2,7 +2,9 @@
 <nav class="landing-nav">
   <div class="nav-container">
     <div class="nav-brand">
-      <app-logo [size]="32" [showText]="true"></app-logo>
+      <a href="#" class="logo-link" (click)="scrollToTop($event)">
+        <app-logo [size]="32" [showText]="true"></app-logo>
+      </a>
     </div>
     <div class="nav-links">
       <a routerLink="/services" class="nav-link">Services</a>
@@ -198,7 +200,9 @@
   <div class="container">
     <div class="footer-content">
       <div class="footer-brand">
-        <app-logo [size]="28" [showText]="true" containerClass="small"></app-logo>
+        <a href="#" class="logo-link" (click)="scrollToTop($event)">
+          <app-logo [size]="28" [showText]="true" containerClass="small"></app-logo>
+        </a>
       </div>
       <div class="footer-links">
         <a routerLink="/about" class="footer-link">About</a>
