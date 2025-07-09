@@ -160,7 +160,7 @@ export class SchedulingService {
   async createBooking(input: CreateBookingInput): Promise<Booking> {
     // First, get the service to calculate total cost
     const service = await this.getService(input.serviceId);
-    const totalCost = input.duration * service.hourlyRate;
+    const totalCost = input.duration * service.hourlyDuration;
 
     const mutation = `
       mutation CreateBooking($input: CreateBookingInput!) {
@@ -180,7 +180,7 @@ export class SchedulingService {
           updatedAt
           service {
             title
-            hourlyRate
+            hourlyDuration
             user {
               firstName
               lastName
@@ -292,7 +292,7 @@ export class SchedulingService {
             service {
               title
               category
-              hourlyRate
+              hourlyDuration
             }
             provider {
               firstName
@@ -388,7 +388,7 @@ export class SchedulingService {
         getService(id: $id) {
           id
           title
-          hourlyRate
+          hourlyDuration
           userId
         }
       }

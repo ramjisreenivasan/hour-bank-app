@@ -284,7 +284,7 @@ export class UserGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
                 isActive
                 tags
                 requiresScheduling
@@ -331,7 +331,7 @@ export class UserGraphQLService {
                   title
                   description
                   category
-                  hourlyRate
+                  hourlyDuration
                   isActive
                   tags
                   createdAt
@@ -369,7 +369,7 @@ export class UserGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
                 isActive
                 tags
                 requiresScheduling
@@ -412,7 +412,7 @@ export class UserGraphQLService {
                   title
                   description
                   category
-                  hourlyRate
+                  hourlyDuration
                   isActive
                   tags
                   createdAt
@@ -447,7 +447,7 @@ export class UserGraphQLService {
               title
               description
               category
-              hourlyRate
+              hourlyDuration
               isActive
               tags
               createdAt
@@ -498,7 +498,7 @@ export class UserGraphQLService {
               title
               description
               category
-              hourlyRate
+              hourlyDuration
               isActive
               tags
               createdAt
@@ -590,7 +590,7 @@ export class UserGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
                 isActive
                 tags
                 createdAt

@@ -49,7 +49,7 @@ export class TransactionGraphQLService {
                   title
                   description
                   category
-                  hourlyRate
+                  hourlyDuration
                 }
                 createdAt
                 completedAt
@@ -103,7 +103,7 @@ export class TransactionGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
               }
               createdAt
               completedAt
@@ -161,7 +161,7 @@ export class TransactionGraphQLService {
                   title
                   description
                   category
-                  hourlyRate
+                  hourlyDuration
                 }
                 createdAt
                 completedAt
@@ -220,7 +220,7 @@ export class TransactionGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
               }
               createdAt
               completedAt
@@ -293,7 +293,7 @@ export class TransactionGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
               }
               createdAt
               completedAt
@@ -357,7 +357,7 @@ export class TransactionGraphQLService {
                 title
                 description
                 category
-                hourlyRate
+                hourlyDuration
               }
               createdAt
               completedAt
@@ -407,7 +407,7 @@ export class TransactionGraphQLService {
               title
               description
               category
-              hourlyRate
+              hourlyDuration
               user {
                 id
                 firstName
@@ -467,7 +467,7 @@ export class TransactionGraphQLService {
               title
               description
               category
-              hourlyRate
+              hourlyDuration
             }
           }
         `,
@@ -561,7 +561,7 @@ export class TransactionGraphQLService {
                   title
                   description
                   category
-                  hourlyRate
+                  hourlyDuration
                 }
                 createdAt
                 completedAt

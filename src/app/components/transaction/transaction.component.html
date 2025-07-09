@@ -76,12 +76,12 @@
                 <span class="value">{{ transaction.hoursSpent }}</span>
               </div>
               <div class="detail-item">
-                <span class="label">Rate:</span>
-                <span class="value">{{ getServiceById(transaction.serviceId)?.hourlyRate }} hrs</span>
+                <span class="label">Duration:</span>
+                <span class="value">{{ getServiceById(transaction.serviceId)?.hourlyDuration }} hours</span>
               </div>
               <div class="detail-item">
                 <span class="label">Total Cost:</span>
-                <span class="value">{{ transaction.hoursSpent * (getServiceById(transaction.serviceId)?.hourlyRate || 0) }} hrs</span>
+                <span class="value">{{ transaction.hoursSpent * (getServiceById(transaction.serviceId)?.hourlyDuration || 0) }} hours</span>
               </div>
               <div class="detail-item">
                 <span class="label">Date:</span>

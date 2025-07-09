@@ -82,7 +82,7 @@ export const createService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       tags
       requiresScheduling
       minBookingHours
@@ -107,7 +107,7 @@ export const updateService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       tags
       requiresScheduling
       minBookingHours
@@ -132,7 +132,7 @@ export const deleteService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       tags
       requiresScheduling
       minBookingHours

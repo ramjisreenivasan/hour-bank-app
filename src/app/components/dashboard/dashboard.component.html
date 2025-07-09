@@ -70,9 +70,9 @@
           <button 
             class="btn btn-primary service-request-btn"
             (click)="requestService(service)"
-            [disabled]="(currentUser?.bankHours || 0) < service.hourlyRate"
+            [disabled]="(currentUser?.bankHours || 0) < service.hourlyDuration"
           >
-            {{ (currentUser?.bankHours || 0) < service.hourlyRate ? 'Insufficient Hours' : 'Request Service' }}
+            {{ (currentUser?.bankHours || 0) < service.hourlyDuration ? 'Insufficient Hours' : 'Request Service' }}
           </button>
         </div>
       </div>

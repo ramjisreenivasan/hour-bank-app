@@ -20,7 +20,7 @@ import { AuthService } from '../../services/auth.service';
           </p>
           <p class="hourly-rate">
             <i class="fas fa-clock"></i>
-            {{ service.hourlyRate }} bank hours per hour
+            {{ service.hourlyDuration }} bank hours per hour
           </p>
         </div>
       </div>
@@ -484,7 +484,7 @@ export class BookingComponent implements OnInit {
   }
 
   private calculateTotalCost(): void {
-    this.totalCost = this.selectedDuration * this.service.hourlyRate;
+    this.totalCost = this.selectedDuration * this.service.hourlyDuration;
   }
 
   canBook(): boolean {
