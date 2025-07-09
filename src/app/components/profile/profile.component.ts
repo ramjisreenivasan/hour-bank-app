@@ -75,10 +75,6 @@ export class ProfileComponent implements OnInit {
     const userId = this.route.snapshot.paramMap.get('id');
     console.log('🔍 DEBUG: Route userId parameter:', userId);
     
-    // TEMPORARY: Force display test services for debugging
-    // Remove this line once the issue is resolved
-    this.forceDisplayTestServices();
-    
     if (userId) {
       // Load specific user profile
       console.log('🔍 DEBUG: Loading specific user profile for:', userId);
