@@ -71,13 +71,21 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('🔍 DEBUG: ProfileComponent ngOnInit called');
     const userId = this.route.snapshot.paramMap.get('id');
+    console.log('🔍 DEBUG: Route userId parameter:', userId);
+    
+    // TEMPORARY: Force display test services for debugging
+    // Remove this line once the issue is resolved
+    this.forceDisplayTestServices();
     
     if (userId) {
       // Load specific user profile
+      console.log('🔍 DEBUG: Loading specific user profile for:', userId);
       this.loadUserProfile(userId);
     } else {
       // No user ID provided - check if user is authenticated and load their own profile
+      console.log('🔍 DEBUG: No userId in route, loading current user profile');
       this.loadCurrentUserProfile();
     }
   }
@@ -130,19 +138,23 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserProfile(userId: string) {
+    console.log('🔍 DEBUG: Loading user profile for:', userId);
     this.loading = true;
     this.lastAction = 'loadUserProfile';
     this.clearError();
 
     this.userService.getUser(userId).subscribe({
       next: (user) => {
+        console.log('🔍 DEBUG: User profile loaded:', user);
         this.loading = false;
         if (user) {
           this.user = { ...user };
           this.originalUser = { ...user };
+          console.log('🔍 DEBUG: About to load user services for:', userId);
           // Load user's services
           this.loadUserServices(userId);
         } else {
+          console.log('🔍 DEBUG: User not found for ID:', userId);
           // User not found - this will be logged by the UserService
           this.handleError(
             new Error(`User not found: ${userId}`),
@@ -449,17 +461,27 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserServices(userId: string) {
+    console.log('🔍 DEBUG: Loading services for user:', userId);
+    
     this.serviceService.getServicesByUserId(userId).subscribe({
       next: (result) => {
+        console.log('🔍 DEBUG: API Response:', result);
+        console.log('🔍 DEBUG: Services count:', result.items?.length || 0);
+        
         this.userServices = result.items;
         
         // If no services found, add some mock data for testing
         if (this.userServices.length === 0) {
+          console.log('🔍 DEBUG: No services found, adding mock data');
           this.addMockServicesForTesting(userId);
+          console.log('🔍 DEBUG: Mock services added:', this.userServices.length);
+        } else {
+          console.log('🔍 DEBUG: Services loaded successfully:', this.userServices);
         }
       },
       error: (error) => {
-        console.error('Error loading user services:', error);
+        console.error('🔍 DEBUG: Error loading user services:', error);
+        console.log('🔍 DEBUG: Adding mock data due to error');
         // Fallback to mock data if API fails
         this.addMockServicesForTesting(userId);
       }
@@ -467,6 +489,8 @@ export class ProfileComponent implements OnInit {
   }
 
   private addMockServicesForTesting(userId: string) {
+    console.log('🔍 DEBUG: Adding mock services for user:', userId);
+    
     // Add mock services for testing purposes
     this.userServices = [
       {
@@ -496,6 +520,9 @@ export class ProfileComponent implements OnInit {
         updatedAt: new Date()
       }
     ];
+    
+    console.log('🔍 DEBUG: Mock services created:', this.userServices.length);
+    console.log('🔍 DEBUG: Mock services data:', this.userServices);
   }
 
   addTag() {
@@ -555,6 +582,53 @@ export class ProfileComponent implements OnInit {
       this.handleError(error as Error, 'saveService');
       this.isSaving = false;
     }
+  }
+
+  // Test method to force display services - for debugging
+  forceDisplayTestServices() {
+    console.log('🔍 DEBUG: Forcing test services display');
+    this.userServices = [
+      {
+        id: 'test-1',
+        userId: 'current-user',
+        title: 'Test Service 1 - Forced Display',
+        description: 'This is a test service to verify the UI is working correctly',
+        category: 'Technology',
+        hourlyDuration: 2,
+        tags: ['test', 'debug', 'ui-test'],
+        isActive: true,
+        requiresScheduling: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 'test-2',
+        userId: 'current-user',
+        title: 'Test Service 2 - UI Verification',
+        description: 'Another test service to ensure multiple services display correctly',
+        category: 'Education',
+        hourlyDuration: 1,
+        tags: ['teaching', 'test', 'verification'],
+        isActive: true,
+        requiresScheduling: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 'test-3',
+        userId: 'current-user',
+        title: 'Test Service 3 - Inactive Service',
+        description: 'This service is inactive to test the status display',
+        category: 'Creative',
+        hourlyDuration: 3,
+        tags: ['design', 'inactive', 'test'],
+        isActive: false,
+        requiresScheduling: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ];
+    console.log('🔍 DEBUG: Forced test services:', this.userServices);
   }
 
   toggleServiceStatus(service: Service) {
