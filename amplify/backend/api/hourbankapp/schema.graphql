@@ -50,7 +50,7 @@ type Service @model @auth(rules: [
   title: String!
   description: String!
   category: String! @index(name: "byCategory")
-  hourlyRate: Float!
+  hourlyDuration: Float!
   isActive: Boolean!
   tags: [String!]!
   
@@ -400,7 +400,7 @@ type Query {
     query: String
     category: String
     minRating: Float
-    maxHourlyRate: Float
+    maxHourlyDuration: Float
     tags: [String]
     isActive: Boolean
     limit: Int

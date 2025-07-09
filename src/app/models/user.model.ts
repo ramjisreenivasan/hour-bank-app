@@ -27,7 +27,7 @@ export interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyDuration: number; // duration in hours
+  hourlyDuration: number; // Standardized on hourlyDuration throughout the application
   isActive: boolean;
   tags: string[];
   

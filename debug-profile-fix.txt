@@ -1,0 +1,64 @@
+
+// Add this to your profile.component.ts in the loadUserServices method
+// Replace the existing method with this debug version:
+
+loadUserServices(userId: string) {
+    console.log('🔍 DEBUG: Loading services for user:', userId);
+    
+    this.serviceService.getServicesByUserId(userId).subscribe({
+        next: (result) => {
+            console.log('🔍 DEBUG: API Response:', result);
+            console.log('🔍 DEBUG: Services count:', result.items?.length || 0);
+            
+            this.userServices = result.items;
+            
+            // Force mock data for testing
+            if (this.userServices.length === 0) {
+                console.log('🔍 DEBUG: No services found, adding mock data');
+                this.addMockServicesForTesting(userId);
+                console.log('🔍 DEBUG: Mock services added:', this.userServices.length);
+            }
+        },
+        error: (error) => {
+            console.error('🔍 DEBUG: Error loading services:', error);
+            console.log('🔍 DEBUG: Adding mock data due to error');
+            this.addMockServicesForTesting(userId);
+        }
+    });
+}
+
+// Also add this method to force display services:
+forceDisplayTestServices() {
+    this.userServices = [
+        {
+            id: 'test-1',
+            userId: 'current-user',
+            title: 'Test Service 1',
+            description: 'This is a test service to verify display',
+            category: 'Technology',
+            hourlyDuration: 2,
+            tags: ['test', 'debug'],
+            isActive: true,
+            requiresScheduling: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        },
+        {
+            id: 'test-2',
+            userId: 'current-user',
+            title: 'Test Service 2',
+            description: 'Another test service',
+            category: 'Education',
+            hourlyDuration: 1,
+            tags: ['teaching', 'test'],
+            isActive: true,
+            requiresScheduling: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+    ];
+    console.log('🔍 DEBUG: Forced test services:', this.userServices);
+}
+
+// Call this method in ngOnInit for testing:
+// this.forceDisplayTestServices();
