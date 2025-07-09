@@ -27,12 +27,3 @@ export function getRandomServiceDurations(count: number): number[] {
 export function formatServiceDuration(hours: number): string {
   return hours === 1 ? '1 hour' : `${hours} hours`;
 }
-
-/**
- * Format service rate for display
- * @param hours Number of hours
- * @returns Formatted string (e.g., "2 hrs", "1 hr")
- */
-export function formatServiceRate(hours: number): string {
-  return hours === 1 ? '1 hr' : `${hours} hrs`;
-}

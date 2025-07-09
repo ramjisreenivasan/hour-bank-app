@@ -55,7 +55,7 @@ interface Service {
               <h1 class="service-title">{{ service.title }}</h1>
               <div class="service-meta">
                 <span class="category-badge">{{ service.category }}</span>
-                <span class="rate-display">{{ service.hourlyDuration }} bank hours/hour</span>
+                <span class="duration-display">{{ service.hourlyDuration }} hours</span>
               </div>
             </div>
             
@@ -111,8 +111,8 @@ interface Service {
                 <span class="detail-value">{{ service.category }}</span>
               </div>
               <div class="detail-item">
-                <span class="detail-label">Rate</span>
-                <span class="detail-value">{{ service.hourlyDuration }} bank hours/hour</span>
+                <span class="detail-label">Duration</span>
+                <span class="detail-value">{{ service.hourlyDuration }} hours</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Available</span>

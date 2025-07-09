@@ -40,37 +40,37 @@ export class LandingComponent {
       icon: '💻',
       title: 'Web Development',
       description: 'Website creation, coding lessons, and technical consulting',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     },
     {
       icon: '🎨',
       title: 'Graphic Design',
       description: 'Logo design, branding, and creative visual solutions',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     },
     {
       icon: '📚',
       title: 'Language Tutoring',
       description: 'Language lessons, conversation practice, and cultural exchange',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     },
     {
       icon: '🔧',
       title: 'Home Repair',
       description: 'Handyman services, maintenance, and DIY guidance',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     },
     {
       icon: '🍳',
       title: 'Cooking Lessons',
       description: 'Culinary skills, meal prep, and nutrition guidance',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     },
     {
       icon: '🧘',
       title: 'Wellness Coaching',
       description: 'Fitness training, meditation, and mental health support',
-      rate: this.getRandomHours() + ' hours'
+      duration: this.getRandomHours() + ' hours'
     }
   ];
 

@@ -214,8 +214,8 @@ interface Service {
 
             <div class="service-stats">
               <div class="stat">
-                <span class="stat-label">Rate:</span>
-                <span class="stat-value">{{ service.hourlyDuration }} hr/hr</span>
+                <span class="stat-label">Duration:</span>
+                <span class="stat-value">{{ service.hourlyDuration }} hours</span>
               </div>
               <div class="stat">
                 <span class="stat-label">Bookings:</span>
@@ -230,7 +230,7 @@ interface Service {
               </div>
               <div class="stat">
                 <span class="stat-label">Earned:</span>
-                <span class="stat-value">{{ service.totalEarnings }} hrs</span>
+                <span class="stat-value">{{ service.totalEarnings }} hours</span>
               </div>
             </div>
 

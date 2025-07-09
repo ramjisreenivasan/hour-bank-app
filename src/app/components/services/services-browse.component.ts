@@ -121,8 +121,8 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
               <option value="rating">Highest Rated</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
+              <option value="duration-low">Duration: Short to Long</option>
+              <option value="duration-high">Duration: Long to Short</option>
               <option value="popular">Most Popular</option>
             </select>
           </div>
@@ -172,7 +172,7 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
                 <div class="service-category">
                   <span class="category-badge">{{ service.category }}</span>
                 </div>
-                <div class="service-rate">{{ service.hourlyDuration }} hrs</div>
+                <div class="service-duration">{{ service.hourlyDuration }} hours</div>
               </div>
 
               <div class="card-content">
@@ -222,7 +222,7 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
               <div class="list-item-content">
                 <div class="list-item-header">
                   <h3 class="service-title">{{ service.title }}</h3>
-                  <div class="service-rate">{{ service.hourlyDuration }} hrs/hour</div>
+                  <div class="service-duration">{{ service.hourlyDuration }} hours</div>
                 </div>
                 
                 <p class="service-description">{{ service.description }}</p>
@@ -657,10 +657,10 @@ export class ServicesBrowseComponent implements OnInit {
       case 'rating':
         this.filteredServices.sort((a, b) => (b.provider?.rating || 0) - (a.provider?.rating || 0));
         break;
-      case 'price-low':
+      case 'duration-low':
         this.filteredServices.sort((a, b) => a.hourlyDuration - b.hourlyDuration);
         break;
-      case 'price-high':
+      case 'duration-high':
         this.filteredServices.sort((a, b) => b.hourlyDuration - a.hourlyDuration);
         break;
       case 'popular':
