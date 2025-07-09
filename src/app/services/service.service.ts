@@ -110,6 +110,19 @@ export class ServiceService {
           extensions: error.extensions
         });
         
+        // Log each GraphQL error in detail
+        if (error.errors && Array.isArray(error.errors)) {
+          console.error('🔍 DEBUG: GraphQL errors breakdown:');
+          error.errors.forEach((gqlError, index) => {
+            console.error(`  Error ${index + 1}:`, {
+              message: gqlError.message,
+              locations: gqlError.locations,
+              path: gqlError.path,
+              extensions: gqlError.extensions
+            });
+          });
+        }
+        
         errorLogger.logApiError(
           '/graphql',
           'POST',
