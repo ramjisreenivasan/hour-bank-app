@@ -5,21 +5,16 @@ const https = require('https');
 const graphqlEndpoint = 'https://fxghyoyyabhsljplild6be6evy.appsync-api.us-east-1.amazonaws.com/graphql';
 const apiKey = 'da2-7p4lacsjwbdabgmhywkvhc7wwi';
 
-// Test query with hourlyDuration only
+// Test query to check available fields in Service type
 const testQuery = {
   query: `
     query TestServiceFields {
-      listServices(limit: 3) {
+      listServices(limit: 1) {
         items {
           id
           title
-          description
-          category
+          hourlyRate
           hourlyDuration
-          isActive
-          tags
-          userId
-          createdAt
           __typename
         }
       }
@@ -41,7 +36,7 @@ const options = {
   }
 };
 
-console.log('Testing GraphQL API with hourlyDuration field...\n');
+console.log('Testing GraphQL API to check Service field availability...\n');
 
 const req = https.request(options, (res) => {
   let data = '';
@@ -67,19 +62,6 @@ const req = https.request(options, (res) => {
       if (response.data) {
         console.log('GraphQL Response Data:');
         console.log(JSON.stringify(response.data, null, 2));
-        
-        const services = response.data.listServices?.items || [];
-        console.log(`\nFound ${services.length} services`);
-        
-        services.forEach((service, index) => {
-          console.log(`\nService ${index + 1}:`);
-          console.log(`  ID: ${service.id}`);
-          console.log(`  Title: ${service.title}`);
-          console.log(`  Category: ${service.category}`);
-          console.log(`  Hourly Duration: ${service.hourlyDuration}`);
-          console.log(`  Is Active: ${service.isActive}`);
-          console.log(`  User ID: ${service.userId}`);
-        });
       }
       
     } catch (error) {

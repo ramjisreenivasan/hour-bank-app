@@ -1,231 +1,249 @@
 #!/usr/bin/env node
 
-console.log('🔧 Fixing null hourlyDuration values...\n');
+const https = require('https');
 
 const API_ENDPOINT = 'https://fxghyoyyabhsljplild6be6evy.appsync-api.us-east-1.amazonaws.com/graphql';
 const API_KEY = 'da2-7p4lacsjwbdabgmhywkvhc7wwi';
 
-// GraphQL queries and mutations
-const listServicesQuery = `
-  query ListServices {
+console.log('🔧 Fixing null hourlyDuration values...\n');
+
+// Query to get services without the problematic hourlyDuration field first
+const listServicesBasicQuery = `
+  query ListServicesBasic {
     listServices(limit: 100) {
       items {
         id
         userId
         title
         category
-        hourlyDuration
+        description
         isActive
+        tags
+        createdAt
+        updatedAt
       }
-      nextToken
     }
   }
 `;
 
+// Mutation to update service with default hourlyDuration
 const updateServiceMutation = `
   mutation UpdateService($input: UpdateServiceInput!) {
     updateService(input: $input) {
       id
-      userId
       title
-      category
       hourlyDuration
       isActive
     }
   }
 `;
 
-async function graphqlRequest(query, variables = {}) {
-    try {
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': API_KEY
-            },
-            body: JSON.stringify({ query, variables })
-        });
-        
-        const result = await response.json();
-        
-        if (result.errors) {
-            console.error('❌ GraphQL Errors:', result.errors);
-            throw new Error(`GraphQL Error: ${result.errors[0].message}`);
+async function makeGraphQLRequest(query, variables = {}) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify({ query, variables });
+    
+    const options = {
+      hostname: 'fxghyoyyabhsljplild6be6evy.appsync-api.us-east-1.amazonaws.com',
+      port: 443,
+      path: '/graphql',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+        'x-api-key': API_KEY
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          const response = JSON.parse(data);
+          
+          if (response.errors) {
+            console.log('GraphQL Errors:', response.errors);
+            reject(new Error(response.errors[0].message));
+          } else {
+            resolve(response.data);
+          }
+        } catch (error) {
+          reject(error);
         }
-        
-        return result.data;
-        
-    } catch (error) {
-        console.error('❌ Request Error:', error.message);
-        throw error;
-    }
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(error);
+    });
+
+    req.write(postData);
+    req.end();
+  });
 }
 
-// Default hourly duration values based on service categories
-const getDefaultHourlyDuration = (service) => {
-    const categoryDefaults = {
-        'Technology': 4,
-        'Creative': 3,
-        'Education': 2,
-        'Business': 3,
-        'Health & Wellness': 2,
-        'Home & Garden': 3,
-        'Other': 2
-    };
-    
-    return categoryDefaults[service.category] || 2;
-};
-
 async function fixNullHourlyDuration() {
-    console.log('📋 Step 1: Fetching all services...');
+  try {
+    console.log('📋 Step 1: Fetching services (without hourlyDuration field)...');
     
-    try {
-        const data = await graphqlRequest(listServicesQuery);
-        const services = data.listServices.items;
-        
-        console.log(`✅ Found ${services.length} services`);
-        
-        if (services.length === 0) {
-            console.log('No services found');
-            return;
-        }
-        
-        // Find services with null hourlyDuration
-        const servicesToFix = services.filter(service => 
-            service.hourlyDuration === null || service.hourlyDuration === undefined
-        );
-        
-        console.log(`📊 Services with null hourlyDuration: ${servicesToFix.length}`);
-        
-        if (servicesToFix.length === 0) {
-            console.log('✅ All services already have hourlyDuration values');
-            
-            // Show current state
-            console.log('\n📋 Current Services:');
-            services.forEach((service, index) => {
-                console.log(`  ${index + 1}. ${service.title}`);
-                console.log(`     - Category: ${service.category}`);
-                console.log(`     - Duration: ${service.hourlyDuration || 'null'} hours`);
-                console.log(`     - Active: ${service.isActive}`);
-                console.log('');
-            });
-            
-            return;
-        }
-        
-        console.log('\n📋 Services to fix:');
-        servicesToFix.forEach((service, index) => {
-            const defaultDuration = getDefaultHourlyDuration(service);
-            console.log(`  ${index + 1}. ${service.title} (${service.category})`);
-            console.log(`     - Current hourlyDuration: ${service.hourlyDuration || 'null'}`);
-            console.log(`     - Will set to: ${defaultDuration} hours`);
-            console.log('');
-        });
-        
-        console.log('🔄 Step 2: Updating services with default hourlyDuration values...');
-        
-        let successCount = 0;
-        let errorCount = 0;
-        
-        for (const service of servicesToFix) {
-            try {
-                const defaultDuration = getDefaultHourlyDuration(service);
-                console.log(`🔄 Updating: ${service.title} → ${defaultDuration} hours...`);
-                
-                const updateInput = {
-                    id: service.id,
-                    hourlyDuration: defaultDuration
-                };
-                
-                await graphqlRequest(updateServiceMutation, { input: updateInput });
-                
-                console.log(`✅ Updated: ${service.title} (${defaultDuration} hours)`);
-                successCount++;
-                
-                // Small delay to avoid rate limiting
-                await new Promise(resolve => setTimeout(resolve, 200));
-                
-            } catch (error) {
-                console.error(`❌ Failed to update ${service.title}:`, error.message);
-                errorCount++;
-            }
-        }
-        
-        console.log('\n📊 Update Summary:');
-        console.log(`✅ Successfully updated: ${successCount} services`);
-        console.log(`❌ Failed to update: ${errorCount} services`);
-        
-        if (successCount > 0) {
-            console.log('\n🎉 Update completed successfully!');
-            console.log('\nNext steps:');
-            console.log('1. Test the profile page');
-            console.log('2. Verify services load correctly');
-            console.log('3. Adjust hourlyDuration values as needed');
-        }
-        
-    } catch (error) {
-        console.error('❌ Update failed:', error.message);
-        process.exit(1);
+    const data = await makeGraphQLRequest(listServicesBasicQuery);
+    const services = data.listServices.items;
+    
+    console.log(`✅ Found ${services.length} services`);
+    
+    if (services.length === 0) {
+      console.log('No services found');
+      return;
     }
+    
+    console.log('\n📋 Services found:');
+    services.forEach((service, index) => {
+      console.log(`  ${index + 1}. ${service.title} (${service.category})`);
+      console.log(`     - ID: ${service.id}`);
+      console.log(`     - Active: ${service.isActive}`);
+      console.log('');
+    });
+    
+    console.log('🔄 Step 2: Updating services with default hourlyDuration...');
+    
+    let successCount = 0;
+    let errorCount = 0;
+    
+    for (const service of services) {
+      try {
+        console.log(`🔄 Updating: ${service.title}...`);
+        
+        // Set a default hourlyDuration based on category or use 1.0 as default
+        let defaultDuration = 1.0;
+        
+        // Set different defaults based on category
+        switch (service.category?.toLowerCase()) {
+          case 'technology':
+          case 'programming':
+          case 'software':
+            defaultDuration = 2.0;
+            break;
+          case 'tutoring':
+          case 'education':
+          case 'teaching':
+            defaultDuration = 1.5;
+            break;
+          case 'consulting':
+          case 'business':
+            defaultDuration = 1.0;
+            break;
+          case 'creative':
+          case 'design':
+          case 'art':
+            defaultDuration = 2.0;
+            break;
+          case 'fitness':
+          case 'health':
+          case 'wellness':
+            defaultDuration = 1.0;
+            break;
+          case 'home services':
+          case 'maintenance':
+          case 'repair':
+            defaultDuration = 2.0;
+            break;
+          default:
+            defaultDuration = 1.5;
+        }
+        
+        const updateInput = {
+          id: service.id,
+          hourlyDuration: defaultDuration
+        };
+        
+        await makeGraphQLRequest(updateServiceMutation, { input: updateInput });
+        
+        console.log(`✅ Updated: ${service.title} (${defaultDuration} hours)`);
+        successCount++;
+        
+        // Small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+      } catch (error) {
+        console.error(`❌ Failed to update ${service.title}:`, error.message);
+        errorCount++;
+      }
+    }
+    
+    console.log('\n📊 Update Summary:');
+    console.log(`✅ Successfully updated: ${successCount} services`);
+    console.log(`❌ Failed to update: ${errorCount} services`);
+    
+    if (successCount > 0) {
+      console.log('\n🎉 Fix completed successfully!');
+      console.log('\nNext steps:');
+      console.log('1. Test the dashboard page to see if services load correctly');
+      console.log('2. Check the profile page for service management');
+      console.log('3. Verify no GraphQL errors in browser console');
+    }
+    
+  } catch (error) {
+    console.error('❌ Fix failed:', error.message);
+    process.exit(1);
+  }
 }
 
 async function verifyFix() {
-    console.log('\n🔍 Step 3: Verifying fix...');
-    
-    try {
-        const data = await graphqlRequest(listServicesQuery);
-        const services = data.listServices.items;
-        
-        console.log('📋 Post-update service state:');
-        services.forEach((service, index) => {
-            console.log(`  ${index + 1}. ${service.title}`);
-            console.log(`     - Category: ${service.category}`);
-            console.log(`     - Duration: ${service.hourlyDuration || 'null'} hours`);
-            console.log(`     - Active: ${service.isActive}`);
-            
-            if (service.hourlyDuration && service.hourlyDuration > 0) {
-                console.log('     ✅ Has valid hourlyDuration');
-            } else {
-                console.log('     ⚠️  Still has null/invalid hourlyDuration');
-            }
-            console.log('');
-        });
-        
-        const servicesWithValidDuration = services.filter(s => s.hourlyDuration && s.hourlyDuration > 0);
-        console.log(`✅ Services with valid hourlyDuration: ${servicesWithValidDuration.length}/${services.length}`);
-        
-    } catch (error) {
-        console.error('❌ Verification failed:', error.message);
+  console.log('\n🔍 Step 3: Verifying the fix...');
+  
+  // Try to query with hourlyDuration to see if it works now
+  const testQuery = `
+    query TestHourlyDuration {
+      listServices(limit: 5) {
+        items {
+          id
+          title
+          category
+          hourlyDuration
+          isActive
+        }
+      }
     }
+  `;
+  
+  try {
+    const data = await makeGraphQLRequest(testQuery);
+    const services = data.listServices.items;
+    
+    console.log('✅ Services now loading correctly with hourlyDuration:');
+    services.forEach((service, index) => {
+      console.log(`  ${index + 1}. ${service.title}`);
+      console.log(`     - Category: ${service.category}`);
+      console.log(`     - Hourly Duration: ${service.hourlyDuration} hours`);
+      console.log(`     - Active: ${service.isActive}`);
+      console.log('');
+    });
+    
+    console.log(`✅ Successfully loaded ${services.length} services with hourlyDuration`);
+    
+  } catch (error) {
+    console.error('❌ Verification failed:', error.message);
+    console.log('The services may still have null hourlyDuration values');
+  }
 }
 
 async function main() {
-    console.log('🔧 Fix Null HourlyDuration Tool');
-    console.log('================================');
-    console.log('Setting default hourlyDuration values for existing services\n');
-    
-    await fixNullHourlyDuration();
-    await verifyFix();
-    
-    console.log('\n✅ Fix process complete!');
-    console.log('\n📋 Default Duration Values Used:');
-    console.log('- Technology: 4 hours');
-    console.log('- Creative: 3 hours');
-    console.log('- Education: 2 hours');
-    console.log('- Business: 3 hours');
-    console.log('- Health & Wellness: 2 hours');
-    console.log('- Home & Garden: 3 hours');
-    console.log('- Other: 2 hours');
-    console.log('\nYou can adjust these values in the profile page as needed.');
-}
-
-// Check if we have fetch available
-if (typeof fetch === 'undefined') {
-    console.log('❌ This script requires Node.js 18+ or a fetch polyfill');
-    process.exit(1);
+  console.log('🔧 HourBank Service Fix Tool');
+  console.log('============================');
+  console.log('Fixing null hourlyDuration values\n');
+  
+  await fixNullHourlyDuration();
+  await verifyFix();
+  
+  console.log('\n✅ Fix process complete!');
+  console.log('\nYou can now test the dashboard page to see if services load correctly.');
 }
 
 main().catch(error => {
-    console.error('❌ Fix process failed:', error);
-    process.exit(1);
+  console.error('❌ Fix failed:', error);
+  process.exit(1);
 });

@@ -6,7 +6,7 @@ export const searchServices = /* GraphQL */ `
     $query: String
     $category: String
     $minRating: Float
-    $maxHourlyRate: Float
+    $maxHourlyDuration: Float
     $tags: [String]
     $isActive: Boolean
     $limit: Int
@@ -16,7 +16,7 @@ export const searchServices = /* GraphQL */ `
       query: $query
       category: $category
       minRating: $minRating
-      maxHourlyRate: $maxHourlyRate
+      maxHourlyDuration: $maxHourlyDuration
       tags: $tags
       isActive: $isActive
       limit: $limit
@@ -28,7 +28,7 @@ export const searchServices = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -68,7 +68,7 @@ export const getTrendingServices = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -123,7 +123,7 @@ export const getRecommendedServices = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -286,7 +286,7 @@ export const getBookingsByDateRange = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -480,7 +480,7 @@ export const getService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -540,7 +540,7 @@ export const listServices = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -573,7 +573,7 @@ export const getServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -658,7 +658,7 @@ export const getBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -781,7 +781,7 @@ export const getScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -898,7 +898,7 @@ export const getTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1574,7 +1574,7 @@ export const servicesByUserId = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1612,7 +1612,7 @@ export const servicesByCategory = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling

@@ -54,7 +54,7 @@ export const onTransactionUpdate = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -208,7 +208,7 @@ export const onBookingUpdate = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -296,7 +296,7 @@ export const onScheduleUpdate = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -594,7 +594,7 @@ export const onCreateService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -649,7 +649,7 @@ export const onUpdateService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -704,7 +704,7 @@ export const onDeleteService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -769,7 +769,7 @@ export const onCreateServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -822,7 +822,7 @@ export const onUpdateServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -875,7 +875,7 @@ export const onDeleteServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -932,7 +932,7 @@ export const onCreateBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1026,7 +1026,7 @@ export const onUpdateBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1120,7 +1120,7 @@ export const onDeleteBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1211,7 +1211,7 @@ export const onCreateScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1265,7 +1265,7 @@ export const onUpdateScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1319,7 +1319,7 @@ export const onDeleteScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1409,7 +1409,7 @@ export const onCreateTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1513,7 +1513,7 @@ export const onUpdateTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1617,7 +1617,7 @@ export const onDeleteTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling

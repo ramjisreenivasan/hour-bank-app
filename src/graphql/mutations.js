@@ -276,7 +276,7 @@ export const createService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -334,7 +334,7 @@ export const updateService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -392,7 +392,7 @@ export const deleteService = /* GraphQL */ `
       title
       description
       category
-      hourlyRate
+      hourlyDuration
       isActive
       tags
       requiresScheduling
@@ -458,7 +458,7 @@ export const createServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -512,7 +512,7 @@ export const updateServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -566,7 +566,7 @@ export const deleteServiceSchedule = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -626,7 +626,7 @@ export const createBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -723,7 +723,7 @@ export const updateBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -820,7 +820,7 @@ export const deleteBooking = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -912,7 +912,7 @@ export const createScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -967,7 +967,7 @@ export const updateScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1022,7 +1022,7 @@ export const deleteScheduleException = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1113,7 +1113,7 @@ export const createTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1218,7 +1218,7 @@ export const updateTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
@@ -1323,7 +1323,7 @@ export const deleteTransaction = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         isActive
         tags
         requiresScheduling
