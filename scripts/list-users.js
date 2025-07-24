@@ -1,154 +1,142 @@
-#!/usr/bin/env node
+const https = require('https');
 
-/**
- * Utility script to list all users in the database
- * Helps identify the correct user ID for other scripts
- */
+const API_ENDPOINT = 'https://fxghyoyyabhsljplild6be6evy.appsync-api.us-east-1.amazonaws.com/graphql';
+const API_KEY = 'da2-7p4lacsjwbdabgmhywkvhc7wwi';
 
-const fs = require('fs');
-const path = require('path');
+console.log('📋 Listing all users in the database...');
+console.log('');
 
-// Read Amplify configuration
-let amplifyConfig;
-try {
-  const configPath = path.join(__dirname, '../src/amplifyconfiguration.json');
-  amplifyConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-} catch (error) {
-  console.error('❌ Could not read amplifyconfiguration.json:', error.message);
-  process.exit(1);
-}
+// Function to make GraphQL requests
+function makeGraphQLRequest(query, variables = {}) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify({
+      query: query,
+      variables: variables
+    });
 
-const LIST_USERS_QUERY = `
-  query ListUsers {
-    listUsers {
-      items {
-        id
-        email
-        username
-        firstName
-        lastName
-        bankHours
-        rating
-        totalTransactions
-        createdAt
-        updatedAt
+    const options = {
+      hostname: 'fxghyoyyabhsljplild6be6evy.appsync-api.us-east-1.amazonaws.com',
+      port: 443,
+      path: '/graphql',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'Content-Length': data.length
       }
-    }
-  }
-`;
+    };
 
-async function makeGraphQLRequest(query, variables = {}) {
-  const graphqlEndpoint = amplifyConfig.aws_appsync_graphqlEndpoint;
-  const apiKey = amplifyConfig.aws_appsync_apiKey;
+    const req = https.request(options, (res) => {
+      let responseData = '';
+      
+      res.on('data', (chunk) => {
+        responseData += chunk;
+      });
+      
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(responseData);
+          resolve(parsed);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
 
-  if (!graphqlEndpoint || !apiKey) {
-    throw new Error('GraphQL endpoint or API key not found in configuration');
-  }
+    req.on('error', (error) => {
+      reject(error);
+    });
 
-  const response = await fetch(graphqlEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey
-    },
-    body: JSON.stringify({
-      query,
-      variables
-    })
+    req.write(data);
+    req.end();
   });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const result = await response.json();
-  
-  if (result.errors) {
-    throw new Error(`GraphQL errors: ${JSON.stringify(result.errors, null, 2)}`);
-  }
-
-  return result;
 }
 
 async function listUsers() {
   try {
-    console.log('🔍 Fetching all users from database...\n');
+    const listUsersQuery = `
+      query ListUsers {
+        listUsers {
+          items {
+            id
+            email
+            username
+            firstName
+            lastName
+            bankHours
+            rating
+            totalTransactions
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+    `;
+
+    const result = await makeGraphQLRequest(listUsersQuery);
     
-    const result = await makeGraphQLRequest(LIST_USERS_QUERY);
-    const users = result.data?.listUsers?.items || [];
-    
-    if (users.length === 0) {
-      console.log('📭 No users found in the database.');
+    if (result.errors) {
+      console.log('❌ Error listing users:', JSON.stringify(result.errors, null, 2));
       return;
     }
 
-    console.log(`👥 Found ${users.length} user(s):\n`);
-    console.log('='.repeat(80));
+    const users = result.data.listUsers.items;
     
-    users.forEach((user, index) => {
-      console.log(`[${index + 1}] User Details:`);
-      console.log(`    ID: ${user.id}`);
-      console.log(`    Name: ${user.firstName} ${user.lastName}`);
-      console.log(`    Username: ${user.username}`);
-      console.log(`    Email: ${user.email}`);
-      console.log(`    Bank Hours: ${user.bankHours}`);
-      console.log(`    Rating: ${user.rating}`);
-      console.log(`    Total Transactions: ${user.totalTransactions}`);
-      console.log(`    Created: ${new Date(user.createdAt).toLocaleDateString()}`);
-      console.log(`    Updated: ${new Date(user.updatedAt).toLocaleDateString()}`);
-      console.log('-'.repeat(80));
-    });
-
-    // Find users named Ramji
-    const ramjiUsers = users.filter(user => 
-      user.firstName?.toLowerCase().includes('ramji') || 
-      user.lastName?.toLowerCase().includes('ramji') ||
-      user.username?.toLowerCase().includes('ramji')
-    );
-
-    if (ramjiUsers.length > 0) {
-      console.log('\n🎯 Users matching "Ramji":');
-      console.log('='.repeat(50));
-      ramjiUsers.forEach((user, index) => {
-        console.log(`[${index + 1}] ${user.firstName} ${user.lastName} (${user.username})`);
-        console.log(`    ID: ${user.id}`);
-        console.log(`    Email: ${user.email}`);
-        console.log('-'.repeat(50));
+    if (users.length === 0) {
+      console.log('📭 No users found in the database.');
+      console.log('');
+      console.log('💡 You may need to create a user first. Here\'s how:');
+      console.log('');
+      console.log('```javascript');
+      console.log('const createUserMutation = `');
+      console.log('  mutation CreateUser($input: CreateUserInput!) {');
+      console.log('    createUser(input: $input) {');
+      console.log('      id');
+      console.log('      email');
+      console.log('      username');
+      console.log('      firstName');
+      console.log('      lastName');
+      console.log('    }');
+      console.log('  }');
+      console.log('`;');
+      console.log('');
+      console.log('const input = {');
+      console.log('  email: "user@example.com",');
+      console.log('  username: "testuser",');
+      console.log('  firstName: "Test",');
+      console.log('  lastName: "User",');
+      console.log('  bankHours: 10.0,');
+      console.log('  skills: ["JavaScript", "React"],');
+      console.log('  rating: 5.0,');
+      console.log('  totalTransactions: 0');
+      console.log('};');
+      console.log('```');
+    } else {
+      console.log(`✅ Found ${users.length} user(s):`);
+      console.log('');
+      
+      users.forEach((user, index) => {
+        console.log(`👤 User ${index + 1}:`);
+        console.log(`   ID: ${user.id}`);
+        console.log(`   Email: ${user.email}`);
+        console.log(`   Username: ${user.username}`);
+        console.log(`   Name: ${user.firstName} ${user.lastName}`);
+        console.log(`   Bank Hours: ${user.bankHours}`);
+        console.log(`   Rating: ${user.rating}`);
+        console.log(`   Total Transactions: ${user.totalTransactions}`);
+        console.log(`   Created: ${user.createdAt}`);
+        console.log(`   Updated: ${user.updatedAt}`);
+        console.log('');
       });
-
-      if (ramjiUsers.length === 1) {
-        console.log(`\n💡 To add services for ${ramjiUsers[0].firstName}, use:`);
-        console.log(`    node scripts/add-services-simple.js ${ramjiUsers[0].id}`);
-      }
+      
+      console.log('💡 To update a user profile, use one of the IDs above.');
     }
 
   } catch (error) {
-    console.error('❌ Error fetching users:', error.message);
-    process.exit(1);
+    console.log('❌ Failed to list users:', error.message);
   }
 }
 
-// Main execution
-async function main() {
-  console.log('🏦 HourBank User List Utility');
-  console.log('=============================');
-  console.log(`Timestamp: ${new Date().toISOString()}\n`);
-
-  try {
-    await listUsers();
-    console.log('\n✨ User list completed successfully!');
-  } catch (error) {
-    console.error('\n💥 Script failed with error:', error.message);
-    process.exit(1);
-  }
-}
-
-// Handle script execution
-if (require.main === module) {
-  main().catch((error) => {
-    console.error('💥 Unhandled error:', error.message);
-    process.exit(1);
-  });
-}
-
-module.exports = { listUsers };
+// Run the function
+listUsers();
