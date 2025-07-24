@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HourBank</string>
+    <string name="title_activity_main">HourBank</string>
+    <string name="package_name">com.hourbank.app</string>
+    <string name="custom_url_scheme">com.hourbank.app</string>
+</resources>
