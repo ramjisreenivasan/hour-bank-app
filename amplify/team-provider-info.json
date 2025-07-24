@@ -15,14 +15,11 @@
       "auth": {
         "hourbankapp488f170c": {}
       },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d28saavnbxir8q",
-          "type": "manual"
-        }
-      },
       "api": {
         "hourbankapp": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
       }
     }
   }
