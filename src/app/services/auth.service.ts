@@ -25,19 +25,24 @@ export class AuthService {
 
   async checkAuthStatus(): Promise<void> {
     try {
+      console.log('Checking auth status...');
       const cognitoUser = await getCurrentUser();
       if (cognitoUser) {
+        console.log('Cognito user found:', cognitoUser.username);
         // Sync user mapping and get DynamoDB user data
         this.userMappingService.syncUserMapping(cognitoUser).subscribe({
           next: (mapping) => {
+            console.log('User mapping synced:', mapping);
             // Fetch complete user data from DynamoDB using the mapped ID
             this.userService.getUser(mapping.dynamoDbUserId).subscribe({
               next: (dynamoUser) => {
                 if (dynamoUser) {
+                  console.log('DynamoDB user data loaded');
                   // Use the complete user data from DynamoDB
                   this.currentUserSubject.next(dynamoUser);
                   this.isAuthenticatedSubject.next(true);
                 } else {
+                  console.log('Creating fallback user data');
                   // Fallback: create minimal user object if DynamoDB fetch fails
                   const userData: User = {
                     id: mapping.dynamoDbUserId,
@@ -82,6 +87,7 @@ export class AuthService {
             });
           },
           error: (error) => {
+            console.error('User mapping sync failed:', error);
             this.isAuthenticatedSubject.next(false);
             errorLogger.logAuthError(
               'checkAuthStatus_userMapping',
@@ -96,8 +102,12 @@ export class AuthService {
             );
           }
         });
+      } else {
+        console.log('No Cognito user found');
+        this.isAuthenticatedSubject.next(false);
       }
     } catch (error) {
+      console.error('Auth status check failed:', error);
       this.isAuthenticatedSubject.next(false);
       errorLogger.logAuthError(
         'checkAuthStatus',
@@ -153,6 +163,22 @@ export class AuthService {
       
       if (result.isSignedIn) {
         await this.checkAuthStatus();
+        
+        // Wait for authentication state to be properly set
+        return new Promise((resolve, reject) => {
+          const subscription = this.isAuthenticated$.subscribe(isAuthenticated => {
+            if (isAuthenticated) {
+              subscription.unsubscribe();
+              resolve();
+            }
+          });
+          
+          // Timeout after 10 seconds
+          setTimeout(() => {
+            subscription.unsubscribe();
+            reject(new Error('Authentication state update timeout'));
+          }, 10000);
+        });
       }
     } catch (error: any) {
       // Handle specific "already signed in" error
@@ -171,6 +197,22 @@ export class AuthService {
           
           if (result.isSignedIn) {
             await this.checkAuthStatus();
+            
+            // Wait for authentication state to be properly set
+            return new Promise((resolve, reject) => {
+              const subscription = this.isAuthenticated$.subscribe(isAuthenticated => {
+                if (isAuthenticated) {
+                  subscription.unsubscribe();
+                  resolve();
+                }
+              });
+              
+              // Timeout after 10 seconds
+              setTimeout(() => {
+                subscription.unsubscribe();
+                reject(new Error('Authentication state update timeout'));
+              }, 10000);
+            });
           }
         } catch (retryError) {
           errorLogger.logAuthError(
