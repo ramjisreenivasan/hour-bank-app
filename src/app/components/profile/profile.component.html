@@ -266,7 +266,9 @@
                     [(ngModel)]="newService.hourlyDuration"
                     name="hourlyDuration"
                     min="1"
+                    step="1"
                     class="form-control"
+                    (input)="onHourlyDurationChange($event)"
                     required
                     [disabled]="isSaving">
                 </div>

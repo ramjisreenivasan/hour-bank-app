@@ -9,6 +9,7 @@ import { UserMappingService } from '../../services/user-mapping.service';
 import { User, Service } from '../../models/user.model';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { errorLogger } from '../../utils/error-logger';
+import { normalizeHourlyDuration } from '../../utils/service-utils';
 
 @Component({
   selector: 'app-profile',
@@ -535,6 +536,13 @@ export class ProfileComponent implements OnInit {
     console.log('🔍 DEBUG: Mock services data:', this.userServices);
   }
 
+  onHourlyDurationChange(event: any): void {
+    const value = event.target.value;
+    if (value) {
+      this.newService.hourlyDuration = normalizeHourlyDuration(parseFloat(value));
+    }
+  }
+
   addTag() {
     if (this.newTag.trim() && !this.newService.tags.includes(this.newTag.trim())) {
       this.newService.tags.push(this.newTag.trim());
@@ -563,6 +571,7 @@ export class ProfileComponent implements OnInit {
       const serviceData = {
         ...this.newService,
         userId: this.user.id,
+        hourlyDuration: normalizeHourlyDuration(this.newService.hourlyDuration),
         tags: this.newService.tags || []
       };
 

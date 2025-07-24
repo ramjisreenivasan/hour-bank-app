@@ -27,7 +27,7 @@ export interface Service {
   title: string;
   description: string;
   category: string;
-  hourlyDuration: number; // Standardized on hourlyDuration throughout the application
+  hourlyDuration: number; // Duration in whole hours (integer) - represents the time commitment for this service
   isActive: boolean;
   tags: string[];
   

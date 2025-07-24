@@ -191,7 +191,7 @@ export const servicesByUserId = /* GraphQL */ `
         title
         description
         category
-        hourlyRate
+        hourlyDuration
         tags
         requiresScheduling
         minBookingHours

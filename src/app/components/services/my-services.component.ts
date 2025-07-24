@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ScheduleManagementComponent } from '../schedule-management/schedule-management.component';
 import { NavigationComponent } from '../navigation/navigation.component';
+import { normalizeHourlyDuration } from '../../utils/service-utils';
 
 interface Service {
   id: string;
@@ -137,7 +138,9 @@ interface Service {
                 [(ngModel)]="newService.hourlyDuration" 
                 name="hourlyDuration"
                 min="1"
+                step="1"
                 placeholder="1"
+                (input)="onHourlyDurationChange($event)"
                 required
               >
             </div>
@@ -382,6 +385,13 @@ export class MyServicesComponent implements OnInit {
     }
   }
 
+  onHourlyDurationChange(event: any): void {
+    const value = event.target.value;
+    if (value) {
+      this.newService.hourlyDuration = normalizeHourlyDuration(parseFloat(value));
+    }
+  }
+
   addService() {
     if (!this.newService.title || !this.newService.description || !this.newService.category) {
       return;
@@ -395,7 +405,7 @@ export class MyServicesComponent implements OnInit {
       title: this.newService.title,
       description: this.newService.description,
       category: this.newService.category,
-      hourlyDuration: this.newService.hourlyDuration,
+      hourlyDuration: normalizeHourlyDuration(this.newService.hourlyDuration),
       tags: this.newService.tagsString ? this.newService.tagsString.split(',').map(t => t.trim()) : [],
       isActive: true,
       requiresScheduling: false,

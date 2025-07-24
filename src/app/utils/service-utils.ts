@@ -3,27 +3,27 @@
  */
 
 /**
- * Generate random duration between 1-4 hours for services
- * @returns Random number between 1 and 4 (inclusive)
+ * Ensures hourlyDuration is always a positive integer
+ * @param duration - The duration value to normalize
+ * @returns A positive integer representing hours
  */
-export function getRandomServiceDuration(): number {
-  return Math.floor(Math.random() * 4) + 1; // Returns 1, 2, 3, or 4
+export function normalizeHourlyDuration(duration: number | undefined | null): number {
+  if (duration === undefined || duration === null || isNaN(duration)) {
+    return 1; // Default to 1 hour
+  }
+  
+  // Ensure it's a positive integer, minimum 1 hour
+  return Math.max(1, Math.floor(Math.abs(duration)));
 }
 
 /**
- * Generate multiple random durations for a list of services
- * @param count Number of durations to generate
- * @returns Array of random durations
+ * Validates service data and normalizes hourlyDuration
+ * @param serviceData - The service data to validate
+ * @returns Validated service data with normalized hourlyDuration
  */
-export function getRandomServiceDurations(count: number): number[] {
-  return Array.from({ length: count }, () => getRandomServiceDuration());
-}
-
-/**
- * Format service duration for display
- * @param hours Number of hours
- * @returns Formatted string (e.g., "2 hours", "1 hour")
- */
-export function formatServiceDuration(hours: number): string {
-  return hours === 1 ? '1 hour' : `${hours} hours`;
+export function validateAndNormalizeService(serviceData: any): any {
+  return {
+    ...serviceData,
+    hourlyDuration: normalizeHourlyDuration(serviceData.hourlyDuration)
+  };
 }
