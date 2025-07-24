@@ -1,0 +1,39 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bank Building -->
+  <rect x="15" y="25" width="70" height="60" fill="#2563eb" opacity="0.1" rx="4"/>
+  <rect x="15" y="25" width="70" height="8" fill="#2563eb" opacity="0.2"/>
+  
+  <!-- Bank Columns -->
+  <rect x="20" y="33" width="6" height="45" fill="#2563eb" opacity="0.15"/>
+  <rect x="30" y="33" width="6" height="45" fill="#2563eb" opacity="0.15"/>
+  <rect x="64" y="33" width="6" height="45" fill="#2563eb" opacity="0.15"/>
+  <rect x="74" y="33" width="6" height="45" fill="#2563eb" opacity="0.15"/>
+  
+  <!-- Bank Steps -->
+  <rect x="12" y="78" width="76" height="4" fill="#2563eb" opacity="0.2"/>
+  <rect x="10" y="82" width="80" height="3" fill="#2563eb" opacity="0.15"/>
+  
+  <!-- Hourglass (centered) -->
+  <g transform="translate(50, 50)">
+    <!-- Hourglass outline -->
+    <path d="M-8,-15 L8,-15 L8,-10 L0,0 L8,10 L8,15 L-8,15 L-8,10 L0,0 L-8,-10 Z" 
+          fill="none" 
+          stroke="#1e3a8a" 
+          stroke-width="2"/>
+    
+    <!-- Sand in top -->
+    <path d="M-6,-13 L6,-13 L6,-11 L-2,-2 L-6,-11 Z" 
+          fill="#2563eb" 
+          opacity="0.6"/>
+    
+    <!-- Sand in bottom -->
+    <path d="M-4,11 L4,11 L4,13 L-4,13 Z" 
+          fill="#2563eb" 
+          opacity="0.6"/>
+    
+    <!-- Falling sand -->
+    <circle cx="0" cy="-1" r="0.5" fill="#2563eb" opacity="0.4"/>
+    <circle cx="0" cy="2" r="0.5" fill="#2563eb" opacity="0.4"/>
+    <circle cx="0" cy="5" r="0.5" fill="#2563eb" opacity="0.4"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1e3a8a" rx="4"/>
+  
+  <!-- Bank roof/pediment -->
+  <path d="M4 10 L16 4 L28 10 L26 10 L16 6 L6 10 Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="0.5"/>
+  
+  <!-- Columns (simplified) -->
+  <rect x="6" y="10" width="2" height="12" fill="#fbbf24"/>
+  <rect x="15" y="10" width="2" height="12" fill="#fbbf24"/>
+  <rect x="24" y="10" width="2" height="12" fill="#fbbf24"/>
+  
+  <!-- Base platform -->
+  <rect x="4" y="22" width="24" height="2" fill="#fbbf24"/>
+  <rect x="3" y="24" width="26" height="2" fill="#f59e0b"/>
+  
+  <!-- Hourglass (simplified for small size) -->
+  <g transform="translate(16, 16)">
+    <!-- Hourglass frame -->
+    <ellipse cx="0" cy="-4" rx="3" ry="1.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+    <ellipse cx="0" cy="4" rx="3" ry="1.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+    <path d="M-3 -4 L-1 0 L-3 4" fill="none" stroke="#ffffff" stroke-width="1"/>
+    <path d="M3 -4 L1 0 L3 4" fill="none" stroke="#ffffff" stroke-width="1"/>
+    
+    <!-- Sand -->
+    <ellipse cx="0" cy="-3" rx="2" ry="1" fill="#fbbf24"/>
+    <ellipse cx="0" cy="3" rx="1.5" ry="0.8" fill="#f59e0b"/>
+    <path d="M-1 0 L0 1 L1 0 Z" fill="#fbbf24"/>
+  </g>
+</svg>

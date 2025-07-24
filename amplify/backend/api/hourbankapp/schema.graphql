@@ -55,7 +55,7 @@ type Service @model @auth(rules: [
   tags: [String!]!
   
   # Scheduling fields
-  requiresScheduling: Boolean! # Whether this service requires time slot booking
+  requiresScheduling: Boolean # Whether this service requires time slot booking (nullable)
   minBookingHours: Float # Minimum hours that can be booked at once
   maxBookingHours: Float # Maximum hours that can be booked at once
   advanceBookingDays: Int # How many days in advance can be booked

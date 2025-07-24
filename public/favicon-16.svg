@@ -1,0 +1,37 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #1e3a8a; }
+      .gold { fill: #fbbf24; }
+      .gold-dark { fill: #f59e0b; }
+      .white { fill: none; stroke: #ffffff; stroke-width: 0.8; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="16" height="16" rx="2" class="bg"/>
+  
+  <!-- Simplified bank structure -->
+  <!-- Roof -->
+  <path d="M2 5 L8 2 L14 5 L8 3 Z" class="gold"/>
+  
+  <!-- Columns (just 3 lines) -->
+  <rect x="3" y="5" width="1" height="6" class="gold"/>
+  <rect x="7.5" y="5" width="1" height="6" class="gold"/>
+  <rect x="12" y="5" width="1" height="6" class="gold"/>
+  
+  <!-- Base -->
+  <rect x="2" y="11" width="12" height="1" class="gold"/>
+  <rect x="1.5" y="12" width="13" height="1" class="gold-dark"/>
+  
+  <!-- Simplified hourglass -->
+  <g transform="translate(8, 8)">
+    <!-- Hourglass shape -->
+    <path d="M-2 -2 L2 -2 L0.5 0 L2 2 L-2 2 L-0.5 0 Z" class="white"/>
+    
+    <!-- Sand -->
+    <ellipse cx="0" cy="-1.5" rx="1.5" ry="0.5" class="gold"/>
+    <ellipse cx="0" cy="1.5" rx="1" ry="0.4" class="gold-dark"/>
+    <circle cx="0" cy="0" r="0.2" class="gold"/>
+  </g>
+</svg>
