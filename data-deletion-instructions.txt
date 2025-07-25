@@ -1,0 +1,31 @@
+HOURBANK DATA DELETION REQUEST
+
+To request deletion of your HourBank account and all associated data:
+
+1. Send an email to: ramjisreenivasan@gmail.com
+2. Subject: "HourBank Data Deletion Request"
+3. Include:
+   - Email address associated with your account
+   - Username (if known)
+   - Confirmation that you want to permanently delete all data
+
+WHAT GETS DELETED:
+- Account information (username, email, password)
+- Profile data (name, picture, bio, location, skills)
+- Service listings and transaction history
+- Messages and communications
+- App usage data and analytics
+- Reviews and ratings
+
+IMPORTANT:
+- Data deletion is permanent and cannot be undone
+- You will lose access to your account and all bank-hours
+- Process takes up to 30 days to complete
+- We respond to requests within 48 hours
+
+CONTACT:
+Email: ramjisreenivasan@gmail.com
+Developer: Ramji Sreenivasan
+Response Time: 48 hours
+
+Some data may be retained for legal compliance (anonymized transaction records, security logs).
