@@ -1,4 +1,29 @@
 // About Page Styles
+
+// Common styles
+%section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+%section-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+%container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .hero-section {
   background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
   color: white;
@@ -12,10 +37,7 @@
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
     opacity: 0.3;
   }
@@ -139,14 +161,27 @@
     }
   }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-    }
-  }
+// Common animations
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes orbit {
+  0% { opacity: 1; transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  100% { opacity: 1; transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}
 }
 
 // Movement Emphasis Section
@@ -261,18 +296,6 @@
     font-weight: 600;
     font-size: 0.9rem;
     text-align: center;
-  }
-  
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
   }
 
   .hero-stats {
@@ -1273,7 +1296,7 @@ section {
   .snippet-icon {
     font-size: 4rem;
     margin-bottom: 1.5rem;
-    animation: bounce-gentle 2s ease-in-out infinite;
+    animation: bounce 2s ease-in-out infinite;
   }
 
   .snippet-title {
@@ -1344,12 +1367,6 @@ section {
       box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
       background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
     }
-  }
-
-  @keyframes bounce-gentle {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-8px); }
-    60% { transform: translateY(-4px); }
   }
 }
 
