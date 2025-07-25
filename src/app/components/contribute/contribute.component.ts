@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-contribute',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, NavigationComponent],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './contribute.component.html',
   styleUrls: ['./contribute.component.scss']
 })

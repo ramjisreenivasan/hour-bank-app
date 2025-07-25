@@ -7,11 +7,10 @@ import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { User, Transaction, TransactionStatus } from '../../models/user.model';
-import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-transaction',
-  imports: [CommonModule, FormsModule, NavigationComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
 })

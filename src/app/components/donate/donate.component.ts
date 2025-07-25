@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-donate',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavigationComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './donate.component.html',
   styleUrls: ['./donate.component.scss']
 })

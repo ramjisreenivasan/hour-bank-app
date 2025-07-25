@@ -8,11 +8,10 @@ import { TransactionGraphQLService } from '../../services/transaction-graphql.se
 import { UserDisplayService } from '../../services/user-display.service';
 import { UserMappingService } from '../../services/user-mapping.service';
 import { User, Service, Transaction } from '../../models/user.model';
-import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, RouterModule, NavigationComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

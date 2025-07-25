@@ -7,14 +7,13 @@ import { ServiceService } from '../../services/service.service';
 import { AuthService } from '../../services/auth.service';
 import { UserMappingService } from '../../services/user-mapping.service';
 import { User, Service } from '../../models/user.model';
-import { NavigationComponent } from '../navigation/navigation.component';
 import { errorLogger } from '../../utils/error-logger';
 import { normalizeHourlyDuration } from '../../utils/service-utils';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavigationComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
