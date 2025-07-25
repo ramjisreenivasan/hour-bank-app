@@ -19,7 +19,7 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
   isAdmin = false;
   
   // Dropdown states
-  showSupportDropdown = false;
+  showAboutDropdown = false;
   showServicesDropdown = false;
   showAccountDropdown = false;
   
@@ -100,7 +100,7 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
 
   // Utility methods for dropdown management
   closeAllDropdowns() {
-    this.showSupportDropdown = false;
+    this.showAboutDropdown = false;
     this.showServicesDropdown = false;
     this.showAccountDropdown = false;
   }

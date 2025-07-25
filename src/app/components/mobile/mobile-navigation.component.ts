@@ -54,10 +54,24 @@ import { IonicModule } from '@ionic/angular';
             <ion-icon name="people-outline" slot="start"></ion-icon>
             <ion-label>Community</ion-label>
           </ion-item>
+
+          <ion-item-divider>
+            <ion-label>About & Support</ion-label>
+          </ion-item-divider>
           
           <ion-item button routerLink="/about" (click)="closeMenu()">
             <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-            <ion-label>About</ion-label>
+            <ion-label>About hOurBank</ion-label>
+          </ion-item>
+          
+          <ion-item button routerLink="/donate" (click)="closeMenu()">
+            <ion-icon name="heart-outline" slot="start"></ion-icon>
+            <ion-label>Donate</ion-label>
+          </ion-item>
+          
+          <ion-item button routerLink="/contribute" (click)="closeMenu()">
+            <ion-icon name="hand-left-outline" slot="start"></ion-icon>
+            <ion-label>Contribute</ion-label>
           </ion-item>
 
           <ion-item-divider>

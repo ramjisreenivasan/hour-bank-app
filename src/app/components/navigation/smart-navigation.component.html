@@ -24,20 +24,21 @@
         <span>Community</span>
       </a>
       
-      <a routerLink="/about" class="nav-link" routerLinkActive="active">
-        <i class="fas fa-info-circle"></i>
-        <span>About</span>
-      </a>
-      
-      <!-- Support Dropdown -->
-      <div class="nav-dropdown" (mouseenter)="showSupportDropdown = true" (mouseleave)="showSupportDropdown = false">
-        <button class="nav-link dropdown-trigger" [class.active]="showSupportDropdown">
-          <i class="fas fa-heart"></i>
-          <span>Support</span>
+      <!-- About Dropdown -->
+      <div class="nav-dropdown" (mouseenter)="showAboutDropdown = true" (mouseleave)="showAboutDropdown = false">
+        <button class="nav-link dropdown-trigger" [class.active]="showAboutDropdown">
+          <i class="fas fa-info-circle"></i>
+          <span>About</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </button>
         
-        <div class="dropdown-menu" [class.show]="showSupportDropdown">
+        <div class="dropdown-menu" [class.show]="showAboutDropdown">
+          <a routerLink="/about" class="dropdown-item">
+            <i class="fas fa-info-circle"></i>
+            <span>About hOurBank</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-header">Support the Movement</div>
           <a routerLink="/donate" class="dropdown-item">
             <i class="fas fa-donate"></i>
             <span>Donate</span>
@@ -82,6 +83,36 @@
           <a routerLink="/bookings" class="dropdown-item">
             <i class="fas fa-calendar-alt"></i>
             <span>Service Requests</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- About Dropdown -->
+      <div class="nav-dropdown" (mouseenter)="showAboutDropdown = true" (mouseleave)="showAboutDropdown = false">
+        <button class="nav-link dropdown-trigger" [class.active]="showAboutDropdown">
+          <i class="fas fa-info-circle"></i>
+          <span>About</span>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
+        </button>
+        
+        <div class="dropdown-menu" [class.show]="showAboutDropdown">
+          <a routerLink="/about" class="dropdown-item">
+            <i class="fas fa-info-circle"></i>
+            <span>About hOurBank</span>
+          </a>
+          <a routerLink="/community" class="dropdown-item">
+            <i class="fas fa-users"></i>
+            <span>Community</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-header">Support the Movement</div>
+          <a routerLink="/donate" class="dropdown-item">
+            <i class="fas fa-donate"></i>
+            <span>Donate</span>
+          </a>
+          <a routerLink="/contribute" class="dropdown-item">
+            <i class="fas fa-hands-helping"></i>
+            <span>Contribute</span>
           </a>
         </div>
       </div>
