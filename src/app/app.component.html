@@ -1,6 +1,6 @@
 <div class="app-container">
   <!-- Platform-specific navigation -->
-  <app-navigation *ngIf="platformService.isWeb()"></app-navigation>
+  <app-smart-navigation *ngIf="platformService.isWeb()"></app-smart-navigation>
   <app-mobile-navigation *ngIf="platformService.isMobile()"></app-mobile-navigation>
   
   <!-- Main Content -->

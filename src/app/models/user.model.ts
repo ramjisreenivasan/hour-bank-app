@@ -8,8 +8,10 @@ export interface User {
   skills: string[];
   bio?: string;
   profilePicture?: string;
+  avatar?: string; // Alternative field name for profile picture
   rating: number;
   totalTransactions: number;
+  role?: 'user' | 'admin'; // Added role field for admin detection
   cognitoId?: string;  // Added to map to Cognito User Pool ID
   createdAt: Date;
   updatedAt: Date;

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { PlatformService } from './services/platform.service';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { SmartNavigationComponent } from './components/navigation/smart-navigation.component';
 import { MobileNavigationComponent } from './components/mobile/mobile-navigation.component';
 import { IonicModule } from '@ionic/angular';
 
@@ -12,7 +12,7 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     RouterOutlet, 
     CommonModule, 
-    NavigationComponent, 
+    SmartNavigationComponent, 
     MobileNavigationComponent,
     IonicModule
   ],

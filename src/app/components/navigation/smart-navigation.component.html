@@ -1,0 +1,161 @@
+<nav class="smart-nav" [class.authenticated]="isAuthenticated">
+  <div class="nav-container">
+    <!-- Brand Logo -->
+    <div class="nav-brand">
+      <a routerLink="/" class="logo-link">
+        <app-logo [size]="32" [showText]="true"></app-logo>
+      </a>
+    </div>
+    
+    <!-- Public Navigation (Unauthenticated Users) -->
+    <div class="nav-links" *ngIf="!isAuthenticated">
+      <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      
+      <a routerLink="/services" class="nav-link" routerLinkActive="active">
+        <i class="fas fa-store"></i>
+        <span>Browse Services</span>
+      </a>
+      
+      <a routerLink="/community" class="nav-link" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span>Community</span>
+      </a>
+      
+      <a routerLink="/about" class="nav-link" routerLinkActive="active">
+        <i class="fas fa-info-circle"></i>
+        <span>About</span>
+      </a>
+      
+      <!-- Support Dropdown -->
+      <div class="nav-dropdown" (mouseenter)="showSupportDropdown = true" (mouseleave)="showSupportDropdown = false">
+        <button class="nav-link dropdown-trigger" [class.active]="showSupportDropdown">
+          <i class="fas fa-heart"></i>
+          <span>Support</span>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
+        </button>
+        
+        <div class="dropdown-menu" [class.show]="showSupportDropdown">
+          <a routerLink="/donate" class="dropdown-item">
+            <i class="fas fa-donate"></i>
+            <span>Donate</span>
+          </a>
+          <a routerLink="/contribute" class="dropdown-item">
+            <i class="fas fa-hands-helping"></i>
+            <span>Contribute</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Authenticated Navigation (Logged-in Users) -->
+    <div class="nav-links" *ngIf="isAuthenticated">
+      <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      
+      <a routerLink="/dashboard" class="nav-link" routerLinkActive="active">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </a>
+      
+      <!-- Services Dropdown -->
+      <div class="nav-dropdown" (mouseenter)="showServicesDropdown = true" (mouseleave)="showServicesDropdown = false">
+        <button class="nav-link dropdown-trigger" [class.active]="showServicesDropdown">
+          <i class="fas fa-store"></i>
+          <span>Services</span>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
+        </button>
+        
+        <div class="dropdown-menu" [class.show]="showServicesDropdown">
+          <a routerLink="/services" class="dropdown-item">
+            <i class="fas fa-search"></i>
+            <span>Browse All</span>
+          </a>
+          <a routerLink="/my-services" class="dropdown-item">
+            <i class="fas fa-tools"></i>
+            <span>My Services</span>
+          </a>
+          <a routerLink="/bookings" class="dropdown-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Service Requests</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Area -->
+    <div class="nav-actions">
+      <!-- Public User Actions -->
+      <ng-container *ngIf="!isAuthenticated">
+        <button routerLink="/auth" class="btn btn-primary nav-cta-btn">
+          <i class="fas fa-rocket"></i>
+          Get Started
+        </button>
+      </ng-container>
+      
+      <!-- Authenticated User Actions -->
+      <ng-container *ngIf="isAuthenticated">
+        <!-- User Name Dropdown -->
+        <div class="nav-dropdown user-dropdown" (mouseenter)="showAccountDropdown = true" (mouseleave)="showAccountDropdown = false">
+          <button class="user-name-trigger" [class.active]="showAccountDropdown">
+            <div class="user-avatar">
+              <i class="fas fa-user" *ngIf="!currentUser?.avatar"></i>
+              <img [src]="currentUser?.avatar" *ngIf="currentUser?.avatar" alt="User Avatar">
+            </div>
+            <span class="user-name">{{ getUserDisplayName() }}</span>
+            <span class="admin-badge" *ngIf="isAdmin">ADMIN</span>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </button>
+          
+          <div class="dropdown-menu user-menu" [class.show]="showAccountDropdown">
+            <div class="dropdown-header">
+              <div class="user-details">
+                <strong>{{ getUserDisplayName() }}</strong>
+                <small>{{ currentUser?.email }}</small>
+                <span class="role-badge" *ngIf="isAdmin">Administrator</span>
+              </div>
+            </div>
+            
+            <div class="dropdown-divider"></div>
+            
+            <a routerLink="/profile" class="dropdown-item">
+              <i class="fas fa-user"></i>
+              <span>Profile</span>
+            </a>
+            
+            <a routerLink="/transactions" class="dropdown-item">
+              <i class="fas fa-exchange-alt"></i>
+              <span>Transactions</span>
+            </a>
+            
+            <a routerLink="/messages" class="dropdown-item">
+              <i class="fas fa-comments"></i>
+              <span>Messages</span>
+            </a>
+            
+            <a routerLink="/bookings" class="dropdown-item">
+              <i class="fas fa-calendar-check"></i>
+              <span>Bookings</span>
+            </a>
+            
+            <a routerLink="/admin" class="dropdown-item" *ngIf="isAdmin">
+              <i class="fas fa-shield-alt"></i>
+              <span>Admin Panel</span>
+            </a>
+            
+            <div class="dropdown-divider"></div>
+            
+            <button class="dropdown-item logout-item" (click)="signOut()">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>
