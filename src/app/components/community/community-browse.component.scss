@@ -52,7 +52,7 @@
       .stat-number {
         font-size: 2.5rem;
         font-weight: 700;
-        color: white;
+        color: #1e40af; // Changed from white to blue for visibility on white background
         margin-bottom: 0.5rem;
       }
 
@@ -151,7 +151,7 @@ section {
           }
 
           .skill-more {
-            color: white;
+            color: #1e40af; // Changed from white to blue for visibility
             font-size: 0.75rem;
             font-weight: 500;
           }
@@ -279,7 +279,7 @@ section {
 
         &.btn-primary {
           background: white;
-          color: white;
+          color: #1e40af; // Changed from white to blue for visibility on white background
 
           &:hover {
             background: #f7fafc;
@@ -294,7 +294,7 @@ section {
 
           &:hover {
             background: white;
-            color: white;
+            color: #1e40af; // Changed from white to blue for visibility on white background
           }
         }
       }
