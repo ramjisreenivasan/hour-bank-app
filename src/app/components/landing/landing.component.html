@@ -81,7 +81,21 @@
         <div class="service-icon">{{ service.icon }}</div>
         <h3 class="service-title">{{ service.title }}</h3>
         <p class="service-description">{{ service.description }}</p>
-        <div class="service-duration">{{ service.duration }}</div>
+        <div class="service-details">
+          <div class="service-duration">
+            <span class="duration-icon">⏱️</span>
+            <span class="duration-text">{{ service.duration }}</span>
+            <span class="duration-type">{{ service.timeType }}</span>
+          </div>
+          <div class="service-rate">
+            <span class="rate-icon">⚖️</span>
+            <span class="rate-text">{{ service.rate }}</span>
+          </div>
+          <div class="service-example">
+            <span class="example-icon">💡</span>
+            <span class="example-text">{{ service.example }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

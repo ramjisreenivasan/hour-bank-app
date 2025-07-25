@@ -40,37 +40,55 @@ export class LandingComponent {
       icon: '💻',
       title: 'Web Development',
       description: 'Website creation, coding lessons, and technical consulting',
-      duration: 'Time = Time'
+      duration: '2-4 hours',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per project',
+      example: 'Build a landing page: 3 hours'
     },
     {
       icon: '🎨',
       title: 'Graphic Design',
       description: 'Logo design, branding, and creative visual solutions',
-      duration: 'Time = Time'
+      duration: '1-3 hours',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per design',
+      example: 'Logo design: 2 hours'
     },
     {
       icon: '📚',
       title: 'Language Tutoring',
       description: 'Language lessons, conversation practice, and cultural exchange',
-      duration: 'Time = Time'
+      duration: '1 hour',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per lesson',
+      example: 'Spanish conversation: 1 hour'
     },
     {
       icon: '🔧',
       title: 'Home Repair',
       description: 'Handyman services, maintenance, and DIY guidance',
-      duration: 'Time = Time'
+      duration: '1-2 hours',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per task',
+      example: 'Fix leaky faucet: 1 hour'
     },
     {
       icon: '🍳',
       title: 'Cooking Lessons',
       description: 'Culinary skills, meal prep, and nutrition guidance',
-      duration: 'Time = Time'
+      duration: '1.5-2 hours',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per class',
+      example: 'Italian pasta making: 2 hours'
     },
     {
       icon: '🧘',
       title: 'Wellness Coaching',
       description: 'Fitness training, meditation, and mental health support',
-      duration: 'Time = Time'
+      duration: '1 hour',
+      rate: '1 hour = 1 hour',
+      timeType: 'Per session',
+      example: 'Yoga class: 1 hour'
     }
   ];
 
