@@ -1,6 +1,10 @@
 <div class="app-container">
+  <!-- Platform-specific navigation -->
+  <app-navigation *ngIf="platformService.isWeb()"></app-navigation>
+  <app-mobile-navigation *ngIf="platformService.isMobile()"></app-mobile-navigation>
+  
   <!-- Main Content -->
-  <main class="main-content">
+  <main class="main-content" [id]="platformService.isMobile() ? 'main-content' : ''">
     <router-outlet></router-outlet>
   </main>
 </div>

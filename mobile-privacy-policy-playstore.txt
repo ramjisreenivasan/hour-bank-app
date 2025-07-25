@@ -1,0 +1,42 @@
+HOURBANK MOBILE GATEWAY - PRIVACY POLICY SUMMARY
+
+WHAT WE DON'T COLLECT:
+• No personal information (names, emails, phone numbers)
+• No location data or device identifiers
+• No usage analytics or tracking
+• No authentication credentials
+• No payment information
+• No local data storage on your device
+
+WHAT THE APP DOES:
+• Displays publicly available community services
+• Shows service provider usernames (anonymized IDs only)
+• Redirects to web browser for account features
+• Uses HTTPS for secure communication
+
+DATA DISPLAYED:
+• Service titles and descriptions (already public)
+• Service categories and ratings
+• Community activity (intended for sharing)
+• Provider usernames only (no personal contact info)
+
+PERMISSIONS:
+• Internet access only (to display community data)
+• No camera, microphone, or location permissions
+
+THIRD-PARTY SERVICES:
+• Capacitor Browser Plugin (opens web app in browser)
+• No analytics, advertising, or tracking SDKs
+
+EXTERNAL LINKS:
+When you tap "Sign In" or other account features, the app opens your web browser to hourbank.ramjisreenivasan.com where the full web privacy policy applies.
+
+CHILDREN'S PRIVACY:
+Safe for all ages - no personal data collection.
+
+CONTACT:
+privacy@hourbank.ramjisreenivasan.com
+
+Full privacy policy: https://hourbank.ramjisreenivasan.com/mobile-privacy-policy
+
+This mobile app is a gateway that displays public community information and redirects to the web application for full features. No personal data is collected or stored.
