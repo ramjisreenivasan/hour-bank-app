@@ -59,7 +59,7 @@ import { Observable } from 'rxjs';
             </div>
             <div class="user-info">
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
-              <p class="username">@{{ user.username }}</p>
+              <p class="username">{{ '@' + user.username }}</p>
               <div class="user-stats">
                 <div class="stat">
                   <span class="label">Bank Hours:</span>
@@ -141,11 +141,11 @@ import { Observable } from 'rxjs';
             </div>
             <div class="transaction-details">
               <div class="transaction-users">
-                <span class="consumer">{{ getUser(transaction.consumerId)?.firstName }}</span>
+                <span class="consumer">{{ getUser(transaction.consumerId)?.firstName || 'Unknown' }}</span>
                 <i class="fas fa-arrow-right"></i>
-                <span class="provider">{{ getUser(transaction.providerId)?.firstName }}</span>
+                <span class="provider">{{ getUser(transaction.providerId)?.firstName || 'Unknown' }}</span>
               </div>
-              <div class="transaction-service">{{ getService(transaction.serviceId)?.title }}</div>
+              <div class="transaction-service">{{ getService(transaction.serviceId)?.title || 'Unknown Service' }}</div>
               <div class="transaction-meta">
                 <span class="hours">{{ transaction.hoursSpent }}h</span>
                 <span class="rating">⭐{{ transaction.rating }}</span>
