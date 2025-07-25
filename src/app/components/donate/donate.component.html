@@ -1,0 +1,170 @@
+<app-navigation></app-navigation>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Donate Your <span class="highlight">Hours</span>
+      </h1>
+      <p class="hero-subtitle">
+        Share your earned hours with those who need them most. Build a pay-it-forward culture 
+        that strengthens our community and supports vulnerable populations.
+      </p>
+      <div class="hero-cta">
+        <a routerLink="/auth" class="btn btn-primary">Start Donating</a>
+        <a routerLink="/dashboard" class="btn btn-secondary">View My Balance</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="donation-flow">
+        <div class="flow-step">
+          <span class="step-icon">⏰</span>
+          <span class="step-text">Earn Hours</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <span class="step-icon">💝</span>
+          <span class="step-text">Donate Hours</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <span class="step-icon">🌟</span>
+          <span class="step-text">Help Others</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats">
+        <div class="stat-icon">{{ stat.icon }}</div>
+        <div class="stat-number">{{ stat.number }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Who We Support Section -->
+<section class="support-section">
+  <div class="container">
+    <h2 class="section-title">Who Your Donations Support</h2>
+    <p class="section-subtitle">
+      Your donated hours go directly to a community pool that supports three key groups in need
+    </p>
+    
+    <div class="support-grid">
+      <div class="support-card" *ngFor="let group of supportedGroups">
+        <div class="support-header">
+          <div class="support-icon">{{ group.icon }}</div>
+          <h3 class="support-title">{{ group.title }}</h3>
+        </div>
+        <p class="support-description">{{ group.description }}</p>
+        <div class="support-needs">
+          <h4>Common Needs:</h4>
+          <ul>
+            <li *ngFor="let need of group.needs">{{ need }}</li>
+          </ul>
+        </div>
+        <div class="support-impact">
+          <strong>Impact:</strong> {{ group.impact }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Donation Options Section -->
+<section class="options-section">
+  <div class="container">
+    <h2 class="section-title">How You Can Donate</h2>
+    <p class="section-subtitle">
+      Choose the donation approach that works best for your generosity and circumstances
+    </p>
+    
+    <div class="options-grid">
+      <div class="option-card" *ngFor="let option of donationOptions">
+        <div class="option-icon">{{ option.icon }}</div>
+        <h3 class="option-title">{{ option.type }}</h3>
+        <p class="option-description">{{ option.description }}</p>
+        <div class="option-example">
+          <span class="example-label">Example:</span>
+          <span class="example-text">{{ option.example }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-section">
+  <div class="container">
+    <h2 class="section-title">How Hour Donation Works</h2>
+    <div class="steps-grid">
+      <div class="step" *ngFor="let step of howItWorks">
+        <div class="step-number">{{ step.step }}</div>
+        <div class="step-icon">{{ step.icon }}</div>
+        <h3 class="step-title">{{ step.title }}</h3>
+        <p class="step-description">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section">
+  <div class="container">
+    <h2 class="section-title">Why Donate Your Hours?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card" *ngFor="let benefit of donationBenefits">
+        <div class="benefit-icon">{{ benefit.icon }}</div>
+        <h3 class="benefit-title">{{ benefit.title }}</h3>
+        <p class="benefit-description">{{ benefit.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title">Stories from Our Community</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+        <div class="testimonial-avatar">{{ testimonial.avatar }}</div>
+        <div class="testimonial-content">
+          <p class="testimonial-quote">"{{ testimonial.quote }}"</p>
+          <div class="testimonial-author">
+            <span class="author-name">{{ testimonial.name }}</span>
+            <span class="author-role">{{ testimonial.role }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Make a Difference?</h2>
+      <p class="cta-subtitle">
+        Your generosity can transform lives. Start by earning hours through your skills, 
+        then choose how much you'd like to donate to help others in your community.
+      </p>
+      <div class="cta-buttons">
+        <a routerLink="/auth" class="btn btn-primary">Join & Start Earning</a>
+        <a routerLink="/services" class="btn btn-secondary">Browse Services</a>
+      </div>
+      <div class="cta-note">
+        <p>Every hour donated makes a real difference in someone's life.</p>
+      </div>
+    </div>
+  </div>
+</section>
