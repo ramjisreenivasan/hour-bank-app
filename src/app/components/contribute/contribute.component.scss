@@ -1056,9 +1056,10 @@
 
 // CTA Section
 .cta-section {
-  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-  color: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); // Very light gradient
+  color: #1e293b; // Dark text for better contrast on light background
   padding: 4rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05); // Subtle border for definition
 
   .container {
     max-width: 800px;
@@ -1113,18 +1114,19 @@
 
     &.btn-secondary {
       background: transparent;
-      color: white;
-      border: 2px solid white;
+      color: #1e293b; // Dark text for light background
+      border: 2px solid #1e293b; // Dark border for light background
       
       &:hover {
-        background: white;
-        color: #1f2937;
+        background: #1e293b; // Dark background on hover
+        color: white; // White text on dark hover background
       }
     }
   }
 
   .cta-note {
-    opacity: 0.8;
+    opacity: 0.7; // Slightly more opaque for better visibility on light background
     font-style: italic;
+    color: #64748b; // Specific gray color for better readability
   }
 }
