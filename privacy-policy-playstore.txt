@@ -1,0 +1,42 @@
+PRIVACY POLICY FOR HOURBANK
+
+Last Updated: January 25, 2025
+
+INTRODUCTION
+HourBank is a skill exchange platform that enables users to exchange services using a time-based currency system. This Privacy Policy explains how we collect, use, and protect your information.
+
+INFORMATION WE COLLECT
+- Account Information: Username, email address, encrypted password
+- Profile Information: Name, profile picture, bio, location, skills and services
+- Transaction Data: Service requests, bank-hour balances, ratings and reviews
+- Technical Information: Device data, app usage, location (with permission)
+
+HOW WE USE YOUR INFORMATION
+- Provide and improve our services
+- Enable service discovery and matching
+- Process transactions and maintain balances
+- Ensure safety and security
+- Communicate important updates
+
+INFORMATION SHARING
+- Profile information is visible to other users for service discovery
+- We use AWS (Amazon Web Services) for secure hosting and authentication
+- We may share data as required by law or to protect safety
+
+DATA SECURITY
+- Data encrypted in transit and at rest
+- Secure authentication via AWS Amplify
+- Limited access controls
+- Regular security monitoring
+
+YOUR RIGHTS
+- Access and update your profile
+- Request data deletion
+- Control communication preferences
+- Manage location sharing
+
+CONTACT
+Email: privacy@hourbank.app
+Support: support@hourbank.app
+
+This policy applies to all HourBank users and is governed by applicable data protection laws.
