@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NavigationComponent } from '../navigation/navigation.component';
 import { ServiceService } from '../../services/service.service';
 import { UserService } from '../../services/user.service';
 import { Service, User } from '../../models/user.model';
@@ -21,9 +20,8 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
 @Component({
   selector: 'app-services-browse',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, NavigationComponent],
+  imports: [CommonModule, RouterModule, FormsModule],
   template: `
-    <app-navigation></app-navigation>
     <div class="services-browse">
       <!-- Hero Header -->
       <div class="hero-header">

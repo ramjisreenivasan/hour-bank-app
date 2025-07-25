@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { NavigationComponent } from '../navigation/navigation.component';
 
 interface Service {
   id: string;
@@ -33,9 +32,8 @@ interface Service {
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavigationComponent],
+  imports: [CommonModule, RouterModule],
   template: `
-    <app-navigation></app-navigation>
     <div class="service-detail" *ngIf="service">
       <!-- Breadcrumb -->
       <div class="breadcrumb">
