@@ -1,6 +1,6 @@
 # Privacy Policy for HourBank
 
-**Last Updated:** January 25, 2025
+**Last Updated:** July 25, 2025
 
 ## 1. Introduction
 
@@ -86,8 +86,9 @@ We implement appropriate technical and organizational measures:
 
 If you have questions regarding this Privacy Policy:
 
-**Email:** privacy@hourbank.app  
-**Support:** support@hourbank.app  
+**Email:** ramjisreenivasan@gmail.com  
+**Support:** ramjisreenivasan@gmail.com  
+**Developer:** Ramji Sreenivasan  
 **Response Time:** We aim to respond within 30 days.
 
 ---
