@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/donate/donate.component').then(m => m.DonateComponent)
   },
   { 
+    path: 'contribute', 
+    loadComponent: () => import('./components/contribute/contribute.component').then(m => m.ContributeComponent)
+  },
+  { 
     path: 'services', 
     loadComponent: () => import('./components/services/services-browse.component').then(m => m.ServicesBrowseComponent)
   },

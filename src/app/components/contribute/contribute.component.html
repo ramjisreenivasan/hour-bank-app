@@ -1,0 +1,390 @@
+<app-navigation></app-navigation>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Contribute to <span class="highlight">hOurBank</span>
+      </h1>
+      <p class="hero-subtitle">
+        Join our Community-Sustaining Developer Model. Earn time credits for code contributions, 
+        bug fixes, reviews, and feature development. Help build the future of time banking.
+      </p>
+      <div class="hero-cta">
+        <a href="https://github.com/ramjisreenivasan/hour-bank-app" target="_blank" class="btn btn-primary">
+          <span class="btn-icon">🚀</span>
+          Start Contributing
+        </a>
+        <a routerLink="#bounties" class="btn btn-secondary">View Bounties</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="contribution-flow">
+        <div class="flow-item">
+          <span class="flow-icon">💻</span>
+          <span class="flow-text">Code</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+          <span class="flow-icon">🔍</span>
+          <span class="flow-text">Review</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+          <span class="flow-icon">⏰</span>
+          <span class="flow-text">Earn Hours</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats">
+        <div class="stat-icon">{{ stat.icon }}</div>
+        <div class="stat-number">{{ stat.number }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contribution Types Section -->
+<section class="contribution-types-section">
+  <div class="container">
+    <h2 class="section-title">Ways to Contribute & Earn Hours</h2>
+    <p class="section-subtitle">
+      Multiple paths to contribute your skills and earn time credits in our developer ecosystem
+    </p>
+    
+    <div class="types-grid">
+      <div class="type-card" *ngFor="let type of contributionTypes">
+        <div class="type-header">
+          <div class="type-icon">{{ type.icon }}</div>
+          <h3 class="type-title">{{ type.title }}</h3>
+        </div>
+        <p class="type-description">{{ type.description }}</p>
+        <div class="type-details">
+          <div class="type-hours">
+            <span class="hours-icon">⏱️</span>
+            <span class="hours-text">{{ type.hourRange }}</span>
+          </div>
+          <div class="type-difficulty">
+            <span class="difficulty-icon">📊</span>
+            <span class="difficulty-text">{{ type.difficulty }}</span>
+          </div>
+        </div>
+        <div class="type-examples">
+          <h4>Examples:</h4>
+          <ul>
+            <li *ngFor="let example of type.examples">{{ example }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="process-section">
+  <div class="container">
+    <h2 class="section-title">Contribution Process</h2>
+    <p class="section-subtitle">
+      Simple 4-step process to start contributing and earning time credits
+    </p>
+    
+    <div class="process-grid">
+      <div class="process-step" *ngFor="let step of contributionProcess">
+        <div class="step-number">{{ step.step }}</div>
+        <div class="step-icon">{{ step.icon }}</div>
+        <h3 class="step-title">{{ step.title }}</h3>
+        <p class="step-description">{{ step.description }}</p>
+        <div class="step-details">
+          <ul>
+            <li *ngFor="let detail of step.details">{{ detail }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Bounties Section -->
+<section class="bounties-section" id="bounties">
+  <div class="container">
+    <h2 class="section-title">Current Feature Bounties</h2>
+    <p class="section-subtitle">
+      High-priority features and enhancements with allocated hour rewards
+    </p>
+    
+    <div class="bounties-grid">
+      <div class="bounty-card" *ngFor="let bounty of currentBounties" 
+           [class.in-progress]="bounty.status === 'In Progress'">
+        <div class="bounty-header">
+          <h3 class="bounty-title">{{ bounty.title }}</h3>
+          <div class="bounty-status" [class]="bounty.status.toLowerCase().replace(' ', '-')">
+            {{ bounty.status }}
+          </div>
+        </div>
+        <p class="bounty-description">{{ bounty.description }}</p>
+        <div class="bounty-details">
+          <div class="bounty-hours">
+            <span class="hours-icon">⏰</span>
+            <span class="hours-text">{{ bounty.hours }} hours</span>
+          </div>
+          <div class="bounty-difficulty">
+            <span class="difficulty-icon">📊</span>
+            <span class="difficulty-text">{{ bounty.difficulty }}</span>
+          </div>
+          <div class="bounty-priority">
+            <span class="priority-icon">🎯</span>
+            <span class="priority-text">{{ bounty.priority }} Priority</span>
+          </div>
+        </div>
+        <div class="bounty-tags">
+          <span class="tag" *ngFor="let tag of bounty.tags">{{ tag }}</span>
+        </div>
+        <div class="bounty-actions">
+          <button class="btn btn-claim" [disabled]="bounty.status !== 'Open'">
+            {{ bounty.status === 'Open' ? 'Claim Bounty' : bounty.status }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Wishlist Section -->
+<section class="wishlist-section">
+  <div class="container">
+    <h2 class="section-title">Feature Wishlist</h2>
+    <p class="section-subtitle">
+      Suggest new features and enhancements for the hOurBank platform
+    </p>
+    
+    <div class="wishlist-content">
+      <div class="wishlist-form">
+        <h3 class="form-title">Submit Feature Request</h3>
+        <form (ngSubmit)="submitFeatureRequest()" #featureForm="ngForm">
+          <div class="form-group">
+            <label for="title">Feature Title *</label>
+            <input 
+              type="text" 
+              id="title" 
+              name="title"
+              [(ngModel)]="newFeatureRequest.title"
+              required
+              placeholder="Brief, descriptive title for your feature"
+              class="form-input">
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Description *</label>
+            <textarea 
+              id="description" 
+              name="description"
+              [(ngModel)]="newFeatureRequest.description"
+              required
+              rows="4"
+              placeholder="Detailed description of the feature, its benefits, and use cases"
+              class="form-textarea"></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category">Category *</label>
+              <select 
+                id="category" 
+                name="category"
+                [(ngModel)]="newFeatureRequest.category"
+                required
+                class="form-select">
+                <option value="">Select category</option>
+                <option *ngFor="let category of categories" [value]="category">
+                  {{ category }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="priority">Priority</label>
+              <select 
+                id="priority" 
+                name="priority"
+                [(ngModel)]="newFeatureRequest.priority"
+                class="form-select">
+                <option *ngFor="let priority of priorities" [value]="priority">
+                  {{ priority }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="estimatedHours">Estimated Hours</label>
+              <input 
+                type="number" 
+                id="estimatedHours" 
+                name="estimatedHours"
+                [(ngModel)]="newFeatureRequest.estimatedHours"
+                min="1"
+                max="100"
+                placeholder="Optional"
+                class="form-input">
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-submit" [disabled]="!featureForm.valid">
+            <span class="btn-icon">✨</span>
+            Submit Feature Request
+          </button>
+        </form>
+      </div>
+      
+      <div class="wishlist-info">
+        <h3 class="info-title">How Feature Requests Work</h3>
+        <div class="info-steps">
+          <div class="info-step">
+            <span class="step-icon">📝</span>
+            <div class="step-content">
+              <h4>Submit Request</h4>
+              <p>Describe your feature idea with details and use cases</p>
+            </div>
+          </div>
+          <div class="info-step">
+            <span class="step-icon">👥</span>
+            <div class="step-content">
+              <h4>Community Review</h4>
+              <p>Community votes and provides feedback on the request</p>
+            </div>
+          </div>
+          <div class="info-step">
+            <span class="step-icon">🎯</span>
+            <div class="step-content">
+              <h4>Bounty Creation</h4>
+              <p>Popular requests become bounties with hour allocations</p>
+            </div>
+          </div>
+          <div class="info-step">
+            <span class="step-icon">🚀</span>
+            <div class="step-content">
+              <h4>Development</h4>
+              <p>Contributors claim and develop the feature</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Contributions Section -->
+<section class="recent-contributions-section">
+  <div class="container">
+    <h2 class="section-title">Recent Contributions</h2>
+    <p class="section-subtitle">
+      See what our community developers have been building
+    </p>
+    
+    <div class="contributions-grid">
+      <div class="contribution-card" *ngFor="let contribution of recentContributions">
+        <div class="contribution-header">
+          <div class="contributor-info">
+            <span class="contributor-avatar">{{ contribution.avatar }}</span>
+            <div class="contributor-details">
+              <span class="contributor-name">{{ contribution.contributor }}</span>
+              <span class="contribution-date">{{ contribution.date }}</span>
+            </div>
+          </div>
+          <div class="contribution-type">{{ contribution.type }}</div>
+        </div>
+        <p class="contribution-description">{{ contribution.contribution }}</p>
+        <div class="contribution-reward">
+          <span class="reward-icon">⏰</span>
+          <span class="reward-text">{{ contribution.hoursEarned }} hours earned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Transparent Ledger Section -->
+<section class="ledger-section">
+  <div class="container">
+    <div class="ledger-content">
+      <div class="ledger-text">
+        <h2 class="ledger-title">Transparent Contribution Ledger</h2>
+        <p class="ledger-description">
+          All developer contributions and earned hours are tracked in our transparent ledger system. 
+          This ensures fairness, accountability, and proper recognition for all community contributors.
+        </p>
+        <div class="ledger-features">
+          <div class="feature">
+            <span class="feature-icon">📊</span>
+            <div class="feature-content">
+              <h4>Public Tracking</h4>
+              <p>All contributions are publicly visible and verifiable</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⚖️</span>
+            <div class="feature-content">
+              <h4>Fair Allocation</h4>
+              <p>Hours are allocated based on contribution complexity and impact</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🏆</span>
+            <div class="feature-content">
+              <h4>Recognition System</h4>
+              <p>Top contributors are recognized and rewarded for their efforts</p>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-ledger">View Full Ledger</a>
+      </div>
+      <div class="ledger-visual">
+        <div class="ledger-chart">
+          <div class="chart-header">Contribution Ledger</div>
+          <div class="chart-entries">
+            <div class="entry" *ngFor="let contribution of recentContributions.slice(0, 3)">
+              <span class="entry-avatar">{{ contribution.avatar }}</span>
+              <span class="entry-name">{{ contribution.contributor }}</span>
+              <span class="entry-hours">+{{ contribution.hoursEarned }}h</span>
+            </div>
+          </div>
+          <div class="chart-footer">
+            <span class="total-label">Total Hours Distributed:</span>
+            <span class="total-hours">2,340 hours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Start Contributing?</h2>
+      <p class="cta-subtitle">
+        Join our community of developers building the future of time banking. 
+        Your code contributions earn you time credits while making a real impact.
+      </p>
+      <div class="cta-buttons">
+        <a href="https://github.com/ramjisreenivasan/hour-bank-app" target="_blank" class="btn btn-primary">
+          <span class="btn-icon">💻</span>
+          View GitHub Repository
+        </a>
+        <a routerLink="/auth" class="btn btn-secondary">Join the Community</a>
+      </div>
+      <div class="cta-note">
+        <p>New to open source? We welcome developers of all experience levels!</p>
+      </div>
+    </div>
+  </div>
+</section>
