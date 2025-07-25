@@ -28,7 +28,7 @@
 
   .page-subtitle {
     font-size: 1.25rem;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95); // Explicit white with slight transparency for better visibility
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
@@ -178,7 +178,7 @@ section {
         }
 
         .member-joined {
-          color: #a0aec0;
+          color: #718096; // Darker grey for better visibility on white background
           font-size: 0.75rem;
           padding-top: 1rem;
           border-top: 1px solid #e2e8f0;
@@ -250,7 +250,7 @@ section {
     .join-subtitle {
       font-size: 1.125rem;
       margin-bottom: 2rem;
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.95); // Explicit white with slight transparency for better visibility
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
