@@ -37,6 +37,7 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
         this.isAuthenticated = isAuth;
         if (isAuth) {
           this.loadUserData();
+          this.checkAdminStatus(); // Check admin status when authenticated
         } else {
           this.currentUser = null;
           this.isAdmin = false;
@@ -48,7 +49,11 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
     this.userSubscription = this.authService.currentUser$.subscribe(
       (user: User | null) => {
         this.currentUser = user;
-        this.isAdmin = user?.role === 'admin';
+        if (user) {
+          this.checkAdminStatus(); // Re-check admin status when user changes
+        } else {
+          this.isAdmin = false;
+        }
       }
     );
 
@@ -67,7 +72,15 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.currentUser = user;
-      this.isAdmin = user.role === 'admin';
+    }
+  }
+
+  private async checkAdminStatus() {
+    try {
+      this.isAdmin = await this.authService.isCurrentUserAdmin();
+    } catch (error) {
+      console.error('Error checking admin status in navigation:', error);
+      this.isAdmin = false;
     }
   }
 

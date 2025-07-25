@@ -33,6 +33,10 @@ export const routes: Routes = [
     path: 'community', 
     loadComponent: () => import('./components/community/community-browse.component').then(m => m.CommunityBrowseComponent)
   },
+  { 
+    path: 'simulation', 
+    loadComponent: () => import('./components/admin/simulation-dashboard.component').then(m => m.SimulationDashboardComponent)
+  },
   
   // Authentication routes
   { 

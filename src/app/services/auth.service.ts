@@ -307,4 +307,52 @@ export class AuthService {
       })
     );
   }
+
+  /**
+   * Check if current user has admin privileges
+   * Uses same logic as AdminGuard for consistency
+   */
+  async isCurrentUserAdmin(): Promise<boolean> {
+    try {
+      if (!this.isAuthenticated()) {
+        return false;
+      }
+
+      const session = await fetchAuthSession();
+      const cognitoUser = await getCurrentUser();
+      
+      // Check for admin group membership in Cognito
+      const groups = session.tokens?.accessToken?.payload['cognito:groups'] as string[] || [];
+      const isAdminGroup = groups.includes('admin') || groups.includes('Admin');
+      
+      // Check for admin email patterns
+      const adminEmails = [
+        'admin@hourbank.com',
+        'administrator@hourbank.com',
+        'ramjisreenivasan@gmail.com'
+      ];
+      const userEmail = cognitoUser.signInDetails?.loginId || '';
+      const isAdminEmail = adminEmails.includes(userEmail.toLowerCase());
+      
+      // Check for admin username patterns
+      const username = cognitoUser.username || '';
+      const isAdminUsername = username.toLowerCase().includes('admin');
+      
+      // Check for admin first name or last name
+      const userAttributes = cognitoUser.signInDetails?.loginId ? session.tokens?.idToken?.payload : {};
+      const firstName = (userAttributes?.['given_name'] || userAttributes?.['custom:firstName'] || '').toString().toLowerCase();
+      const lastName = (userAttributes?.['family_name'] || userAttributes?.['custom:lastName'] || '').toString().toLowerCase();
+      const isAdminName = firstName === 'admin' || lastName === 'admin';
+      
+      // Also check the current user from AuthService if available
+      const authUser = this.getCurrentUser();
+      const isAdminFirstName = authUser?.firstName?.toLowerCase() === 'admin';
+      const isAdminLastName = authUser?.lastName?.toLowerCase() === 'admin';
+      
+      return isAdminGroup || isAdminEmail || isAdminUsername || isAdminName || isAdminFirstName || isAdminLastName;
+    } catch (error) {
+      console.error('Error checking admin privileges:', error);
+      return false;
+    }
+  }
 }

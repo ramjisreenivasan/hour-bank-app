@@ -20,6 +20,10 @@ import { User } from '../../models/user.model';
           Admin Dashboard
         </h1>
         <div class="admin-actions">
+          <button class="btn btn-info" routerLink="/admin/simulation">
+            <i class="fas fa-chart-line"></i>
+            Simulation Data
+          </button>
           <button class="btn btn-secondary" (click)="refreshData()">
             <i class="fas fa-sync-alt" [class.spinning]="loading"></i>
             Refresh
