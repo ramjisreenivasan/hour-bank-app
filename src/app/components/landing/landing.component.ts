@@ -76,7 +76,7 @@ export class LandingComponent {
       icon: '🍳',
       title: 'Cooking Lessons',
       description: 'Culinary skills, meal prep, and nutrition guidance',
-      duration: '1.5-2 hours',
+      duration: '2 hours',
       rate: '1 hour = 1 hour',
       timeType: 'Per class',
       example: 'Italian pasta making: 2 hours'
