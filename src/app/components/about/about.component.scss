@@ -1001,71 +1001,43 @@ section {
   margin-top: 3rem;
 
   .step {
-    background: var(--surface-color);
-    border-radius: var(--radius-lg);
+    background: white;
+    border-radius: 12px;
     padding: 2rem;
     text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    border: 1px solid #e5e7eb;
 
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
+    &:hover { transform: translateY(-4px); }
 
     .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      @extend %flex-center;
       width: 40px;
       height: 40px;
-      background: var(--primary-color);
+      background: #3b82f6;
       color: white;
       border-radius: 50%;
       font-weight: 600;
       font-size: 1.25rem;
-      margin-bottom: 1rem;
+      @extend %mb-1;
     }
 
-    .step-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .step-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .step-description {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
+    .step-icon { font-size: 3rem; @extend %mb-1; display: block; }
+    .step-title { font-size: 1.5rem; font-weight: 600; color: $text-primary; @extend %mb-1; }
+    .step-description { color: $text-secondary; @extend %mb-15; line-height: 1.6; }
 
     .step-details {
       ul {
         list-style: none;
         padding: 0;
         text-align: left;
-
         li {
           padding: 0.5rem 0;
-          color: var(--text-secondary);
+          color: $text-secondary;
           position: relative;
           padding-left: 1.5rem;
-
-          &::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: 600;
-          }
+          &::before { content: '✓'; position: absolute; left: 0; color: #3b82f6; font-weight: 600; }
         }
       }
     }
