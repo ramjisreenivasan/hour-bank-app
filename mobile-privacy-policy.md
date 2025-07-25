@@ -86,16 +86,17 @@ We may update this privacy policy from time to time. We will notify users of any
 
 If you have any questions about this privacy policy or the mobile app, please contact us:
 
-**Email:** privacy@hourbank.ramjisreenivasan.com  
+**Developer:** Ramji Sreenivasan  
+**Email:** ramjisreenivasan@gmail.com  
 **Website:** https://hourbank.ramjisreenivasan.com/about  
 **Mailing Address:**  
-HourBank Privacy Team  
-[Your Address]  
-[City, State, ZIP Code]
+13055 Garridan Ave  
+Windermere, FL 34786  
+United States
 
 ## Jurisdiction
 
-This privacy policy is governed by the laws of [Your State/Country] and any disputes will be resolved in the courts of [Your Jurisdiction].
+This privacy policy is governed by the laws of the State of Florida, United States, and any disputes will be resolved in the courts of Orange County, Florida.
 
 ## Key Points Summary
 

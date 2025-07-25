@@ -76,8 +76,13 @@ import { Browser } from '@capacitor/browser';
             </ion-button>
 
             <div class="contact-section">
-              <h3>Questions?</h3>
-              <p>Contact us at: <strong>privacy@hourbank.ramjisreenivasan.com</strong></p>
+              <h3>Contact Information</h3>
+              <p><strong>Developer:</strong> Ramji Sreenivasan</p>
+              <p><strong>Email:</strong> ramjisreenivasan@gmail.com</p>
+              <p><strong>Address:</strong><br>
+              13055 Garridan Ave<br>
+              Windermere, FL 34786<br>
+              United States</p>
             </div>
           </ion-card-content>
         </ion-card>
@@ -140,6 +145,10 @@ import { Browser } from '@capacitor/browser';
       padding: 15px;
       border-radius: 8px;
       margin-top: 20px;
+    }
+
+    .contact-section p {
+      margin: 5px 0;
     }
 
     .benefits-grid {

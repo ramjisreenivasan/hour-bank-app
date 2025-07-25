@@ -1,5 +1,9 @@
 HOURBANK MOBILE GATEWAY - PRIVACY POLICY SUMMARY
 
+DEVELOPER: Ramji Sreenivasan
+EMAIL: ramjisreenivasan@gmail.com
+ADDRESS: 13055 Garridan Ave, Windermere, FL 34786, USA
+
 WHAT WE DON'T COLLECT:
 • No personal information (names, emails, phone numbers)
 • No location data or device identifiers
@@ -34,8 +38,11 @@ When you tap "Sign In" or other account features, the app opens your web browser
 CHILDREN'S PRIVACY:
 Safe for all ages - no personal data collection.
 
+JURISDICTION:
+Governed by Florida State law, USA. Disputes resolved in Orange County, FL courts.
+
 CONTACT:
-privacy@hourbank.ramjisreenivasan.com
+ramjisreenivasan@gmail.com
 
 Full privacy policy: https://hourbank.ramjisreenivasan.com/mobile-privacy-policy
 
