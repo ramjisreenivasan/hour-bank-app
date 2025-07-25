@@ -63,7 +63,88 @@ $orange-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 @mixin small { @media (max-width: 480px) { @content; } }
 
 .hero-section {
-  @extend .hero-section-bright;
+  background: var(--hero-gradient-bright);
+  color: #1e293b;
+  padding: 4rem 2rem;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+  }
+
+  .hero-text {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    @media (max-width: 768px) {
+      padding: 1.5rem;
+    }
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+
+    .highlight {
+      background: linear-gradient(45deg, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #374151;
+    opacity: 0.9;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   
   // Component-specific overrides
   .hero-subtitle {
@@ -942,7 +1023,9 @@ section {
     &:hover { transform: translateY(-4px); }
 
     .step-number {
-      @extend %flex-center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 40px;
       height: 40px;
       background: #3b82f6;
@@ -950,12 +1033,12 @@ section {
       border-radius: 50%;
       font-weight: 600;
       font-size: 1.25rem;
-      @extend %mb-1;
+      margin-bottom: 1rem;
     }
 
-    .step-icon { font-size: 3rem; @extend %mb-1; display: block; }
-    .step-title { font-size: 1.5rem; font-weight: 600; color: $text-primary; @extend %mb-1; }
-    .step-description { color: $text-secondary; @extend %mb-15; line-height: 1.6; }
+    .step-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .step-title { font-size: 1.5rem; font-weight: 600; color: $text-primary; margin-bottom: 1rem; }
+    .step-description { color: $text-secondary; margin-bottom: 1.5rem; line-height: 1.6; }
 
     .step-details {
       ul {
@@ -976,11 +1059,12 @@ section {
 
 // Time Banking Concept Styles
 .concept-section {
-  @extend %section-padding;
+  padding: 4rem 2rem;
   background: #f8fafc;
 
   .concept-content {
-    @extend %container;
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -989,8 +1073,11 @@ section {
   }
 
   .concept-title {
-    @extend %section-title;
-    @extend %mb-15;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
     @include mobile { font-size: 2rem; }
   }
 
@@ -998,11 +1085,12 @@ section {
     font-size: 1.125rem;
     color: $text-secondary;
     line-height: 1.7;
-    @extend %mb-2;
+    margin-bottom: 2rem;
   }
 
   .concept-benefits {
-    @extend %flex-column;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
 
     .benefit {
@@ -1012,16 +1100,19 @@ section {
 
       .benefit-icon { font-size: 1.5rem; flex-shrink: 0; }
       .benefit-content {
-        h4 { font-size: 1.125rem; font-weight: 600; color: $text-primary; @extend %mb-05; }
+        h4 { font-size: 1.125rem; font-weight: 600; color: $text-primary; margin-bottom: 0.5rem; }
         p { color: $text-secondary; margin: 0; }
       }
     }
   }
 
   .concept-visual {
-    @extend %flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .time-equation {
-      @extend %flex-column;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
       align-items: center;
       @include mobile { flex-direction: row; gap: 2rem; }
@@ -1032,7 +1123,7 @@ section {
         text-align: center;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         border: 2px solid #e5e7eb;
-        .service-icon { font-size: 2rem; display: block; @extend %mb-05; }
+        .service-icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
         .service-text { font-size: 0.875rem; font-weight: 600; color: $text-primary; line-height: 1.3; }
       }
       .equals { font-size: 1.5rem; font-weight: 700; color: #3b82f6; }
@@ -1042,7 +1133,7 @@ section {
 
 // Examples Section Styles
 .examples-section {
-  @extend %section-padding;
+  padding: 4rem 2rem;
 
   .examples-grid {
     display: grid;
@@ -1065,7 +1156,7 @@ section {
       display: flex;
       align-items: center;
       gap: 1rem;
-      @extend %mb-1;
+      margin-bottom: 1rem;
 
       .example-icon { font-size: 2rem; }
       .example-title { font-size: 1.25rem; font-weight: 600; color: $text-primary; margin: 0; }
@@ -1073,7 +1164,7 @@ section {
 
     .example-description {
       color: $text-secondary;
-      @extend %mb-15;
+      margin-bottom: 1.5rem;
       line-height: 1.6;
     }
 
@@ -1094,7 +1185,7 @@ section {
 
 // FAQ Section Styles
 .faq-section {
-  @extend %section-padding;
+  padding: 4rem 2rem;
   background: #f8fafc;
 
   .faq-grid {
@@ -1116,7 +1207,7 @@ section {
       font-size: 1.125rem;
       font-weight: 600;
       color: $text-primary;
-      @extend %mb-1;
+      margin-bottom: 1rem;
       line-height: 1.4;
     }
 
