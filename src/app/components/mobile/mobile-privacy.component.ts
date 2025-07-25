@@ -78,7 +78,7 @@ import { Browser } from '@capacitor/browser';
             <div class="contact-section">
               <h3>Contact Information</h3>
               <p><strong>Developer:</strong> Ramji Sreenivasan</p>
-              <p><strong>Email:</strong> ramjisreenivasan@gmail.com</p>
+              <p><strong>Email:</strong> ramjisreenivasan&#64;gmail.com</p>
               <p><strong>Address:</strong><br>
               13055 Garridan Ave<br>
               Windermere, FL 34786<br>
