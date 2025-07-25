@@ -143,12 +143,4 @@ export class LandingComponent {
   ];
 
   constructor() { }
-
-  /**
-   * Scroll to top of page when logo is clicked
-   */
-  scrollToTop(event: Event): void {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 }

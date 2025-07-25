@@ -29,7 +29,7 @@
 
     <div class="nav-actions">
       <ng-container *ngIf="!isAuthenticated">
-        <a routerLink="/auth" class="nav-link nav-cta">Get Started</a>
+        <button routerLink="/auth" class="btn btn-primary nav-cta-btn">Get Started</button>
       </ng-container>
       
       <ng-container *ngIf="isAuthenticated">
