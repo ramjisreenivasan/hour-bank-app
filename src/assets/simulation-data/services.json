@@ -1,0 +1,214 @@
+[
+  {
+    "id": "service-001",
+    "userId": "user-001",
+    "title": "React Web Development Tutoring",
+    "description": "Learn React from basics to advanced concepts. Perfect for beginners and intermediate developers.",
+    "category": "Technology",
+    "hourlyDuration": 2,
+    "isActive": true,
+    "tags": [
+      "React",
+      "JavaScript",
+      "Web Development",
+      "Frontend"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 4,
+    "advanceBookingDays": 2,
+    "cancellationHours": 24,
+    "createdAt": "2025-06-01T10:30:00.000Z",
+    "updatedAt": "2025-06-01T10:30:00.000Z"
+  },
+  {
+    "id": "service-002",
+    "userId": "user-002",
+    "title": "Mandarin Language Lessons",
+    "description": "Native speaker offering conversational Mandarin lessons for all levels.",
+    "category": "Education",
+    "hourlyDuration": 1,
+    "isActive": true,
+    "tags": [
+      "Mandarin",
+      "Language",
+      "Conversation",
+      "Chinese Culture"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 3,
+    "advanceBookingDays": 1,
+    "cancellationHours": 12,
+    "createdAt": "2025-06-01T12:00:00.000Z",
+    "updatedAt": "2025-06-01T12:00:00.000Z"
+  },
+  {
+    "id": "service-003",
+    "userId": "user-003",
+    "title": "Logo Design & Branding",
+    "description": "Professional logo design and brand identity creation for small businesses.",
+    "category": "Design",
+    "hourlyDuration": 3,
+    "isActive": true,
+    "tags": [
+      "Logo Design",
+      "Branding",
+      "Graphic Design",
+      "Business"
+    ],
+    "requiresScheduling": false,
+    "createdAt": "2025-06-01T14:45:00.000Z",
+    "updatedAt": "2025-06-01T14:45:00.000Z"
+  },
+  {
+    "id": "service-004",
+    "userId": "user-004",
+    "title": "Home Plumbing Repairs",
+    "description": "Fix leaky faucets, unclog drains, and handle basic plumbing issues.",
+    "category": "Home Services",
+    "hourlyDuration": 2,
+    "isActive": true,
+    "tags": [
+      "Plumbing",
+      "Home Repair",
+      "Maintenance",
+      "Handyman"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 6,
+    "advanceBookingDays": 1,
+    "cancellationHours": 4,
+    "createdAt": "2025-06-01T17:00:00.000Z",
+    "updatedAt": "2025-06-01T17:00:00.000Z"
+  },
+  {
+    "id": "service-005",
+    "userId": "user-005",
+    "title": "Italian Cooking Class",
+    "description": "Learn to cook authentic Italian dishes from scratch. Ingredients provided.",
+    "category": "Culinary",
+    "hourlyDuration": 3,
+    "isActive": true,
+    "tags": [
+      "Cooking",
+      "Italian Cuisine",
+      "Culinary Skills",
+      "Food"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 2,
+    "maxBookingHours": 4,
+    "advanceBookingDays": 3,
+    "cancellationHours": 48,
+    "createdAt": "2025-06-02T09:45:00.000Z",
+    "updatedAt": "2025-06-02T09:45:00.000Z"
+  },
+  {
+    "id": "service-006",
+    "userId": "user-006",
+    "title": "Personal Fitness Training",
+    "description": "One-on-one fitness training sessions tailored to your goals and fitness level.",
+    "category": "Health & Fitness",
+    "hourlyDuration": 1,
+    "isActive": true,
+    "tags": [
+      "Personal Training",
+      "Fitness",
+      "Health",
+      "Exercise"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 2,
+    "advanceBookingDays": 1,
+    "cancellationHours": 12,
+    "createdAt": "2025-06-02T13:30:00.000Z",
+    "updatedAt": "2025-06-02T13:30:00.000Z"
+  },
+  {
+    "id": "service-007",
+    "userId": "user-007",
+    "title": "Piano Lessons for Beginners",
+    "description": "Learn piano fundamentals, music theory, and play your favorite songs.",
+    "category": "Arts & Music",
+    "hourlyDuration": 1,
+    "isActive": true,
+    "tags": [
+      "Piano",
+      "Music Lessons",
+      "Music Theory",
+      "Beginner Friendly"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 2,
+    "advanceBookingDays": 2,
+    "cancellationHours": 24,
+    "createdAt": "2025-06-03T11:30:00.000Z",
+    "updatedAt": "2025-06-03T11:30:00.000Z"
+  },
+  {
+    "id": "service-008",
+    "userId": "user-008",
+    "title": "Blog Writing & Content Creation",
+    "description": "Professional blog posts, articles, and web content for your business.",
+    "category": "Writing",
+    "hourlyDuration": 2,
+    "isActive": true,
+    "tags": [
+      "Blog Writing",
+      "Content Creation",
+      "SEO Writing",
+      "Marketing"
+    ],
+    "requiresScheduling": false,
+    "createdAt": "2025-06-03T16:00:00.000Z",
+    "updatedAt": "2025-06-03T16:00:00.000Z"
+  },
+  {
+    "id": "service-009",
+    "userId": "user-009",
+    "title": "Portrait Photography Session",
+    "description": "Professional portrait photography for individuals, families, or business headshots.",
+    "category": "Photography",
+    "hourlyDuration": 2,
+    "isActive": true,
+    "tags": [
+      "Portrait Photography",
+      "Professional Photos",
+      "Headshots",
+      "Family Photos"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 1,
+    "maxBookingHours": 4,
+    "advanceBookingDays": 5,
+    "cancellationHours": 48,
+    "createdAt": "2025-06-04T11:15:00.000Z",
+    "updatedAt": "2025-06-04T11:15:00.000Z"
+  },
+  {
+    "id": "service-010",
+    "userId": "user-010",
+    "title": "Garden Design Consultation",
+    "description": "Professional garden design and landscaping consultation for your outdoor space.",
+    "category": "Gardening",
+    "hourlyDuration": 2,
+    "isActive": true,
+    "tags": [
+      "Garden Design",
+      "Landscaping",
+      "Plant Selection",
+      "Outdoor Spaces"
+    ],
+    "requiresScheduling": true,
+    "minBookingHours": 2,
+    "maxBookingHours": 6,
+    "advanceBookingDays": 3,
+    "cancellationHours": 24,
+    "createdAt": "2025-06-04T14:45:00.000Z",
+    "updatedAt": "2025-06-04T14:45:00.000Z"
+  }
+]

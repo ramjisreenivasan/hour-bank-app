@@ -79,6 +79,11 @@ export const routes: Routes = [
     loadComponent: () => import('./components/admin/admin-dashboard.component').then(m => m.AdminDashboardComponent),
     canActivate: [AdminGuard]
   },
+  { 
+    path: 'admin/simulation', 
+    loadComponent: () => import('./components/admin/simulation-dashboard.component').then(m => m.SimulationDashboardComponent),
+    canActivate: [AdminGuard]
+  },
   
   { path: '**', redirectTo: '/' }
 ];

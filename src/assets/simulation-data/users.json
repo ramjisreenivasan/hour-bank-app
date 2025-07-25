@@ -1,0 +1,202 @@
+[
+  {
+    "id": "user-001",
+    "email": "sarah.developer@email.com",
+    "username": "sarah_codes",
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "bankHours": 21,
+    "skills": [
+      "Web Development",
+      "React",
+      "Node.js",
+      "UI/UX Design"
+    ],
+    "bio": "Full-stack developer with 5 years experience. Love helping others learn to code!",
+    "rating": 4.4,
+    "totalTransactions": 17,
+    "role": "user",
+    "createdAt": "2025-06-01T10:00:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-002",
+    "email": "mike.tutor@email.com",
+    "username": "mike_teaches",
+    "firstName": "Mike",
+    "lastName": "Chen",
+    "bankHours": 0,
+    "skills": [
+      "Language Tutoring",
+      "Mandarin",
+      "English",
+      "Translation"
+    ],
+    "bio": "Native Mandarin speaker, fluent in English. Passionate about language learning!",
+    "rating": 4.5,
+    "totalTransactions": 17,
+    "role": "user",
+    "createdAt": "2025-06-01T11:30:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-003",
+    "email": "lisa.designer@email.com",
+    "username": "lisa_creates",
+    "firstName": "Lisa",
+    "lastName": "Rodriguez",
+    "bankHours": 3,
+    "skills": [
+      "Graphic Design",
+      "Logo Design",
+      "Branding",
+      "Adobe Creative Suite"
+    ],
+    "bio": "Creative designer with expertise in branding and visual identity.",
+    "rating": 4.3,
+    "totalTransactions": 15,
+    "role": "user",
+    "createdAt": "2025-06-01T14:15:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-004",
+    "email": "david.handyman@email.com",
+    "username": "david_fixes",
+    "firstName": "David",
+    "lastName": "Thompson",
+    "bankHours": 7,
+    "skills": [
+      "Home Repair",
+      "Plumbing",
+      "Electrical",
+      "Carpentry"
+    ],
+    "bio": "Experienced handyman ready to help with your home improvement projects.",
+    "rating": 4.6,
+    "totalTransactions": 16,
+    "role": "user",
+    "createdAt": "2025-06-01T16:45:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-005",
+    "email": "emma.chef@email.com",
+    "username": "emma_cooks",
+    "firstName": "Emma",
+    "lastName": "Wilson",
+    "bankHours": 24,
+    "skills": [
+      "Cooking Lessons",
+      "Baking",
+      "Meal Planning",
+      "Nutrition"
+    ],
+    "bio": "Professional chef offering cooking lessons and meal planning services.",
+    "rating": 4.5,
+    "totalTransactions": 12,
+    "role": "user",
+    "createdAt": "2025-06-02T09:20:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-006",
+    "email": "alex.fitness@email.com",
+    "username": "alex_trains",
+    "firstName": "Alex",
+    "lastName": "Kumar",
+    "bankHours": 2,
+    "skills": [
+      "Personal Training",
+      "Yoga",
+      "Nutrition Coaching",
+      "Wellness"
+    ],
+    "bio": "Certified personal trainer and wellness coach. Let's achieve your fitness goals!",
+    "rating": 4.7,
+    "totalTransactions": 21,
+    "role": "user",
+    "createdAt": "2025-06-02T13:10:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-007",
+    "email": "maria.music@email.com",
+    "username": "maria_music",
+    "firstName": "Maria",
+    "lastName": "Garcia",
+    "bankHours": 6,
+    "skills": [
+      "Music Lessons",
+      "Piano",
+      "Guitar",
+      "Music Theory"
+    ],
+    "bio": "Music teacher with 10+ years experience. All skill levels welcome!",
+    "rating": 4.6,
+    "totalTransactions": 18,
+    "role": "user",
+    "createdAt": "2025-06-03T11:00:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-008",
+    "email": "james.writer@email.com",
+    "username": "james_writes",
+    "firstName": "James",
+    "lastName": "Anderson",
+    "bankHours": 5,
+    "skills": [
+      "Writing",
+      "Editing",
+      "Content Creation",
+      "Copywriting"
+    ],
+    "bio": "Professional writer and editor. Help with blogs, articles, and creative writing.",
+    "rating": 4,
+    "totalTransactions": 14,
+    "role": "user",
+    "createdAt": "2025-06-03T15:30:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-009",
+    "email": "nina.photographer@email.com",
+    "username": "nina_captures",
+    "firstName": "Nina",
+    "lastName": "Patel",
+    "bankHours": 19,
+    "skills": [
+      "Photography",
+      "Photo Editing",
+      "Event Photography",
+      "Portraits"
+    ],
+    "bio": "Professional photographer specializing in events and portraits.",
+    "rating": 4.5,
+    "totalTransactions": 15,
+    "role": "user",
+    "createdAt": "2025-06-04T10:45:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  },
+  {
+    "id": "user-010",
+    "email": "robert.gardener@email.com",
+    "username": "robert_grows",
+    "firstName": "Robert",
+    "lastName": "Lee",
+    "bankHours": 13,
+    "skills": [
+      "Gardening",
+      "Landscaping",
+      "Plant Care",
+      "Organic Farming"
+    ],
+    "bio": "Master gardener with expertise in sustainable gardening practices.",
+    "rating": 4.7,
+    "totalTransactions": 7,
+    "role": "user",
+    "createdAt": "2025-06-04T14:20:00.000Z",
+    "updatedAt": "2025-07-25T19:42:28.884Z"
+  }
+]
