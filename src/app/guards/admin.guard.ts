@@ -25,7 +25,11 @@ export class AdminGuard implements CanActivate {
         return;
       }
 
-      // Check if user has admin privileges
+      // Check if user has admin privileges through multiple methods:
+      // 1. Cognito group membership (admin/Admin)
+      // 2. Admin email patterns
+      // 3. Admin username patterns  
+      // 4. First name or last name is "admin"
       this.checkAdminPrivileges().then(isAdmin => {
         if (isAdmin) {
           observer.next(true);
@@ -64,7 +68,18 @@ export class AdminGuard implements CanActivate {
       const username = currentUser.username || '';
       const isAdminUsername = username.toLowerCase().includes('admin');
       
-      return isAdminGroup || isAdminEmail || isAdminUsername;
+      // Check for admin first name or last name
+      const userAttributes = currentUser.signInDetails?.loginId ? session.tokens?.idToken?.payload : {};
+      const firstName = (userAttributes?.['given_name'] || userAttributes?.['custom:firstName'] || '').toString().toLowerCase();
+      const lastName = (userAttributes?.['family_name'] || userAttributes?.['custom:lastName'] || '').toString().toLowerCase();
+      const isAdminName = firstName === 'admin' || lastName === 'admin';
+      
+      // Also check the current user from AuthService if available
+      const authUser = this.authService.getCurrentUser();
+      const isAdminFirstName = authUser?.firstName?.toLowerCase() === 'admin';
+      const isAdminLastName = authUser?.lastName?.toLowerCase() === 'admin';
+      
+      return isAdminGroup || isAdminEmail || isAdminUsername || isAdminName || isAdminFirstName || isAdminLastName;
     } catch (error) {
       console.error('Error checking admin privileges:', error);
       return false;
