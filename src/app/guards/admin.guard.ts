@@ -59,7 +59,8 @@ export class AdminGuard implements CanActivate {
       // Check for admin email patterns (backup method)
       const adminEmails = [
         'admin@hourbank.com',
-        'administrator@hourbank.com'
+        'administrator@hourbank.com',
+        'ramjisreenivasan@gmail.com'
       ];
       const userEmail = currentUser.signInDetails?.loginId || '';
       const isAdminEmail = adminEmails.includes(userEmail.toLowerCase());
