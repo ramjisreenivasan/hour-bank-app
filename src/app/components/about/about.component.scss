@@ -1250,6 +1250,117 @@ section {
   }
 }
 
+// Donate Snippet Section
+.donate-snippet-section {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .donate-snippet-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .snippet-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    animation: bounce-gentle 2s ease-in-out infinite;
+  }
+
+  .snippet-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .snippet-description {
+    font-size: 1.2rem;
+    color: #a16207;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .snippet-benefits {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .snippet-benefit {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.2);
+      padding: 0.75rem 1.25rem;
+      border-radius: 25px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+
+      .benefit-icon {
+        font-size: 1.2rem;
+      }
+
+      .benefit-text {
+        font-weight: 500;
+        color: #92400e;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .btn-donate-about {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    padding: 1.25rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    font-size: 1.1rem;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    }
+  }
+
+  @keyframes bounce-gentle {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-8px);
+    }
+    60% {
+      transform: translateY(-4px);
+    }
+  }
+}
+
 // Enhanced CTA Section
 .cta-section {
   .cta-buttons {
