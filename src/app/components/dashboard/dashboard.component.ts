@@ -209,7 +209,7 @@ export class DashboardComponent implements OnInit {
         providerId: service.userId,
         consumerId: this.currentUser.id,
         serviceId: service.id,
-        hoursSpent: 1, // Default to 1 hour, can be modified later
+        hoursSpent: service.hourlyDuration, // Use actual service duration
         description: `Request for ${service.title}`
       });
 
