@@ -1,0 +1,45 @@
+{
+  "period": {
+    "start": "2025-06-01",
+    "end": "2025-07-26"
+  },
+  "totalDays": 56,
+  "statistics": {
+    "totalTransactions": 348,
+    "completed": 242,
+    "rejected": 68,
+    "cancelled": 25,
+    "pending": 13,
+    "totalBankHours": 356,
+    "averageRating": 4.3,
+    "averageDailyTransactions": 6.2
+  },
+  "config": {
+    "startDate": "2025-06-01",
+    "endDate": "2025-07-26",
+    "dailyVolume": {
+      "weekdayMin": 5,
+      "weekdayMax": 8,
+      "weekendMin": 8,
+      "weekendMax": 12
+    },
+    "userDistribution": {
+      "regular": 0.2,
+      "casual": 0.6,
+      "inactive": 0.2
+    },
+    "outcomes": {
+      "completed": 0.7,
+      "rejected": 0.15,
+      "cancelled": 0.1,
+      "pending": 0.05
+    },
+    "ratings": {
+      "fiveStar": 0.6,
+      "fourStar": 0.25,
+      "threeStar": 0.1,
+      "twoStar": 0.04,
+      "oneStar": 0.01
+    }
+  }
+}

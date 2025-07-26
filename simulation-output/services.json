@@ -1,0 +1,362 @@
+[
+  {
+    "id": "sim-service-1",
+    "providerId": "sim-user-8",
+    "title": "Content Writing 1",
+    "description": "Write engaging content",
+    "category": "Writing",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-2",
+    "providerId": "sim-user-25",
+    "title": "Content Writing 2",
+    "description": "Write engaging content",
+    "category": "Writing",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-3",
+    "providerId": "sim-user-18",
+    "title": "Spanish Lessons 3",
+    "description": "Learn Spanish conversation",
+    "category": "Language",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-4",
+    "providerId": "sim-user-20",
+    "title": "Home Repair 4",
+    "description": "Fix things around your home",
+    "category": "Handyman",
+    "hourlyDuration": 3,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-5",
+    "providerId": "sim-user-6",
+    "title": "Cooking Class 5",
+    "description": "Learn to cook delicious meals",
+    "category": "Food",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-6",
+    "providerId": "sim-user-2",
+    "title": "Personal Training 6",
+    "description": "Get fit with personal trainer",
+    "category": "Fitness",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-7",
+    "providerId": "sim-user-22",
+    "title": "Home Repair 7",
+    "description": "Fix things around your home",
+    "category": "Handyman",
+    "hourlyDuration": 3,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-8",
+    "providerId": "sim-user-7",
+    "title": "Personal Training 8",
+    "description": "Get fit with personal trainer",
+    "category": "Fitness",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-9",
+    "providerId": "sim-user-22",
+    "title": "Guitar Lessons 9",
+    "description": "Learn to play guitar",
+    "category": "Music",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-10",
+    "providerId": "sim-user-22",
+    "title": "Personal Training 10",
+    "description": "Get fit with personal trainer",
+    "category": "Fitness",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-11",
+    "providerId": "sim-user-9",
+    "title": "Home Repair 11",
+    "description": "Fix things around your home",
+    "category": "Handyman",
+    "hourlyDuration": 3,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-12",
+    "providerId": "sim-user-18",
+    "title": "Guitar Lessons 12",
+    "description": "Learn to play guitar",
+    "category": "Music",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-13",
+    "providerId": "sim-user-13",
+    "title": "Photo Session 13",
+    "description": "Professional photo session",
+    "category": "Photography",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-14",
+    "providerId": "sim-user-19",
+    "title": "Personal Training 14",
+    "description": "Get fit with personal trainer",
+    "category": "Fitness",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-15",
+    "providerId": "sim-user-6",
+    "title": "Logo Design 15",
+    "description": "Create professional logos",
+    "category": "Design",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-16",
+    "providerId": "sim-user-15",
+    "title": "Spanish Lessons 16",
+    "description": "Learn Spanish conversation",
+    "category": "Language",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-17",
+    "providerId": "sim-user-11",
+    "title": "Home Repair 17",
+    "description": "Fix things around your home",
+    "category": "Handyman",
+    "hourlyDuration": 3,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-18",
+    "providerId": "sim-user-15",
+    "title": "Guitar Lessons 18",
+    "description": "Learn to play guitar",
+    "category": "Music",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-19",
+    "providerId": "sim-user-21",
+    "title": "Logo Design 19",
+    "description": "Create professional logos",
+    "category": "Design",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-20",
+    "providerId": "sim-user-16",
+    "title": "Math Tutoring 20",
+    "description": "Improve your math skills",
+    "category": "Education",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-21",
+    "providerId": "sim-user-22",
+    "title": "Cooking Class 21",
+    "description": "Learn to cook delicious meals",
+    "category": "Food",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-22",
+    "providerId": "sim-user-14",
+    "title": "Spanish Lessons 22",
+    "description": "Learn Spanish conversation",
+    "category": "Language",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-23",
+    "providerId": "sim-user-23",
+    "title": "Home Repair 23",
+    "description": "Fix things around your home",
+    "category": "Handyman",
+    "hourlyDuration": 3,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-24",
+    "providerId": "sim-user-13",
+    "title": "Cooking Class 24",
+    "description": "Learn to cook delicious meals",
+    "category": "Food",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-25",
+    "providerId": "sim-user-20",
+    "title": "Logo Design 25",
+    "description": "Create professional logos",
+    "category": "Design",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-26",
+    "providerId": "sim-user-13",
+    "title": "Math Tutoring 26",
+    "description": "Improve your math skills",
+    "category": "Education",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-27",
+    "providerId": "sim-user-8",
+    "title": "Content Writing 27",
+    "description": "Write engaging content",
+    "category": "Writing",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-28",
+    "providerId": "sim-user-12",
+    "title": "Personal Training 28",
+    "description": "Get fit with personal trainer",
+    "category": "Fitness",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-29",
+    "providerId": "sim-user-9",
+    "title": "Web Development 29",
+    "description": "Build responsive websites",
+    "category": "Technology",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-30",
+    "providerId": "sim-user-25",
+    "title": "Math Tutoring 30",
+    "description": "Improve your math skills",
+    "category": "Education",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-31",
+    "providerId": "sim-user-23",
+    "title": "Content Writing 31",
+    "description": "Write engaging content",
+    "category": "Writing",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-32",
+    "providerId": "sim-user-2",
+    "title": "Spanish Lessons 32",
+    "description": "Learn Spanish conversation",
+    "category": "Language",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-33",
+    "providerId": "sim-user-11",
+    "title": "Cooking Class 33",
+    "description": "Learn to cook delicious meals",
+    "category": "Food",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-34",
+    "providerId": "sim-user-13",
+    "title": "Math Tutoring 34",
+    "description": "Improve your math skills",
+    "category": "Education",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-35",
+    "providerId": "sim-user-10",
+    "title": "Photo Session 35",
+    "description": "Professional photo session",
+    "category": "Photography",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-36",
+    "providerId": "sim-user-16",
+    "title": "Logo Design 36",
+    "description": "Create professional logos",
+    "category": "Design",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-37",
+    "providerId": "sim-user-7",
+    "title": "Content Writing 37",
+    "description": "Write engaging content",
+    "category": "Writing",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-38",
+    "providerId": "sim-user-4",
+    "title": "Photo Session 38",
+    "description": "Professional photo session",
+    "category": "Photography",
+    "hourlyDuration": 2,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-39",
+    "providerId": "sim-user-2",
+    "title": "Spanish Lessons 39",
+    "description": "Learn Spanish conversation",
+    "category": "Language",
+    "hourlyDuration": 1,
+    "isActive": true
+  },
+  {
+    "id": "sim-service-40",
+    "providerId": "sim-user-11",
+    "title": "Cooking Class 40",
+    "description": "Learn to cook delicious meals",
+    "category": "Food",
+    "hourlyDuration": 2,
+    "isActive": true
+  }
+]

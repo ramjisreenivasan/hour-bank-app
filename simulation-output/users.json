@@ -1,0 +1,252 @@
+[
+  {
+    "id": "sim-user-1",
+    "firstName": "Emma",
+    "lastName": "Smith",
+    "email": "emma.smith0@hourbank.com",
+    "username": "emma_smith0",
+    "bankHours": 0,
+    "rating": 4.757362389946016,
+    "activityLevel": "regular"
+  },
+  {
+    "id": "sim-user-2",
+    "firstName": "Sage",
+    "lastName": "Williams",
+    "email": "sage.williams1@hourbank.com",
+    "username": "sage_williams1",
+    "bankHours": 2,
+    "rating": 4.275192313117347,
+    "activityLevel": "regular"
+  },
+  {
+    "id": "sim-user-3",
+    "firstName": "Casey",
+    "lastName": "Williams",
+    "email": "casey.williams2@hourbank.com",
+    "username": "casey_williams2",
+    "bankHours": 0,
+    "rating": 4.023632282245915,
+    "activityLevel": "regular"
+  },
+  {
+    "id": "sim-user-4",
+    "firstName": "Alex",
+    "lastName": "Lee",
+    "email": "alex.lee3@hourbank.com",
+    "username": "alex_lee3",
+    "bankHours": 0,
+    "rating": 4.395550857113417,
+    "activityLevel": "regular"
+  },
+  {
+    "id": "sim-user-5",
+    "firstName": "Sage",
+    "lastName": "Smith",
+    "email": "sage.smith4@hourbank.com",
+    "username": "sage_smith4",
+    "bankHours": 0,
+    "rating": 4.909364611218159,
+    "activityLevel": "regular"
+  },
+  {
+    "id": "sim-user-6",
+    "firstName": "River",
+    "lastName": "Garcia",
+    "email": "river.garcia5@hourbank.com",
+    "username": "river_garcia5",
+    "bankHours": 23,
+    "rating": 4.370852046086673,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-7",
+    "firstName": "Avery",
+    "lastName": "Thompson",
+    "email": "avery.thompson6@hourbank.com",
+    "username": "avery_thompson6",
+    "bankHours": 21,
+    "rating": 4.681577143824031,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-8",
+    "firstName": "Emma",
+    "lastName": "Martinez",
+    "email": "emma.martinez7@hourbank.com",
+    "username": "emma_martinez7",
+    "bankHours": 16,
+    "rating": 4.3037325125284,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-9",
+    "firstName": "Casey",
+    "lastName": "Patel",
+    "email": "casey.patel8@hourbank.com",
+    "username": "casey_patel8",
+    "bankHours": 28,
+    "rating": 4.631197775771341,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-10",
+    "firstName": "Taylor",
+    "lastName": "Brown",
+    "email": "taylor.brown9@hourbank.com",
+    "username": "taylor_brown9",
+    "bankHours": 33,
+    "rating": 4.581094047027048,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-11",
+    "firstName": "Casey",
+    "lastName": "Anderson",
+    "email": "casey.anderson10@hourbank.com",
+    "username": "casey_anderson10",
+    "bankHours": 47,
+    "rating": 4.808369397005382,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-12",
+    "firstName": "Quinn",
+    "lastName": "Rodriguez",
+    "email": "quinn.rodriguez11@hourbank.com",
+    "username": "quinn_rodriguez11",
+    "bankHours": 1,
+    "rating": 4.654210399143656,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-13",
+    "firstName": "Riley",
+    "lastName": "Davis",
+    "email": "riley.davis12@hourbank.com",
+    "username": "riley_davis12",
+    "bankHours": 56,
+    "rating": 4.932752770235309,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-14",
+    "firstName": "River",
+    "lastName": "Chen",
+    "email": "river.chen13@hourbank.com",
+    "username": "river_chen13",
+    "bankHours": 15,
+    "rating": 4.790599967022278,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-15",
+    "firstName": "Jordan",
+    "lastName": "Thompson",
+    "email": "jordan.thompson14@hourbank.com",
+    "username": "jordan_thompson14",
+    "bankHours": 15,
+    "rating": 4.857385754974635,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-16",
+    "firstName": "Sage",
+    "lastName": "Thompson",
+    "email": "sage.thompson15@hourbank.com",
+    "username": "sage_thompson15",
+    "bankHours": 1,
+    "rating": 4.5851031236748,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-17",
+    "firstName": "David",
+    "lastName": "Davis",
+    "email": "david.davis16@hourbank.com",
+    "username": "david_davis16",
+    "bankHours": 5,
+    "rating": 4.874662587295182,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-18",
+    "firstName": "Riley",
+    "lastName": "Wilson",
+    "email": "riley.wilson17@hourbank.com",
+    "username": "riley_wilson17",
+    "bankHours": 17,
+    "rating": 4.856659309657129,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-19",
+    "firstName": "James",
+    "lastName": "Anderson",
+    "email": "james.anderson18@hourbank.com",
+    "username": "james_anderson18",
+    "bankHours": 1,
+    "rating": 4.31774707255155,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-20",
+    "firstName": "Avery",
+    "lastName": "Davis",
+    "email": "avery.davis19@hourbank.com",
+    "username": "avery_davis19",
+    "bankHours": 10,
+    "rating": 4.3356214957115276,
+    "activityLevel": "casual"
+  },
+  {
+    "id": "sim-user-21",
+    "firstName": "Sage",
+    "lastName": "Patel",
+    "email": "sage.patel20@hourbank.com",
+    "username": "sage_patel20",
+    "bankHours": 32,
+    "rating": 4.757345769549501,
+    "activityLevel": "inactive"
+  },
+  {
+    "id": "sim-user-22",
+    "firstName": "Lisa",
+    "lastName": "Martinez",
+    "email": "lisa.martinez21@hourbank.com",
+    "username": "lisa_martinez21",
+    "bankHours": 77,
+    "rating": 4.251624503532236,
+    "activityLevel": "inactive"
+  },
+  {
+    "id": "sim-user-23",
+    "firstName": "Alex",
+    "lastName": "Martinez",
+    "email": "alex.martinez22@hourbank.com",
+    "username": "alex_martinez22",
+    "bankHours": 34,
+    "rating": 4.810879155244299,
+    "activityLevel": "inactive"
+  },
+  {
+    "id": "sim-user-24",
+    "firstName": "River",
+    "lastName": "Brown",
+    "email": "river.brown23@hourbank.com",
+    "username": "river_brown23",
+    "bankHours": 14,
+    "rating": 4.7339828844134955,
+    "activityLevel": "inactive"
+  },
+  {
+    "id": "sim-user-25",
+    "firstName": "Alex",
+    "lastName": "Davis",
+    "email": "alex.davis24@hourbank.com",
+    "username": "alex_davis24",
+    "bankHours": 20,
+    "rating": 4.7964045622123646,
+    "activityLevel": "inactive"
+  }
+]
