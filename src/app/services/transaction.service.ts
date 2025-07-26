@@ -213,7 +213,7 @@ export class TransactionService {
         variables: { id: transactionId }
       });
 
-      const transaction = transactionResult.data?.getTransaction;
+      const transaction = (transactionResult as any).data?.getTransaction;
       if (!transaction) {
         throw new Error(`Transaction ${transactionId} not found`);
       }
@@ -246,7 +246,7 @@ export class TransactionService {
         }
       });
 
-      const updatedTransaction = updateResult.data?.updateTransaction;
+      const updatedTransaction = (updateResult as any).data?.updateTransaction;
       if (!updatedTransaction) {
         // If transaction update fails, we should ideally rollback the payment
         // For now, we'll log this as a critical error
