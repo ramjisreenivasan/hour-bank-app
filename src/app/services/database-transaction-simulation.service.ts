@@ -10,7 +10,6 @@ export interface DatabaseSimulationProgress {
   currentDate: string;
   totalTransactions: number;
   completedTransactions: number;
-  rejectedTransactions: number;
   cancelledTransactions: number;
   pendingTransactions: number;
   totalBankHoursTransferred: number;
@@ -29,8 +28,7 @@ export class DatabaseTransactionSimulationService {
   // Transaction outcomes matching your requirements
   private readonly TRANSACTION_OUTCOMES = {
     COMPLETED: 0.7,   // 70% completed
-    REJECTED: 0.15,   // 15% rejected
-    CANCELLED: 0.1,   // 10% cancelled
+    CANCELLED: 0.25,  // 25% cancelled (includes rejected + cancelled)
     PENDING: 0.05     // 5% pending
   };
   
@@ -86,7 +84,6 @@ export class DatabaseTransactionSimulationService {
         currentDate: '',
         totalTransactions: 0,
         completedTransactions: 0,
-        rejectedTransactions: 0,
         cancelledTransactions: 0,
         pendingTransactions: 0,
         totalBankHoursTransferred: 0,
@@ -106,7 +103,6 @@ export class DatabaseTransactionSimulationService {
         // Update progress
         totalProgress.totalTransactions += dailyResults.created;
         totalProgress.completedTransactions += dailyResults.completed;
-        totalProgress.rejectedTransactions += dailyResults.rejected;
         totalProgress.cancelledTransactions += dailyResults.cancelled;
         totalProgress.pendingTransactions += dailyResults.pending;
         totalProgress.totalBankHoursTransferred += dailyResults.hoursTransferred;
@@ -233,7 +229,6 @@ export class DatabaseTransactionSimulationService {
   private async simulateDayTransactionsInDatabase(date: Date): Promise<{
     created: number;
     completed: number;
-    rejected: number;
     cancelled: number;
     pending: number;
     hoursTransferred: number;
@@ -247,7 +242,6 @@ export class DatabaseTransactionSimulationService {
     const results = {
       created: 0,
       completed: 0,
-      rejected: 0,
       cancelled: 0,
       pending: 0,
       hoursTransferred: 0
@@ -264,9 +258,6 @@ export class DatabaseTransactionSimulationService {
             case 'COMPLETED':
               results.completed++;
               results.hoursTransferred += transactionResult.hoursSpent;
-              break;
-            case 'REJECTED':
-              results.rejected++;
               break;
             case 'CANCELLED':
               results.cancelled++;
@@ -436,8 +427,7 @@ export class DatabaseTransactionSimulationService {
     const rand = Math.random();
     
     if (rand < this.TRANSACTION_OUTCOMES.COMPLETED) return TransactionStatus.COMPLETED;
-    if (rand < this.TRANSACTION_OUTCOMES.COMPLETED + this.TRANSACTION_OUTCOMES.REJECTED) return TransactionStatus.REJECTED;
-    if (rand < this.TRANSACTION_OUTCOMES.COMPLETED + this.TRANSACTION_OUTCOMES.REJECTED + this.TRANSACTION_OUTCOMES.CANCELLED) return TransactionStatus.CANCELLED;
+    if (rand < this.TRANSACTION_OUTCOMES.COMPLETED + this.TRANSACTION_OUTCOMES.CANCELLED) return TransactionStatus.CANCELLED;
     
     return TransactionStatus.PENDING;
   }
@@ -513,7 +503,6 @@ export class DatabaseTransactionSimulationService {
     console.log(`   Existing services used: ${progress.servicesProcessed}`);
     console.log(`   Total transactions created: ${progress.totalTransactions}`);
     console.log(`   Completed: ${progress.completedTransactions} (${completionRate}%)`);
-    console.log(`   Rejected: ${progress.rejectedTransactions}`);
     console.log(`   Cancelled: ${progress.cancelledTransactions}`);
     console.log(`   Pending: ${progress.pendingTransactions}`);
     console.log(`   Bank hours transferred: ${progress.totalBankHoursTransferred}`);
