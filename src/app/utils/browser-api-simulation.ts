@@ -348,6 +348,7 @@ class BrowserAPITransactionSimulation {
         consumerId: consumer.id,
         serviceId: service.id,
         hoursSpent: service.hourlyDuration,
+        status: 'PENDING', // Add required status field
         description: `Request for ${service.title}`,
         createdAt: requestTime.toISOString(),
         updatedAt: requestTime.toISOString()

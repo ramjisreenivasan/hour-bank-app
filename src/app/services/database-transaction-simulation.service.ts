@@ -309,6 +309,7 @@ export class DatabaseTransactionSimulationService {
         consumerId: consumer.id,
         serviceId: service.id,
         hoursSpent: hoursNeeded,
+        status: 'PENDING', // Add required status field
         description: `Request for ${service.title}`,
         createdAt: requestTime.toISOString(),
         updatedAt: requestTime.toISOString()
