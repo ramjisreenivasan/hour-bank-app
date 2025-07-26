@@ -3,6 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { errorLogger } from '../utils/error-logger';
+import { bankHoursTransferService, BankHoursTransferResult } from '../utils/bank-hours-transfer';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 
@@ -186,6 +187,118 @@ export class TransactionService {
         return throwError(() => new Error(`Failed to update transaction ${transactionId}: ${error.message}`));
       })
     );
+  }
+
+  /**
+   * Complete transaction with bank hours transfer
+   * This method handles the completion of a transaction and automatically transfers bank hours
+   */
+  completeTransactionWithPayment(transactionId: string): Observable<{
+    transaction: Transaction;
+    paymentResult: BankHoursTransferResult;
+  }> {
+    return from(this.processTransactionCompletion(transactionId));
+  }
+
+  private async processTransactionCompletion(transactionId: string): Promise<{
+    transaction: Transaction;
+    paymentResult: BankHoursTransferResult;
+  }> {
+    try {
+      console.log(`Processing transaction completion with payment for transaction ${transactionId}`);
+
+      // 1. Get current transaction details
+      const transactionResult = await this.client.graphql({
+        query: queries.getTransaction,
+        variables: { id: transactionId }
+      });
+
+      const transaction = transactionResult.data?.getTransaction;
+      if (!transaction) {
+        throw new Error(`Transaction ${transactionId} not found`);
+      }
+
+      // 2. Validate transaction can be completed
+      if (transaction.status !== 'IN_PROGRESS') {
+        throw new Error(`Transaction ${transactionId} is not in progress. Current status: ${transaction.status}`);
+      }
+
+      // 3. Transfer bank hours from consumer to provider
+      const paymentResult = await bankHoursTransferService.transferBankHours(
+        transaction.consumerId,
+        transaction.providerId,
+        transaction.hoursSpent,
+        transactionId
+      );
+
+      if (!paymentResult.success) {
+        throw new Error(`Payment failed: ${paymentResult.error}`);
+      }
+
+      // 4. Update transaction status to COMPLETED
+      const updateResult = await this.client.graphql({
+        query: mutations.updateTransaction,
+        variables: {
+          input: {
+            id: transactionId,
+            status: 'COMPLETED'
+          }
+        }
+      });
+
+      const updatedTransaction = updateResult.data?.updateTransaction;
+      if (!updatedTransaction) {
+        // If transaction update fails, we should ideally rollback the payment
+        // For now, we'll log this as a critical error
+        errorLogger.logError({
+          error: new Error('CRITICAL: Payment processed but transaction status update failed'),
+          context: {
+            operation: 'completeTransactionWithPayment',
+            component: 'TransactionService',
+            additionalData: {
+              transactionId,
+              paymentResult,
+              timestamp: new Date().toISOString()
+            }
+          },
+          severity: 'critical',
+          category: 'transaction'
+        });
+        
+        throw new Error('Transaction completion failed after payment processing');
+      }
+
+      console.log(`Transaction ${transactionId} completed successfully with payment`);
+
+      return {
+        transaction: updatedTransaction as Transaction,
+        paymentResult
+      };
+
+    } catch (error) {
+      console.error(`Transaction completion failed for ${transactionId}:`, error);
+      
+      errorLogger.logError({
+        error: error as Error,
+        context: {
+          operation: 'completeTransactionWithPayment',
+          component: 'TransactionService',
+          additionalData: {
+            transactionId,
+            errorDetails: {
+              name: (error as Error).name,
+              message: (error as Error).message,
+              stack: (error as Error).stack
+            },
+            timestamp: new Date().toISOString()
+          }
+        },
+        severity: 'high',
+        category: 'transaction'
+      });
+
+      throw error;
+    }
   }
 
   /**

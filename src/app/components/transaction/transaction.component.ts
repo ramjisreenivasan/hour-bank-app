@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
+import { TransactionService } from '../../services/transaction.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { User, Transaction, TransactionStatus } from '../../models/user.model';
 
@@ -35,6 +36,9 @@ export class TransactionComponent implements OnInit {
   rating = 5;
   feedback = '';
 
+  // Loading states
+  completingTransactions: Set<string> = new Set();
+
   statusOptions = [
     { value: 'ALL', label: 'All Status' },
     { value: TransactionStatus.PENDING, label: 'Pending' },
@@ -53,6 +57,7 @@ export class TransactionComponent implements OnInit {
     private authService: AuthService,
     private userGraphQLService: UserGraphQLService,
     private transactionGraphQLService: TransactionGraphQLService,
+    private transactionService: TransactionService,
     private userDisplayService: UserDisplayService,
     private router: Router
   ) {}
@@ -131,6 +136,13 @@ export class TransactionComponent implements OnInit {
   }
 
   async updateTransactionStatus(transaction: Transaction, status: TransactionStatus): Promise<void> {
+    // If marking as completed, use the new method with payment processing
+    if (status === TransactionStatus.COMPLETED) {
+      await this.completeTransactionWithPayment(transaction);
+      return;
+    }
+
+    // For other status updates, use the original method
     try {
       await this.transactionGraphQLService.updateTransactionStatus(transaction.id, status);
       await this.loadTransactions();
@@ -140,8 +152,70 @@ export class TransactionComponent implements OnInit {
     }
   }
 
+  /**
+   * Complete transaction with automatic bank hours transfer
+   * This method is called when the existing "Mark Complete" button is clicked
+   */
+  private async completeTransactionWithPayment(transaction: Transaction): Promise<void> {
+    if (this.completingTransactions.has(transaction.id)) {
+      return; // Already processing
+    }
+
+    this.completingTransactions.add(transaction.id);
+
+    try {
+      console.log(`Completing transaction ${transaction.id} with payment`);
+
+      // Use the new transaction service method that handles payment
+      this.transactionService.completeTransactionWithPayment(transaction.id).subscribe({
+        next: (result) => {
+          console.log('Transaction completed with payment:', result);
+          
+          // Show success message with payment details
+          const paymentDetails = result.paymentResult.transactionDetails;
+          if (paymentDetails) {
+            alert(`Transaction completed successfully!\n\n` +
+                  `Payment processed: ${paymentDetails.hours} bank hours transferred\n` +
+                  `From: ${this.getUserFromCache(paymentDetails.requesterId)?.firstName || 'Requester'}\n` +
+                  `To: ${this.getUserFromCache(paymentDetails.providerId)?.firstName || 'Provider'}`);
+          } else {
+            alert('Transaction completed successfully with payment!');
+          }
+
+          // Reload transactions to show updated status
+          this.loadTransactions();
+        },
+        error: (error) => {
+          console.error('Error completing transaction with payment:', error);
+          
+          // Show specific error message
+          if (error.message.includes('Insufficient bank hours')) {
+            alert('Payment failed: The service requester does not have sufficient bank hours to complete this transaction.');
+          } else if (error.message.includes('not in progress')) {
+            alert('This transaction cannot be completed. It may have already been completed or cancelled.');
+          } else {
+            alert(`Failed to complete transaction: ${error.message}`);
+          }
+        },
+        complete: () => {
+          this.completingTransactions.delete(transaction.id);
+        }
+      });
+
+    } catch (error) {
+      console.error('Error initiating transaction completion:', error);
+      alert('Failed to complete transaction. Please try again.');
+      this.completingTransactions.delete(transaction.id);
+    }
+  }
+
   canUpdateStatus(transaction: Transaction, status: TransactionStatus): boolean {
     if (!this.currentUser) return false;
+
+    // Don't show button if transaction is currently being completed
+    if (status === TransactionStatus.COMPLETED && this.completingTransactions.has(transaction.id)) {
+      return false;
+    }
 
     // Only provider can mark as in progress or completed
     if ((status === TransactionStatus.IN_PROGRESS || status === TransactionStatus.COMPLETED) 
