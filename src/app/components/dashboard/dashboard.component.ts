@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   currentUser: User | null = null;
   availableServices: Service[] = [];
   recentTransactions: Transaction[] = [];
+  allUserTransactions: Transaction[] = []; // Store all user transactions for counting
   loading = true;
   
   // Cache for users to avoid async issues in templates
@@ -148,10 +149,27 @@ export class DashboardComponent implements OnInit {
         this.cdr.detectChanges();
       }
 
-      // Load recent transactions from GraphQL
+      // Load all transactions from GraphQL
+      console.log('Dashboard: Loading transactions...');
       const transactions = await this.transactionGraphQLService.getTransactions();
-      this.recentTransactions = transactions
-        .filter(t => t.providerId === this.currentUser?.id || t.consumerId === this.currentUser?.id)
+      console.log('Dashboard: Total transactions loaded:', transactions.length);
+      
+      // Filter transactions for current user
+      this.allUserTransactions = transactions
+        .filter(t => t.providerId === this.currentUser?.id || t.consumerId === this.currentUser?.id);
+      
+      console.log('Dashboard: User transactions filtered:', this.allUserTransactions.length);
+      console.log('Dashboard: Current user ID:', this.currentUser?.id);
+      console.log('Dashboard: User transactions:', this.allUserTransactions.map(t => ({
+        id: t.id,
+        providerId: t.providerId,
+        consumerId: t.consumerId,
+        status: t.status,
+        description: t.description
+      })));
+      
+      // Get recent transactions for display
+      this.recentTransactions = this.allUserTransactions
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 5);
 
@@ -214,7 +232,18 @@ export class DashboardComponent implements OnInit {
       });
 
       alert(`Service request sent! Transaction ID: ${transaction.id}`);
-      await this.loadDashboardData(); // Refresh data
+      
+      // Refresh transaction data to update the count
+      const transactions = await this.transactionGraphQLService.getTransactions();
+      this.allUserTransactions = transactions
+        .filter(t => t.providerId === this.currentUser?.id || t.consumerId === this.currentUser?.id);
+      
+      this.recentTransactions = this.allUserTransactions
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 5);
+        
+      // Force change detection to update the UI
+      this.cdr.detectChanges();
     } catch (error) {
       console.error('Error requesting service:', error);
       alert('Failed to request service. Please try again.');
@@ -311,6 +340,12 @@ export class DashboardComponent implements OnInit {
 
   browseServices(): void {
     this.router.navigate(['/services']);
+  }
+
+  getActualTransactionCount(): number {
+    const count = this.allUserTransactions.length;
+    console.log('Dashboard: Transaction count calculated:', count, 'from transactions:', this.allUserTransactions.map(t => t.id));
+    return count;
   }
 
   // Debug method to test user loading

@@ -27,7 +27,7 @@
       <div class="stat-card transactions">
         <div class="stat-icon">🔄</div>
         <div class="stat-content">
-          <h3>{{ currentUser?.totalTransactions || 0 }}</h3>
+          <h3>{{ getActualTransactionCount() }}</h3>
           <p>Transactions</p>
         </div>
       </div>
