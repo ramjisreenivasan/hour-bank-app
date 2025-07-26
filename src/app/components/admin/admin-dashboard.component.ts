@@ -6,6 +6,7 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { AdminService, AdminStats, UserWithStats } from '../../services/admin.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { runBrowserAPISimulation } from '../../utils/browser-api-simulation';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -20,6 +21,19 @@ import { User } from '../../models/user.model';
           Admin Dashboard
         </h1>
         <div class="admin-actions">
+          <button 
+            class="btn btn-success" 
+            (click)="runTransactionSimulation()"
+            [disabled]="simulationRunning"
+            title="Generate realistic transaction data from June-July 2025"
+          >
+            <i class="fas fa-play-circle" [class.fa-spin]="simulationRunning"></i>
+            {{ simulationRunning ? 'Running Simulation...' : 'Run Transaction Simulation' }}
+          </button>
+          <button class="btn btn-info" routerLink="/admin/transaction-simulation">
+            <i class="fas fa-cogs"></i>
+            Simulation Dashboard
+          </button>
           <button class="btn btn-info" routerLink="/admin/simulation">
             <i class="fas fa-chart-line"></i>
             Simulation Data
@@ -33,6 +47,13 @@ import { User } from '../../models/user.model';
             Back to Dashboard
           </button>
         </div>
+      </div>
+
+      <!-- Simulation Status -->
+      <div *ngIf="simulationStatus" class="simulation-status-banner" [ngClass]="simulationStatusClass">
+        <i class="fas" [ngClass]="simulationStatusIcon"></i>
+        <span>{{ simulationStatus }}</span>
+        <button *ngIf="!simulationRunning" class="close-btn" (click)="clearSimulationStatus()">×</button>
       </div>
 
       <!-- Loading State -->
@@ -353,6 +374,12 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   newBankHours: number = 0;
   bankHoursReason = '';
 
+  // Transaction simulation properties
+  simulationRunning = false;
+  simulationStatus: string | null = null;
+  simulationStatusClass = '';
+  simulationStatusIcon = '';
+
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
@@ -542,5 +569,65 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         alert('Failed to update user status: ' + error.message);
       }
     });
+  }
+
+  /**
+   * Run transaction simulation
+   */
+  async runTransactionSimulation(): Promise<void> {
+    if (this.simulationRunning) return;
+
+    this.simulationRunning = true;
+    this.setSimulationStatus('🚀 Starting transaction simulation...', 'info', 'fa-play-circle');
+
+    try {
+      // Show progress message
+      this.setSimulationStatus('📊 Generating realistic transactions from June-July 2025...', 'info', 'fa-cogs fa-spin');
+      
+      // Run the simulation
+      await runBrowserAPISimulation();
+      
+      // Success message
+      this.setSimulationStatus('✅ Transaction simulation completed successfully! Check your database for new transactions.', 'success', 'fa-check-circle');
+      
+      // Refresh admin data to show updated statistics
+      setTimeout(() => {
+        this.refreshData();
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Transaction simulation failed:', error);
+      this.setSimulationStatus(`❌ Simulation failed: ${error}`, 'error', 'fa-exclamation-circle');
+    } finally {
+      this.simulationRunning = false;
+    }
+  }
+
+  /**
+   * Set simulation status message
+   */
+  private setSimulationStatus(message: string, type: 'info' | 'success' | 'error', icon: string): void {
+    this.simulationStatus = message;
+    this.simulationStatusIcon = icon;
+    
+    switch (type) {
+      case 'success':
+        this.simulationStatusClass = 'success';
+        break;
+      case 'error':
+        this.simulationStatusClass = 'error';
+        break;
+      default:
+        this.simulationStatusClass = 'info';
+    }
+  }
+
+  /**
+   * Clear simulation status
+   */
+  clearSimulationStatus(): void {
+    this.simulationStatus = null;
+    this.simulationStatusClass = '';
+    this.simulationStatusIcon = '';
   }
 }
