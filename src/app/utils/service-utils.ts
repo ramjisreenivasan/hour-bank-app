@@ -1,3 +1,5 @@
+import { getAppConfig } from '../config/app-config';
+
 /**
  * Utility functions for service-related operations
  */
@@ -8,12 +10,14 @@
  * @returns A positive integer representing hours
  */
 export function normalizeHourlyDuration(duration: number | undefined | null): number {
+  const config = getAppConfig();
+  
   if (duration === undefined || duration === null || isNaN(duration)) {
-    return 1; // Default to 1 hour
+    return config.service.defaultDuration;
   }
   
-  // Ensure it's a positive integer, minimum 1 hour
-  return Math.max(1, Math.floor(Math.abs(duration)));
+  // Ensure it's a positive integer, minimum configured duration
+  return Math.max(config.service.minimumDuration, Math.floor(Math.abs(duration)));
 }
 
 /**

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { User, Service, Transaction, Booking, TransactionStatus, BookingStatus } from '../models/user.model';
+import { getAppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataSimulationService {
+  private config = getAppConfig();
 
   // Sample users with diverse skills and backgrounds
   private sampleUsers: User[] = [
@@ -14,7 +16,7 @@ export class DataSimulationService {
       username: 'sarah_codes',
       firstName: 'Sarah',
       lastName: 'Johnson',
-      bankHours: 10, // Will be updated after transactions
+      bankHours: this.config.simulation.testUserBankHours, // Will be updated after transactions
       skills: ['Web Development', 'React', 'Node.js', 'UI/UX Design'],
       bio: 'Full-stack developer with 5 years experience. Love helping others learn to code!',
       rating: 4.8,
@@ -29,7 +31,7 @@ export class DataSimulationService {
       username: 'mike_teaches',
       firstName: 'Mike',
       lastName: 'Chen',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Language Tutoring', 'Mandarin', 'English', 'Translation'],
       bio: 'Native Mandarin speaker, fluent in English. Passionate about language learning!',
       rating: 4.9,
@@ -44,7 +46,7 @@ export class DataSimulationService {
       username: 'lisa_creates',
       firstName: 'Lisa',
       lastName: 'Rodriguez',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Graphic Design', 'Logo Design', 'Branding', 'Adobe Creative Suite'],
       bio: 'Creative designer with expertise in branding and visual identity.',
       rating: 4.7,
@@ -59,7 +61,7 @@ export class DataSimulationService {
       username: 'david_fixes',
       firstName: 'David',
       lastName: 'Thompson',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Home Repair', 'Plumbing', 'Electrical', 'Carpentry'],
       bio: 'Experienced handyman ready to help with your home improvement projects.',
       rating: 4.6,
@@ -74,7 +76,7 @@ export class DataSimulationService {
       username: 'emma_cooks',
       firstName: 'Emma',
       lastName: 'Wilson',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Cooking Lessons', 'Baking', 'Meal Planning', 'Nutrition'],
       bio: 'Professional chef offering cooking lessons and meal planning services.',
       rating: 4.9,
@@ -89,7 +91,7 @@ export class DataSimulationService {
       username: 'alex_trains',
       firstName: 'Alex',
       lastName: 'Kumar',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Personal Training', 'Yoga', 'Nutrition Coaching', 'Wellness'],
       bio: 'Certified personal trainer and wellness coach. Let\'s achieve your fitness goals!',
       rating: 4.8,
@@ -104,7 +106,7 @@ export class DataSimulationService {
       username: 'maria_music',
       firstName: 'Maria',
       lastName: 'Garcia',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Music Lessons', 'Piano', 'Guitar', 'Music Theory'],
       bio: 'Music teacher with 10+ years experience. All skill levels welcome!',
       rating: 4.9,
@@ -119,7 +121,7 @@ export class DataSimulationService {
       username: 'james_writes',
       firstName: 'James',
       lastName: 'Anderson',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Writing', 'Editing', 'Content Creation', 'Copywriting'],
       bio: 'Professional writer and editor. Help with blogs, articles, and creative writing.',
       rating: 4.7,
@@ -134,7 +136,7 @@ export class DataSimulationService {
       username: 'nina_captures',
       firstName: 'Nina',
       lastName: 'Patel',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Photography', 'Photo Editing', 'Event Photography', 'Portraits'],
       bio: 'Professional photographer specializing in events and portraits.',
       rating: 4.8,
@@ -149,7 +151,7 @@ export class DataSimulationService {
       username: 'robert_grows',
       firstName: 'Robert',
       lastName: 'Lee',
-      bankHours: 10,
+      bankHours: this.config.simulation.testUserBankHours,
       skills: ['Gardening', 'Landscaping', 'Plant Care', 'Organic Farming'],
       bio: 'Master gardener with expertise in sustainable gardening practices.',
       rating: 4.6,

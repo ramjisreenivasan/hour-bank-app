@@ -44,8 +44,8 @@ export class BankHoursTransferService {
         })
       ]);
 
-      const requester = requesterResult.data?.getUser;
-      const provider = providerResult.data?.getUser;
+      const requester = (requesterResult as any).data?.getUser;
+      const provider = (providerResult as any).data?.getUser;
 
       if (!requester) {
         return {
@@ -106,7 +106,7 @@ export class BankHoursTransferService {
         }
       });
 
-      if (!requesterUpdateResult.data?.updateUser) {
+      if (!(requesterUpdateResult as any).data?.updateUser) {
         throw new Error('Failed to update requester balance');
       }
 
@@ -122,7 +122,7 @@ export class BankHoursTransferService {
           }
         });
 
-        if (!providerUpdateResult.data?.updateUser) {
+        if (!(providerUpdateResult as any).data?.updateUser) {
           // Rollback requester update
           await this.rollbackRequesterUpdate(requesterId, requester.bankHours);
           throw new Error('Failed to update provider balance');
@@ -248,7 +248,7 @@ export class BankHoursTransferService {
         variables: { id: userId }
       });
 
-      return result.data?.getUser?.bankHours || null;
+      return (result as any).data?.getUser?.bankHours || null;
     } catch (error) {
       console.error(`Failed to get balance for user ${userId}:`, error);
       return null;

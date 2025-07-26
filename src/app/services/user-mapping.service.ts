@@ -4,6 +4,7 @@ import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { Observable, from, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { errorLogger } from '../utils/error-logger';
+import { getAppConfig } from '../config/app-config';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 
@@ -28,6 +29,7 @@ export interface CognitoUserInfo {
 })
 export class UserMappingService {
   private client = generateClient();
+  private config = getAppConfig();
   private userMappingCache = new BehaviorSubject<UserMapping | null>(null);
   public currentUserMapping$ = this.userMappingCache.asObservable();
 
@@ -249,11 +251,11 @@ export class UserMappingService {
       username: cognitoUserInfo.username,
       firstName: 'User', // Default values
       lastName: 'Name',
-      bankHours: 10.0, // Starting balance
+      bankHours: this.config.user.defaultBankHours,
       skills: [],
       bio: 'Welcome to HourBank!',
-      rating: 5.0,
-      totalTransactions: 0,
+      rating: this.config.user.defaultRating,
+      totalTransactions: this.config.user.defaultTotalTransactions,
       cognitoId: cognitoUserInfo.userId // Store the mapping
     };
 

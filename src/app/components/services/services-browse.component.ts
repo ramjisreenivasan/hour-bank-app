@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ServiceService } from '../../services/service.service';
 import { UserService } from '../../services/user.service';
 import { Service, User } from '../../models/user.model';
+import { getAppConfig } from '../../config/app-config';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -306,6 +307,7 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
   styleUrls: ['./services-browse.component.scss']
 })
 export class ServicesBrowseComponent implements OnInit {
+  private config = getAppConfig();
   services: ServiceWithProvider[] = [];
   filteredServices: ServiceWithProvider[] = [];
   paginatedServices: ServiceWithProvider[] = [];
@@ -725,7 +727,7 @@ export class ServicesBrowseComponent implements OnInit {
 
   getVisiblePages(): number[] {
     const pages: number[] = [];
-    const maxVisible = 5;
+    const maxVisible = this.config.ui.maxVisibleServices;
     let start = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
     let end = Math.min(this.totalPages, start + maxVisible - 1);
     

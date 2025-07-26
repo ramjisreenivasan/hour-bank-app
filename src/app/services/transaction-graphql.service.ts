@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { generateClient } from 'aws-amplify/api';
 import { Transaction, TransactionStatus, User } from '../models/user.model';
+import { getAppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionGraphQLService {
   private client = generateClient();
+  private config = getAppConfig();
   private transactionsSubject = new BehaviorSubject<Transaction[]>([]);
   public transactions$ = this.transactionsSubject.asObservable();
 
@@ -434,7 +436,7 @@ export class TransactionGraphQLService {
   }
 
   // Request a service (creates a transaction)
-  async requestService(serviceId: string, consumerId: string, hoursRequested: number = 1): Promise<Transaction> {
+  async requestService(serviceId: string, consumerId: string, hoursRequested: number = this.config.service.defaultDuration): Promise<Transaction> {
     try {
       // First get the service to find the provider
       const service = await this.getServiceById(serviceId);

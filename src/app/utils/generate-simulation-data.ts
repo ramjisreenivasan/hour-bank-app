@@ -1,4 +1,7 @@
 import { DataSimulationService } from '../services/data-simulation.service';
+import { getAppConfig } from '../config/app-config';
+
+const config = getAppConfig();
 
 /**
  * Script to generate and export simulation data
@@ -61,7 +64,7 @@ console.log('\n🕒 Recent Transactions (Last 10):');
 console.log('─'.repeat(80));
 const recentTransactions = simulatedData.transactions
   .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-  .slice(0, 10);
+  .slice(0, config.ui.recentTransactionsLimit);
 
 recentTransactions.forEach(transaction => {
   const provider = simulatedData.users.find(u => u.id === transaction.providerId);

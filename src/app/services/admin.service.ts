@@ -4,6 +4,7 @@ import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User, Service, Transaction } from '../models/user.model';
 import { errorLogger } from '../utils/error-logger';
+import { getAppConfig } from '../config/app-config';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 
@@ -28,6 +29,7 @@ export interface UserWithStats extends User {
 })
 export class AdminService {
   private client = generateClient();
+  private config = getAppConfig();
 
   constructor() {}
 
@@ -37,17 +39,17 @@ export class AdminService {
   getAdminStats(): Observable<AdminStats> {
     const usersQuery = from(this.client.graphql({
       query: queries.listUsers,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     const servicesQuery = from(this.client.graphql({
       query: queries.listServices,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     const transactionsQuery = from(this.client.graphql({
       query: queries.listTransactions,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     return forkJoin({
@@ -111,17 +113,17 @@ export class AdminService {
   getAllUsersWithStats(): Observable<UserWithStats[]> {
     const usersQuery = from(this.client.graphql({
       query: queries.listUsers,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     const servicesQuery = from(this.client.graphql({
       query: queries.listServices,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     const transactionsQuery = from(this.client.graphql({
       query: queries.listTransactions,
-      variables: { limit: 1000 }
+      variables: { limit: this.config.admin.queryLimit }
     }));
 
     return forkJoin({

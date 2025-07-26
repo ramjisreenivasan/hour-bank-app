@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { generateClient } from 'aws-amplify/api';
 import { User, Service } from '../models/user.model';
+import { getAppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserGraphQLService {
   private client = generateClient();
+  private config = getAppConfig();
   private usersSubject = new BehaviorSubject<User[]>([]);
   public users$ = this.usersSubject.asObservable();
   
@@ -109,9 +111,9 @@ export class UserGraphQLService {
         variables: {
           input: {
             ...input,
-            bankHours: input.bankHours || 0,
-            rating: input.rating || 0,
-            totalTransactions: input.totalTransactions || 0,
+            bankHours: input.bankHours || this.config.user.defaultBankHours,
+            rating: input.rating || this.config.user.defaultRating,
+            totalTransactions: input.totalTransactions || this.config.user.defaultTotalTransactions,
             skills: input.skills || []
           }
         }

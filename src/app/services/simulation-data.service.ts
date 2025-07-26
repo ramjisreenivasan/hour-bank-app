@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User, Service, Transaction, Booking } from '../models/user.model';
+import { getAppConfig } from '../config/app-config';
 
 export interface SimulationData {
   users: User[];
@@ -15,6 +16,7 @@ export interface SimulationData {
   providedIn: 'root'
 })
 export class SimulationDataService {
+  private config = getAppConfig();
   private simulationDataSubject = new BehaviorSubject<SimulationData | null>(null);
   public simulationData$ = this.simulationDataSubject.asObservable();
 
@@ -276,7 +278,7 @@ export class SimulationDataService {
   /**
    * Get recent transactions (last N transactions)
    */
-  getRecentTransactions(limit: number = 10): Observable<Transaction[]> {
+  getRecentTransactions(limit: number = this.config.ui.recentTransactionsLimit): Observable<Transaction[]> {
     return this.simulationData$.pipe(
       map(data => 
         data?.transactions
