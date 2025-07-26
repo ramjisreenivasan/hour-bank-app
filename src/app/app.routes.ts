@@ -88,6 +88,11 @@ export const routes: Routes = [
     loadComponent: () => import('./components/admin/simulation-dashboard.component').then(m => m.SimulationDashboardComponent),
     canActivate: [AdminGuard]
   },
+  { 
+    path: 'admin/transaction-simulation', 
+    loadComponent: () => import('./components/admin/transaction-simulation.component').then(m => m.TransactionSimulationComponent),
+    canActivate: [AdminGuard]
+  },
   
   { path: '**', redirectTo: '/' }
 ];

@@ -352,10 +352,10 @@ export class DataSimulationService {
     for (let i = 0; i < numTransactions; i++) {
       // Pick random service and users
       const service = services[Math.floor(Math.random() * services.length)];
-      const provider = users.find(u => u.id === service.userId)!;
+      const provider = users.find((u: User) => u.id === service.userId)!;
       
       // Pick a different user as consumer
-      const availableConsumers = users.filter(u => u.id !== provider.id);
+      const availableConsumers = users.filter((u: User) => u.id !== provider.id);
       const consumer = availableConsumers[Math.floor(Math.random() * availableConsumers.length)];
 
       // Generate random date between start and end
@@ -431,7 +431,7 @@ export class DataSimulationService {
     }
 
     // Update user updatedAt timestamps
-    users.forEach(user => {
+    users.forEach((user: User) => {
       user.updatedAt = new Date();
     });
 
@@ -599,5 +599,90 @@ export class DataSimulationService {
    */
   getSimulatedData() {
     return this.generateTransactionHistory();
+  }
+
+  /**
+   * Generate additional users for simulation
+   */
+  generateAdditionalUsers(count: number): User[] {
+    const additionalUsers: User[] = [];
+    const firstNames = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Morgan', 'Riley', 'Avery', 'Quinn', 'Sage', 'River'];
+    const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+    const skillSets = [
+      ['Programming', 'Web Development', 'JavaScript'],
+      ['Design', 'Photoshop', 'UI/UX'],
+      ['Writing', 'Content Creation', 'Editing'],
+      ['Music', 'Guitar', 'Piano'],
+      ['Fitness', 'Personal Training', 'Yoga'],
+      ['Cooking', 'Baking', 'Meal Planning'],
+      ['Photography', 'Photo Editing', 'Portraits'],
+      ['Tutoring', 'Math', 'Science'],
+      ['Language', 'Spanish', 'French'],
+      ['Handyman', 'Repair', 'Maintenance']
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+      const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+      const skills = skillSets[Math.floor(Math.random() * skillSets.length)];
+      
+      additionalUsers.push({
+        id: `sim-user-${Date.now()}-${i}`,
+        email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@simulation.com`,
+        username: `${firstName.toLowerCase()}_${lastName.toLowerCase()}${i}`,
+        firstName,
+        lastName,
+        bankHours: this.config.simulation.testUserBankHours,
+        skills,
+        bio: `Simulated user specializing in ${skills[0].toLowerCase()}.`,
+        rating: this.config.simulation.testUserRatings.good + (Math.random() * 0.3),
+        totalTransactions: 0,
+        role: 'user',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    }
+
+    return additionalUsers;
+  }
+
+  /**
+   * Generate additional services for simulation
+   */
+  generateAdditionalServices(count: number, users: User[]): Service[] {
+    const additionalServices: Service[] = [];
+    const serviceTemplates = [
+      { title: 'Web Development', category: 'Technology', duration: 2, description: 'Build responsive websites' },
+      { title: 'Logo Design', category: 'Design', duration: 1, description: 'Create professional logos' },
+      { title: 'Content Writing', category: 'Writing', duration: 1, description: 'Write engaging content' },
+      { title: 'Guitar Lessons', category: 'Music', duration: 1, description: 'Learn to play guitar' },
+      { title: 'Personal Training', category: 'Fitness', duration: 1, description: 'Get fit with personal trainer' },
+      { title: 'Cooking Class', category: 'Food', duration: 2, description: 'Learn to cook delicious meals' },
+      { title: 'Photo Session', category: 'Photography', duration: 2, description: 'Professional photo session' },
+      { title: 'Math Tutoring', category: 'Education', duration: 1, description: 'Improve your math skills' },
+      { title: 'Spanish Lessons', category: 'Language', duration: 1, description: 'Learn Spanish conversation' },
+      { title: 'Home Repair', category: 'Handyman', duration: 3, description: 'Fix things around your home' }
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const template = serviceTemplates[Math.floor(Math.random() * serviceTemplates.length)];
+      const provider = users[Math.floor(Math.random() * users.length)];
+      
+      additionalServices.push({
+        id: `sim-service-${Date.now()}-${i}`,
+        userId: provider.id,
+        title: `${template.title} ${i + 1}`,
+        description: template.description,
+        category: template.category,
+        hourlyDuration: template.duration,
+        isActive: true,
+        tags: [template.category.toLowerCase(), template.title.toLowerCase().replace(' ', '-')],
+        requiresScheduling: Math.random() > 0.5,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    }
+
+    return additionalServices;
   }
 }

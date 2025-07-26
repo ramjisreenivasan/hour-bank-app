@@ -11,6 +11,7 @@ export class TransactionGraphQLService {
   private client = generateClient();
   private config = getAppConfig();
   private transactionsSubject = new BehaviorSubject<Transaction[]>([]);
+  private transactions: Transaction[] = [];
   public transactions$ = this.transactionsSubject.asObservable();
 
   constructor() {}
@@ -435,7 +436,66 @@ export class TransactionGraphQLService {
     }
   }
 
-  // Request a service (creates a transaction)
+  /**
+   * Update transaction with detailed information (for simulation)
+   */
+  async updateTransactionWithDetails(id: string, updates: {
+    status?: TransactionStatus;
+    rating?: number;
+    feedback?: string;
+    updatedAt?: Date;
+  }): Promise<Transaction> {
+    try {
+      const updateInput: any = {
+        id,
+        ...updates
+      };
+
+      if (updates.status === TransactionStatus.COMPLETED) {
+        updateInput.completedAt = updates.updatedAt?.toISOString() || new Date().toISOString();
+      }
+
+      if (updates.updatedAt) {
+        updateInput.updatedAt = updates.updatedAt.toISOString();
+      }
+
+      const result = await this.client.graphql({
+        query: `
+          mutation UpdateTransaction($input: UpdateTransactionInput!) {
+            updateTransaction(input: $input) {
+              id
+              providerId
+              consumerId
+              serviceId
+              hoursSpent
+              status
+              rating
+              feedback
+              description
+              createdAt
+              updatedAt
+              completedAt
+            }
+          }
+        `,
+        variables: { input: updateInput }
+      }) as any;
+
+      const updatedTransaction = result.data.updateTransaction;
+      
+      // Update local cache
+      const transactionIndex = this.transactions.findIndex((t: Transaction) => t.id === id);
+      if (transactionIndex !== -1) {
+        this.transactions[transactionIndex] = updatedTransaction;
+        this.transactionsSubject.next([...this.transactions]);
+      }
+
+      return updatedTransaction;
+    } catch (error) {
+      console.error('Error updating transaction with details:', error);
+      throw error;
+    }
+  }
   async requestService(serviceId: string, consumerId: string, hoursRequested: number = this.config.service.defaultDuration): Promise<Transaction> {
     try {
       // First get the service to find the provider
