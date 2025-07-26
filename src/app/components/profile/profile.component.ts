@@ -6,7 +6,9 @@ import { UserService } from '../../services/user.service';
 import { ServiceService } from '../../services/service.service';
 import { AuthService } from '../../services/auth.service';
 import { UserMappingService } from '../../services/user-mapping.service';
-import { User, Service } from '../../models/user.model';
+import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
+import { RatingService } from '../../services/rating.service';
+import { User, Service, Transaction } from '../../models/user.model';
 import { errorLogger } from '../../utils/error-logger';
 import { normalizeHourlyDuration } from '../../utils/service-utils';
 
@@ -20,6 +22,7 @@ import { normalizeHourlyDuration } from '../../utils/service-utils';
 export class ProfileComponent implements OnInit {
   user: User | null = null;
   originalUser: User | null = null;
+  allTransactions: Transaction[] = []; // Store all transactions for rating calculation
   loading = false;
   saving = false;
   
@@ -67,7 +70,9 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private serviceService: ServiceService,
     private authService: AuthService,
-    private userMappingService: UserMappingService
+    private userMappingService: UserMappingService,
+    private transactionGraphQLService: TransactionGraphQLService,
+    private ratingService: RatingService
   ) {}
 
   ngOnInit() {
@@ -163,6 +168,8 @@ export class ProfileComponent implements OnInit {
           console.log('🔍 DEBUG: About to load user services for:', userId);
           // Load user's services
           this.loadUserServices(userId);
+          // Load all transactions for rating calculation
+          this.loadAllTransactions();
         } else {
           console.log('🔍 DEBUG: User not found for ID:', userId);
           // User not found - this will be logged by the UserService
@@ -674,5 +681,27 @@ export class ProfileComponent implements OnInit {
         this.isSaving = false;
       }
     });
+  }
+
+  /**
+   * Load all transactions for rating calculation
+   */
+  async loadAllTransactions(): Promise<void> {
+    try {
+      console.log('🔍 DEBUG: Loading all transactions for rating calculation');
+      this.allTransactions = await this.transactionGraphQLService.getTransactions();
+      console.log('🔍 DEBUG: Loaded transactions:', this.allTransactions.length);
+    } catch (error) {
+      console.error('Error loading transactions for rating calculation:', error);
+      this.allTransactions = []; // Fallback to empty array
+    }
+  }
+
+  /**
+   * Get the calculated average rating for the current user
+   */
+  getUserCalculatedRating(): number {
+    if (!this.user) return 5.0;
+    return this.ratingService.calculateUserAverageRating(this.user.id, this.allTransactions);
   }
 }

@@ -7,6 +7,7 @@ import { UserGraphQLService } from '../../services/user-graphql.service';
 import { TransactionGraphQLService } from '../../services/transaction-graphql.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { UserMappingService } from '../../services/user-mapping.service';
+import { RatingService } from '../../services/rating.service';
 import { User, Service, Transaction } from '../../models/user.model';
 
 @Component({
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   availableServices: Service[] = [];
   recentTransactions: Transaction[] = [];
   allUserTransactions: Transaction[] = []; // Store all user transactions for counting
+  allTransactions: Transaction[] = []; // Store all transactions for rating calculations
   loading = true;
   
   // Cache for users to avoid async issues in templates
@@ -31,6 +33,7 @@ export class DashboardComponent implements OnInit {
     private transactionGraphQLService: TransactionGraphQLService,
     private userDisplayService: UserDisplayService,
     private userMappingService: UserMappingService,
+    private ratingService: RatingService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -154,6 +157,9 @@ export class DashboardComponent implements OnInit {
       const transactions = await this.transactionGraphQLService.getTransactions();
       console.log('Dashboard: Total transactions loaded:', transactions.length);
       
+      // Store all transactions for rating calculations
+      this.allTransactions = transactions;
+      
       // Filter transactions for current user
       this.allUserTransactions = transactions
         .filter(t => t.providerId === this.currentUser?.id || t.consumerId === this.currentUser?.id);
@@ -233,8 +239,10 @@ export class DashboardComponent implements OnInit {
 
       alert(`Service request sent! Transaction ID: ${transaction.id}`);
       
-      // Refresh transaction data to update the count
+      // Refresh all transaction data to update counts and ratings
       const transactions = await this.transactionGraphQLService.getTransactions();
+      this.allTransactions = transactions;
+      
       this.allUserTransactions = transactions
         .filter(t => t.providerId === this.currentUser?.id || t.consumerId === this.currentUser?.id);
       
@@ -320,8 +328,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserRating(userId: string): number {
-    const user = this.getUserFromCache(userId);
-    return user?.rating || 0;
+    return this.calculateUserAverageRating(userId);
   }
 
   getWelcomeDisplayName(): string {
@@ -346,6 +353,21 @@ export class DashboardComponent implements OnInit {
     const count = this.allUserTransactions.length;
     console.log('Dashboard: Transaction count calculated:', count, 'from transactions:', this.allUserTransactions.map(t => t.id));
     return count;
+  }
+
+  /**
+   * Calculate the average rating for a user based on completed transactions where they were the provider
+   */
+  calculateUserAverageRating(userId: string): number {
+    return this.ratingService.calculateUserAverageRating(userId, this.allTransactions);
+  }
+
+  /**
+   * Get the current user's calculated average rating
+   */
+  getCurrentUserRating(): number {
+    if (!this.currentUser) return 5.0;
+    return this.calculateUserAverageRating(this.currentUser.id);
   }
 
   // Debug method to test user loading
