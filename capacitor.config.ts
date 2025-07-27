@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.hourbank.gateway',
   appName: 'HourBank Gateway',
-  webDir: 'dist/hourbank-app',
+  webDir: 'dist/hourbank-app/browser',
   server: {
     androidScheme: 'https'
   },
