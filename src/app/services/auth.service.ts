@@ -127,6 +127,14 @@ export class AuthService {
 
   async signUp(contact: string, password: string, username: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
+      console.log('🔍 SignUp Debug Info:', {
+        contact,
+        username,
+        contactMethod,
+        contactLength: contact.length,
+        contactType: typeof contact
+      });
+
       const userAttributes: any = {
         preferred_username: username // Store the chosen username as preferred_username
       };
@@ -134,14 +142,23 @@ export class AuthService {
       // Set the appropriate attribute based on contact method
       if (contactMethod === 'email') {
         userAttributes.email = contact;
+        console.log('📧 Email signup - using contact as username:', contact);
       } else {
         // Ensure phone number is in E.164 format
         const formattedPhone = contact.startsWith('+') ? contact : `+1${contact.replace(/\D/g, '')}`;
         userAttributes.phone_number = formattedPhone;
+        console.log('📱 Phone signup - formatted phone:', formattedPhone);
+        console.log('📱 Original contact:', contact);
+        console.log('📱 Using as Cognito username:', formattedPhone);
       }
 
+      console.log('🔧 Final signUp parameters:', {
+        username: contactMethod === 'phone' ? userAttributes.phone_number : contact,
+        userAttributes
+      });
+
       const result = await signUp({
-        username: contact, // Use contact (email/phone) as Cognito username since that's what Cognito expects
+        username: contactMethod === 'phone' ? userAttributes.phone_number : contact, // Use formatted phone for phone signup
         password,
         options: {
           userAttributes
@@ -153,11 +170,22 @@ export class AuthService {
     }
   }
 
-  async confirmSignUp(contact: string, confirmationCode: string): Promise<any> {
+  async confirmSignUp(contact: string, confirmationCode: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
-      // Use the contact (email/phone) since that's what we used as Cognito username
+      // Use the same formatting logic as signUp
+      let cognitoUsername = contact;
+      if (contactMethod === 'phone') {
+        cognitoUsername = contact.startsWith('+') ? contact : `+1${contact.replace(/\D/g, '')}`;
+      }
+      
+      console.log('🔍 ConfirmSignUp Debug:', {
+        originalContact: contact,
+        cognitoUsername,
+        contactMethod
+      });
+
       const result = await confirmSignUp({
-        username: contact,
+        username: cognitoUsername,
         confirmationCode
       });
       return result;
@@ -166,11 +194,22 @@ export class AuthService {
     }
   }
 
-  async resendConfirmationCode(contact: string): Promise<any> {
+  async resendConfirmationCode(contact: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
-      // Use the contact (email/phone) since that's what we used as Cognito username
+      // Use the same formatting logic as signUp
+      let cognitoUsername = contact;
+      if (contactMethod === 'phone') {
+        cognitoUsername = contact.startsWith('+') ? contact : `+1${contact.replace(/\D/g, '')}`;
+      }
+      
+      console.log('🔍 ResendCode Debug:', {
+        originalContact: contact,
+        cognitoUsername,
+        contactMethod
+      });
+
       const result = await resendSignUpCode({
-        username: contact
+        username: cognitoUsername
       });
       return result;
     } catch (error) {
