@@ -127,19 +127,19 @@ export class AuthService {
 
   async signUp(contact: string, password: string, username: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
-      const userAttributes: any = {
-        preferred_username: username
-      };
+      const userAttributes: any = {};
 
       // Set the appropriate attribute based on contact method
       if (contactMethod === 'email') {
         userAttributes.email = contact;
       } else {
-        userAttributes.phone_number = contact.startsWith('+') ? contact : `+1${contact}`;
+        // Ensure phone number is in E.164 format
+        const formattedPhone = contact.startsWith('+') ? contact : `+1${contact.replace(/\D/g, '')}`;
+        userAttributes.phone_number = formattedPhone;
       }
 
       const result = await signUp({
-        username: contact, // Use contact (email or phone) as username
+        username: username, // Use the chosen username as Cognito username
         password,
         options: {
           userAttributes
@@ -151,11 +151,11 @@ export class AuthService {
     }
   }
 
-  async confirmSignUp(contact: string, confirmationCode: string): Promise<any> {
+  async confirmSignUp(username: string, confirmationCode: string): Promise<any> {
     try {
-      // Use contact (email or phone) as username since that's what we used for sign up
+      // Use the username since that's what we used for sign up
       const result = await confirmSignUp({
-        username: contact,
+        username: username,
         confirmationCode
       });
       return result;
@@ -164,11 +164,11 @@ export class AuthService {
     }
   }
 
-  async resendConfirmationCode(contact: string): Promise<any> {
+  async resendConfirmationCode(username: string): Promise<any> {
     try {
-      // Use contact (email or phone) as username since that's what we used for sign up
+      // Use the username since that's what we used for sign up
       const result = await resendSignUpCode({
-        username: contact
+        username: username
       });
       return result;
     } catch (error) {

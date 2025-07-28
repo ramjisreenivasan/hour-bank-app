@@ -94,8 +94,7 @@ export class AuthComponent {
     this.error = '';
 
     try {
-      const contact = this.currentContactValue;
-      await this.authService.confirmSignUp(contact, this.verificationCode.trim());
+      await this.authService.confirmSignUp(this.username, this.verificationCode.trim());
       const contactType = this.contactMethod === 'email' ? 'Email' : 'Phone number';
       this.successMessage = `${contactType} verified successfully! You can now sign in.`;
       this.showVerification = false;
@@ -120,7 +119,7 @@ export class AuthComponent {
 
     try {
       const contact = this.currentContactValue;
-      await this.authService.resendConfirmationCode(contact);
+      await this.authService.resendConfirmationCode(this.username);
       const contactType = this.contactMethod === 'email' ? 'email' : 'phone number';
       this.successMessage = `New verification code sent to your ${contactType} (${contact})`;
     } catch (error: any) {
@@ -163,7 +162,9 @@ export class AuthComponent {
           return false;
         }
       } else {
-        if (!this.phoneNumber || this.phoneNumber.length < 10) {
+        // Clean phone number and validate
+        const cleanPhone = this.phoneNumber.replace(/\D/g, '');
+        if (!this.phoneNumber || cleanPhone.length < 10) {
           this.error = 'Please enter a valid phone number (at least 10 digits).';
           return false;
         }

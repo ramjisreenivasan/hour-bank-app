@@ -7,8 +7,8 @@ export const environment = {
   enableConsoleLogging: false, // Disable console logging in production
   enableLocalStorage: false,   // Disable local storage in production for privacy
   buildInfo: {
-      "buildNumber": 14,
-      "buildDate": "2025-07-28T13:22:08.828Z",
+      "buildNumber": 15,
+      "buildDate": "2025-07-28T14:11:13.566Z",
       "version": "1.0.0",
       "environment": "production"
   }
