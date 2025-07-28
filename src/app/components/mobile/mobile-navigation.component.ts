@@ -7,13 +7,13 @@ import { MobileNavigationService } from '../../services/mobile-navigation.servic
 import { PlatformService } from '../../services/platform.service';
 import { User } from '../../models/user.model';
 import { LogoComponent } from '../logo/logo.component';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-mobile-navigation',
   standalone: true,
-  imports: [CommonModule, RouterModule, LogoComponent, IonicModule],
+  imports: [CommonModule, RouterModule, LogoComponent],
   template: `
+    <!-- Mobile Header -->
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>
@@ -22,18 +22,26 @@ import { IonicModule } from '@ionic/angular';
           </div>
         </ion-title>
         <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="openMenu()">
+          <ion-button fill="clear" (click)="toggleMenu()">
             <ion-icon name="menu-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
+    <!-- Menu Backdrop -->
+    <div class="menu-backdrop" [class.show]="isMenuOpen" (click)="closeMenu()"></div>
+
     <!-- Mobile Menu -->
-    <ion-menu side="end" menuId="main-menu" contentId="main-content">
+    <ion-menu side="end" menuId="main-menu" contentId="main-content" [class.show-menu]="isMenuOpen">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Menu</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeMenu()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       
@@ -129,19 +137,109 @@ import { IonicModule } from '@ionic/angular';
       align-items: center;
     }
     
+    /* Ensure proper icon display */
+    ion-icon {
+      font-family: 'Ionicons';
+    }
+    
+    /* Fallback icons using Font Awesome if Ionicons not available */
+    ion-icon[name="menu-outline"]::before {
+      content: "☰";
+      font-family: inherit;
+      font-size: 1.2em;
+    }
+    
+    ion-icon[name="close-outline"]::before {
+      content: "✕";
+      font-family: inherit;
+      font-size: 1.2em;
+    }
+    
+    ion-icon[name="home-outline"]::before {
+      content: "🏠";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="list-outline"]::before {
+      content: "📋";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="people-outline"]::before {
+      content: "👥";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="information-circle-outline"]::before {
+      content: "ℹ️";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="heart-outline"]::before {
+      content: "❤️";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="hand-left-outline"]::before {
+      content: "🤝";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="log-in-outline"]::before {
+      content: "🔑";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="grid-outline"]::before {
+      content: "⊞";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="person-outline"]::before {
+      content: "👤";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="card-outline"]::before {
+      content: "💳";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="shield-checkmark-outline"]::before {
+      content: "🛡️";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="phone-portrait-outline"]::before {
+      content: "📱";
+      font-family: inherit;
+    }
+    
+    ion-icon[name="open-outline"]::before {
+      content: "↗";
+      font-family: inherit;
+    }
+    
     ion-item-divider {
       margin-top: 16px;
     }
     
     ion-item p {
       font-size: 0.8em;
-      color: var(--ion-color-medium);
+      color: var(--ion-color-medium, #666);
+      margin: 0;
+    }
+    
+    ion-item h3 {
+      margin: 0 0 4px 0;
+      font-size: 1em;
     }
   `]
 })
 export class MobileNavigationComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   currentUser: User | null = null;
+  isMenuOpen = false;
   private authSubscription?: Subscription;
 
   constructor(
@@ -169,18 +267,12 @@ export class MobileNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
-  async openMenu() {
-    const menu = document.querySelector('ion-menu');
-    if (menu) {
-      await menu.open();
-    }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  async closeMenu() {
-    const menu = document.querySelector('ion-menu');
-    if (menu) {
-      await menu.close();
-    }
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   async openAuthInBrowser() {

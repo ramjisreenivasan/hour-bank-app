@@ -2,9 +2,27 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  
+  /* Mobile safe area handling */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
+  
+  /* Ensure content doesn't overlap with fixed header on mobile */
+  @media (max-width: 768px) {
+    padding-top: 0;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .app-container {
+    /* Ensure proper spacing on mobile */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
 }
