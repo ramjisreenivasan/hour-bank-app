@@ -5,7 +5,6 @@ import { AuthService } from './services/auth.service';
 import { PlatformService } from './services/platform.service';
 import { SmartNavigationComponent } from './components/navigation/smart-navigation.component';
 import { MobileNavigationComponent } from './components/mobile/mobile-navigation.component';
-import { BuildInfoComponent } from './components/build-info/build-info.component';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -15,7 +14,6 @@ import { IonicModule } from '@ionic/angular';
     CommonModule, 
     SmartNavigationComponent, 
     MobileNavigationComponent,
-    BuildInfoComponent,
     IonicModule
   ],
   templateUrl: './app.component.html',

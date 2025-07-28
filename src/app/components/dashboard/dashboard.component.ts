@@ -9,6 +9,7 @@ import { UserDisplayService } from '../../services/user-display.service';
 import { UserMappingService } from '../../services/user-mapping.service';
 import { RatingService } from '../../services/rating.service';
 import { User, Service, Transaction } from '../../models/user.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +27,10 @@ export class DashboardComponent implements OnInit {
   
   // Cache for users to avoid async issues in templates
   usersCache: Map<string, User> = new Map();
+  
+  // Build info
+  buildInfo = environment.buildInfo;
+  showBuildInfo = !environment.production; // Only show in development
 
   constructor(
     private authService: AuthService,
@@ -347,6 +352,16 @@ export class DashboardComponent implements OnInit {
 
   browseServices(): void {
     this.router.navigate(['/services']);
+  }
+
+  formatBuildDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 
   getActualTransactionCount(): number {
