@@ -16,6 +16,7 @@ export class AuthComponent {
   isSignUp = false;
   showVerification = false;
   email = '';
+  emailOrUsername = ''; // For sign-in, can be either email or username
   password = '';
   username = '';
   confirmPassword = '';
@@ -64,7 +65,7 @@ export class AuthComponent {
           this.successMessage = `Verification code sent to ${this.email}. Please check your email and enter the code below.`;
         }
       } else {
-        await this.authService.signIn(this.email, this.password);
+        await this.authService.signIn(this.emailOrUsername, this.password);
         this.router.navigate(['/dashboard']);
       }
     } catch (error: any) {
@@ -120,27 +121,32 @@ export class AuthComponent {
     if (error.message && error.message.includes('already a signed in user')) {
       this.error = 'Signing out previous session and signing you in...';
       // The auth service will handle the retry automatically
-      this.authService.signIn(this.email, this.password).then(() => {
+      this.authService.signIn(this.emailOrUsername, this.password).then(() => {
         this.router.navigate(['/dashboard']);
       }).catch((retryError: any) => {
         this.error = retryError.message || 'Sign in failed. Please try again.';
       });
     } else if (error.name === 'UserNotConfirmedException') {
-      this.showVerification = true;
-      this.error = 'Please verify your email address first.';
-      this.resendCode();
+      // If user tries to sign in with email but hasn't verified, show verification
+      if (this.emailOrUsername.includes('@')) {
+        this.email = this.emailOrUsername; // Set email for verification
+        this.showVerification = true;
+        this.error = 'Please verify your email address first.';
+        this.resendCode();
+      } else {
+        this.error = 'Please verify your email address first. Try signing in with your email instead of username.';
+      }
     } else {
       this.error = error.message || 'An error occurred. Please try again.';
     }
   }
 
   private validateForm(): boolean {
-    if (!this.email || !this.password) {
-      this.error = 'Email and password are required.';
-      return false;
-    }
-
     if (this.isSignUp) {
+      if (!this.email || !this.password) {
+        this.error = 'Email and password are required.';
+        return false;
+      }
       if (!this.username) {
         this.error = 'Username is required for sign up.';
         return false;
@@ -153,6 +159,11 @@ export class AuthComponent {
         this.error = 'Password must be at least 8 characters long.';
         return false;
       }
+    } else {
+      if (!this.emailOrUsername || !this.password) {
+        this.error = 'Email/Username and password are required.';
+        return false;
+      }
     }
 
     return true;
@@ -160,6 +171,7 @@ export class AuthComponent {
 
   private clearForm(): void {
     this.email = '';
+    this.emailOrUsername = '';
     this.password = '';
     this.username = '';
     this.confirmPassword = '';

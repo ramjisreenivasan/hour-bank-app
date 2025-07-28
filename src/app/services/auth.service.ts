@@ -143,8 +143,9 @@ export class AuthService {
 
   async confirmSignUp(email: string, confirmationCode: string): Promise<any> {
     try {
+      // Always use email for confirmation since that's what we used for sign up
       const result = await confirmSignUp({
-        username: email,
+        username: email, // Email is used as username in Cognito
         confirmationCode
       });
       return result;
@@ -155,8 +156,9 @@ export class AuthService {
 
   async resendConfirmationCode(email: string): Promise<any> {
     try {
+      // Always use email for resend since that's what we used for sign up
       const result = await resendSignUpCode({
-        username: email
+        username: email // Email is used as username in Cognito
       });
       return result;
     } catch (error) {
@@ -164,7 +166,7 @@ export class AuthService {
     }
   }
 
-  async signIn(email: string, password: string): Promise<void> {
+  async signIn(emailOrUsername: string, password: string): Promise<void> {
     try {
       // First check if there's already a signed in user
       try {
@@ -179,12 +181,36 @@ export class AuthService {
         // No user signed in, continue with sign in
       }
 
-      const result = await signIn({
-        username: email,
-        password
-      });
+      // Try to sign in with the provided input (could be email or username)
+      let signInResult;
+      try {
+        // First attempt: try as-is (works for email or username)
+        signInResult = await signIn({
+          username: emailOrUsername,
+          password
+        });
+      } catch (firstError: any) {
+        // If first attempt fails and input looks like a username (no @), 
+        // it might be that Cognito expects email format
+        if (!emailOrUsername.includes('@')) {
+          throw firstError; // Username failed, don't retry
+        }
+        
+        // If input is email format but failed, try without domain
+        // This handles cases where user enters email but system expects username
+        const possibleUsername = emailOrUsername.split('@')[0];
+        try {
+          signInResult = await signIn({
+            username: possibleUsername,
+            password
+          });
+        } catch (secondError) {
+          // Both attempts failed, throw the original error
+          throw firstError;
+        }
+      }
       
-      if (result.isSignedIn) {
+      if (signInResult.isSignedIn) {
         await this.checkAuthStatus();
         
         // Wait for authentication state to be properly set
@@ -212,9 +238,9 @@ export class AuthService {
           this.currentUserSubject.next(null);
           this.isAuthenticatedSubject.next(false);
           
-          // Retry sign in
+          // Retry sign in with original input
           const result = await signIn({
-            username: email,
+            username: emailOrUsername,
             password
           });
           
@@ -243,7 +269,9 @@ export class AuthService {
             retryError as Error,
             undefined,
             {
-              email: email.replace(/(.{2}).*(@.*)/, '$1***$2'), // Mask email for privacy
+              emailOrUsername: emailOrUsername.includes('@') 
+                ? emailOrUsername.replace(/(.{2}).*(@.*)/, '$1***$2') 
+                : emailOrUsername.replace(/(.{2}).*/, '$1***'), // Mask for privacy
               errorType: 'retry_failed',
               originalError: error.message,
               retryAttempt: true,
@@ -258,7 +286,9 @@ export class AuthService {
           error as Error,
           undefined,
           {
-            email: email.replace(/(.{2}).*(@.*)/, '$1***$2'), // Mask email for privacy
+            emailOrUsername: emailOrUsername.includes('@') 
+              ? emailOrUsername.replace(/(.{2}).*(@.*)/, '$1***$2') 
+              : emailOrUsername.replace(/(.{2}).*/, '$1***'), // Mask for privacy
             errorType: error.name || 'unknown',
             errorCode: error.code || 'unknown',
             timestamp: new Date().toISOString(),

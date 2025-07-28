@@ -82,6 +82,14 @@
             color: var(--text-muted);
           }
         }
+
+        .form-hint {
+          display: block;
+          color: var(--text-muted);
+          font-size: 0.75rem;
+          margin-top: var(--spacing-xs);
+          line-height: 1.4;
+        }
       }
       
       .error-message {
