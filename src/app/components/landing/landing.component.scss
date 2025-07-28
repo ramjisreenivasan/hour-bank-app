@@ -849,6 +849,20 @@ section {
     color: rgba(44, 62, 80, 0.85); // Dark text for light background
     font-size: 0.9rem;
     font-weight: 400; // Slightly bolder for better readability
+
+    .build-info {
+      margin-top: 0.5rem;
+      
+      .build-text {
+        font-size: 0.75rem;
+        color: rgba(44, 62, 80, 0.6);
+        font-family: 'Courier New', monospace;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        display: inline-block;
+      }
+    }
   }
 }
 

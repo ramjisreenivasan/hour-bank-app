@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from '../logo/logo.component';
 import { getAppConfig } from '../../config/app-config';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-landing',
@@ -16,6 +17,9 @@ export class LandingComponent {
   // App configuration
   private config = getAppConfig();
   freeHoursText = this.config.ui.freeHoursText;
+  
+  // Build info - visible to all users including guests
+  buildInfo = environment.buildInfo;
   
   features = [
     {
@@ -148,4 +152,14 @@ export class LandingComponent {
   ];
 
   constructor() { }
+
+  formatBuildDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
 }

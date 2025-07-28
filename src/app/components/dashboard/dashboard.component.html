@@ -127,11 +127,6 @@
       </ng-template>
     </section>
   </div>
-
-  <!-- Build Info (only in development) -->
-  <div class="build-info-label" *ngIf="showBuildInfo">
-    <span class="build-text">Build #{{ buildInfo.buildNumber }} | v{{ buildInfo.version }} | {{ formatBuildDate(buildInfo.buildDate) }}</span>
-  </div>
 </div>
 
 <div class="loading-container" *ngIf="loading">

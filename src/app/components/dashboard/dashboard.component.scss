@@ -367,24 +367,6 @@
   }
 }
 
-// Build Info Label
-.build-info-label {
-  margin-top: 2rem;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  
-  .build-text {
-    font-size: 0.75rem;
-    font-family: 'Courier New', monospace;
-    color: var(--text-secondary);
-    opacity: 0.7;
-    
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
