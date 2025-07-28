@@ -209,11 +209,14 @@ import { LogoComponent } from '../logo/logo.component';
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s;
+      /* Prevent touch events when hidden */
+      pointer-events: none;
     }
     
     .menu-backdrop.show {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
     }
     
     .mobile-menu {
@@ -403,14 +406,27 @@ export class MobileNavigationComponent implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+    // Ensure body scroll is restored when component is destroyed
+    document.body.style.overflow = '';
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+    this.updateBodyScroll();
   }
 
   closeMenu() {
     this.isMenuOpen = false;
+    this.updateBodyScroll();
+  }
+
+  private updateBodyScroll() {
+    // Prevent body scroll when menu is open, restore when closed
+    if (this.isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   async openAuthInBrowser() {

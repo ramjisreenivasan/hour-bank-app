@@ -148,10 +148,7 @@ ion-item-divider ion-label {
 }
 
 /* Safe area handling for mobile devices */
-.app-container {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-}
+/* Removed conflicting .app-container rule - handled in app.component.scss */
 
 /* CSS Reset and Base Styles */
 * {
@@ -166,6 +163,9 @@ html, body {
   line-height: 1.6;
   color: #333;
   background-color: #f8fafc;
+  /* Ensure scrolling is enabled */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto; /* Allow vertical scroll */
 }
 
 /* CSS Variables for Design System */

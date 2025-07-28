@@ -6,11 +6,17 @@
   /* Mobile safe area handling */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
+  
+  /* Ensure scrolling works properly */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
+  /* Ensure content can scroll */
+  overflow-y: auto;
   
   /* Ensure content doesn't overlap with fixed header on mobile */
   @media (max-width: 768px) {
