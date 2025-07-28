@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node scripts/increment-build.js && ng build",
     "build:increment": "node scripts/increment-build.js && ng build",
     "build:prod": "node scripts/increment-build.js && ng build --configuration production",
     "build:mobile": "ng build --configuration production",
