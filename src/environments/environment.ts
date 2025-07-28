@@ -11,8 +11,8 @@ export const environment = {
   enableConsoleLogging: true,
   enableLocalStorage: true,
   buildInfo: {
-      "buildNumber": 16,
-      "buildDate": "2025-07-28T14:57:27.418Z",
+      "buildNumber": 17,
+      "buildDate": "2025-07-28T15:11:44.188Z",
       "version": "1.0.0",
       "environment": "development"
   }

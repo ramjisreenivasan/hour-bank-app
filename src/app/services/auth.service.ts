@@ -127,7 +127,9 @@ export class AuthService {
 
   async signUp(contact: string, password: string, username: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
-      const userAttributes: any = {};
+      const userAttributes: any = {
+        preferred_username: username // Store the chosen username as preferred_username
+      };
 
       // Set the appropriate attribute based on contact method
       if (contactMethod === 'email') {
@@ -139,7 +141,7 @@ export class AuthService {
       }
 
       const result = await signUp({
-        username: username, // Use the chosen username as Cognito username
+        username: contact, // Use contact (email/phone) as Cognito username since that's what Cognito expects
         password,
         options: {
           userAttributes
@@ -151,11 +153,11 @@ export class AuthService {
     }
   }
 
-  async confirmSignUp(username: string, confirmationCode: string): Promise<any> {
+  async confirmSignUp(contact: string, confirmationCode: string): Promise<any> {
     try {
-      // Use the username since that's what we used for sign up
+      // Use the contact (email/phone) since that's what we used as Cognito username
       const result = await confirmSignUp({
-        username: username,
+        username: contact,
         confirmationCode
       });
       return result;
@@ -164,11 +166,11 @@ export class AuthService {
     }
   }
 
-  async resendConfirmationCode(username: string): Promise<any> {
+  async resendConfirmationCode(contact: string): Promise<any> {
     try {
-      // Use the username since that's what we used for sign up
+      // Use the contact (email/phone) since that's what we used as Cognito username
       const result = await resendSignUpCode({
-        username: username
+        username: contact
       });
       return result;
     } catch (error) {

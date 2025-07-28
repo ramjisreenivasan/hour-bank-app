@@ -94,7 +94,8 @@ export class AuthComponent {
     this.error = '';
 
     try {
-      await this.authService.confirmSignUp(this.username, this.verificationCode.trim());
+      const contact = this.currentContactValue;
+      await this.authService.confirmSignUp(contact, this.verificationCode.trim());
       const contactType = this.contactMethod === 'email' ? 'Email' : 'Phone number';
       this.successMessage = `${contactType} verified successfully! You can now sign in.`;
       this.showVerification = false;
@@ -119,7 +120,7 @@ export class AuthComponent {
 
     try {
       const contact = this.currentContactValue;
-      await this.authService.resendConfirmationCode(this.username);
+      await this.authService.resendConfirmationCode(contact);
       const contactType = this.contactMethod === 'email' ? 'email' : 'phone number';
       this.successMessage = `New verification code sent to your ${contactType} (${contact})`;
     } catch (error: any) {
