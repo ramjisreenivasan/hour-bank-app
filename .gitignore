@@ -166,4 +166,7 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
+# Build configuration (tracked to persist build numbers)
+# build-config.json - intentionally tracked
+
 #amplify-do-not-edit-end

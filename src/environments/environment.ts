@@ -9,7 +9,13 @@ export const environment = {
   region: 'us-east-1',
   enableErrorLogging: true,
   enableConsoleLogging: true,
-  enableLocalStorage: true
+  enableLocalStorage: true,
+  buildInfo: {
+      "buildNumber": 3,
+      "buildDate": "2025-07-28T02:42:32.316Z",
+      "version": "1.0.0",
+      "environment": "development"
+  }
 };
 
 /*

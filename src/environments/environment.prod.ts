@@ -5,5 +5,11 @@ export const environment = {
   region: 'us-east-1',
   enableErrorLogging: true,
   enableConsoleLogging: false, // Disable console logging in production
-  enableLocalStorage: false   // Disable local storage in production for privacy
+  enableLocalStorage: false,   // Disable local storage in production for privacy
+  buildInfo: {
+      "buildNumber": 3,
+      "buildDate": "2025-07-28T02:42:32.316Z",
+      "version": "1.0.0",
+      "environment": "production"
+  }
 };

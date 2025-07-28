@@ -1,0 +1,79 @@
+.build-info {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  z-index: 9999;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  
+  .build-info-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .build-label {
+      color: #888;
+      font-weight: 500;
+    }
+    
+    .build-number {
+      color: #4ade80;
+      font-weight: bold;
+    }
+    
+    .build-version {
+      color: #60a5fa;
+      font-weight: 500;
+    }
+    
+    .build-env {
+      color: #fbbf24;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .build-date {
+      color: #a78bfa;
+    }
+    
+    .build-separator {
+      color: #555;
+    }
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .build-info {
+    font-size: 10px;
+    padding: 3px 8px;
+    
+    .build-info-content {
+      gap: 4px;
+      
+      .build-label {
+        display: none; // Hide "Build:" label on mobile
+      }
+    }
+  }
+}
+
+/* Hide on very small screens */
+@media (max-width: 480px) {
+  .build-info {
+    .build-info-content {
+      .build-date {
+        display: none; // Hide date on very small screens
+      }
+    }
+  }
+}
