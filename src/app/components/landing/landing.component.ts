@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from '../logo/logo.component';
+import { getAppConfig } from '../../config/app-config';
 
 @Component({
   selector: 'app-landing',
@@ -11,6 +12,10 @@ import { LogoComponent } from '../logo/logo.component';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
+  
+  // App configuration
+  private config = getAppConfig();
+  freeHoursText = this.config.ui.freeHoursText;
   
   features = [
     {

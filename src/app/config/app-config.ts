@@ -17,6 +17,7 @@ export interface AppConfig {
     recentTransactionsLimit: number;
     maxVisibleServices: number;
     errorLogLimit: number;
+    freeHoursText: string; // Configurable free hours text for landing page
   };
   admin: {
     queryLimit: number;
@@ -45,7 +46,8 @@ export const APP_CONFIG: AppConfig = {
   ui: {
     recentTransactionsLimit: 10,
     maxVisibleServices: 5,
-    errorLogLimit: 50
+    errorLogLimit: 50,
+    freeHoursText: "Start with 10 free hours"
   },
   admin: {
     queryLimit: 1000
