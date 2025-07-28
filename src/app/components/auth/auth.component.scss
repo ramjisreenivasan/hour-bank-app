@@ -93,6 +93,72 @@
         font-size: 0.875rem;
         border: 1px solid #fecaca;
       }
+
+      .success-message {
+        background: var(--success-light);
+        color: #065f46;
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--spacing-lg);
+        font-size: 0.875rem;
+        border: 1px solid #a7f3d0;
+      }
+
+      .verification-section {
+        .verification-input {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: 600;
+          letter-spacing: 0.5rem;
+          padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        .form-hint {
+          display: block;
+          color: var(--text-muted);
+          font-size: 0.875rem;
+          margin-top: var(--spacing-xs);
+          text-align: center;
+        }
+
+        .verification-actions {
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-md);
+          margin-top: var(--spacing-lg);
+
+          .resend-btn, .back-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+
+            &:hover:not(:disabled) {
+              background: var(--primary-color);
+              color: white;
+            }
+
+            &:disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
+          }
+
+          .back-btn {
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+
+            &:hover:not(:disabled) {
+              background: var(--background-color);
+              color: var(--text-primary);
+            }
+          }
+        }
+      }
       
       .submit-btn {
         width: 100%;

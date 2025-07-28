@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { signUp, signIn, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { signUp, signIn, signOut, getCurrentUser, fetchAuthSession, confirmSignUp, resendSignUpCode } from 'aws-amplify/auth';
 import { User } from '../models/user.model';
 import { UserMappingService } from './user-mapping.service';
 import { UserService } from './user.service';
@@ -134,6 +134,29 @@ export class AuthService {
             preferred_username: username
           }
         }
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async confirmSignUp(email: string, confirmationCode: string): Promise<any> {
+    try {
+      const result = await confirmSignUp({
+        username: email,
+        confirmationCode
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async resendConfirmationCode(email: string): Promise<any> {
+    try {
+      const result = await resendSignUpCode({
+        username: email
       });
       return result;
     } catch (error) {
