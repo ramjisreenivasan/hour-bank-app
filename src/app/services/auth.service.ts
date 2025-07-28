@@ -217,14 +217,15 @@ export class AuthService {
           }
         } else {
           // If it's not email format, it might be a preferred_username
-          // Try to find the user's email by their preferred_username
+          // Try to find the user's actual Cognito username by their preferred_username
           try {
             // Look up user by preferred_username in our database
             const userByUsername = await this.userMappingService.findUserByPreferredUsername(emailOrUsername);
-            if (userByUsername && userByUsername.email) {
-              // Try signing in with the found email
+            if (userByUsername && (userByUsername.cognitoId || userByUsername.email)) {
+              // Try signing in with the found cognitoId (actual Cognito username) or fallback to email
+              const cognitoUsername = userByUsername.cognitoId || userByUsername.email;
               signInResult = await signIn({
-                username: userByUsername.email,
+                username: cognitoUsername,
                 password
               });
             } else {

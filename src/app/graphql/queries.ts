@@ -103,6 +103,7 @@ export const usersByUsername = /* GraphQL */ `
         id
         email
         username
+        cognitoId
         firstName
         lastName
         bankHours

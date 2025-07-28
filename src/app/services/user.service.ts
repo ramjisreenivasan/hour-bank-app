@@ -100,6 +100,49 @@ export class UserService {
   }
 
   /**
+   * Get user by username with comprehensive error logging
+   */
+  getUserByUsername(username: string): Observable<User | null> {
+    return from(this.client.graphql({
+      query: queries.usersByUsername,
+      variables: { username, limit: 1 }
+    })).pipe(
+      map((result: any) => {
+        const users = result.data?.usersByUsername?.items || [];
+        if (users.length === 0) {
+          errorLogger.logError(
+            {
+              error: `No user found with username: ${username}`,
+              context: { 
+                operation: 'getUserByUsername',
+                component: 'UserService',
+                additionalData: { username }
+              },
+              severity: 'low',
+              category: 'user'
+            }
+          );
+          return null;
+        }
+        return users[0] as User;
+      }),
+      catchError((error) => {
+        errorLogger.logApiError(
+          '/graphql',
+          'POST',
+          error,
+          {
+            query: 'usersByUsername',
+            variables: { username: username.replace(/(.{2}).*/, '$1***') } // Mask username
+          },
+          error.response
+        );
+        return throwError(() => new Error(`Failed to get user by username: ${error.message}`));
+      })
+    );
+  }
+
+  /**
    * Update user profile with comprehensive error logging
    */
   updateUser(userId: string, updateData: Partial<User>): Observable<User> {

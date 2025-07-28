@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
-import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { getCurrentUser, fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { Observable, from, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { errorLogger } from '../utils/error-logger';
@@ -246,23 +246,29 @@ export class UserMappingService {
    * Create new DynamoDB user from Cognito user info
    */
   private createDynamoDbUser(cognitoUserInfo: CognitoUserInfo): Observable<UserMapping> {
-    const newUser = {
-      email: cognitoUserInfo.email || `${cognitoUserInfo.username}@example.com`,
-      username: cognitoUserInfo.username,
-      firstName: 'User', // Default values
-      lastName: 'Name',
-      bankHours: this.config.user.defaultBankHours,
-      skills: [],
-      bio: 'Welcome to HourBank!',
-      rating: this.config.user.defaultRating,
-      totalTransactions: this.config.user.defaultTotalTransactions,
-      cognitoId: cognitoUserInfo.userId // Store the mapping
-    };
+    // First, fetch user attributes to get the preferred_username
+    return from(fetchUserAttributes()).pipe(
+      switchMap((attributes) => {
+        const preferredUsername = attributes.preferred_username || cognitoUserInfo.username;
+        
+        const newUser = {
+          email: cognitoUserInfo.email || `${cognitoUserInfo.username}@example.com`,
+          username: preferredUsername, // Use the preferred username chosen by the user
+          firstName: 'User', // Default values
+          lastName: 'Name',
+          bankHours: this.config.user.defaultBankHours,
+          skills: [],
+          bio: 'Welcome to HourBank!',
+          rating: this.config.user.defaultRating,
+          totalTransactions: this.config.user.defaultTotalTransactions,
+          cognitoId: cognitoUserInfo.username // Store the actual Cognito username (email/phone)
+        };
 
-    return from(this.client.graphql({
-      query: mutations.createUser,
-      variables: { input: newUser }
-    })).pipe(
+        return from(this.client.graphql({
+          query: mutations.createUser,
+          variables: { input: newUser }
+        }));
+      }),
       map((result: any) => {
         const createdUser = result.data?.createUser;
         if (!createdUser) {
@@ -287,7 +293,7 @@ export class UserMappingService {
             component: 'UserMappingService',
             additionalData: {
               mapping,
-              newUserData: newUser
+              cognitoUserInfo
             }
           },
           severity: 'low',
@@ -304,7 +310,6 @@ export class UserMappingService {
             component: 'UserMappingService',
             additionalData: {
               cognitoUserInfo,
-              newUserData: newUser,
               errorDetails: {
                 name: error.name,
                 message: error.message,
