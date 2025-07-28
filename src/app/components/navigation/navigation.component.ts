@@ -105,7 +105,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   async signOut(): Promise<void> {
     try {
       await this.authService.signOut();
-      this.router.navigate(['/']);
+      // Navigation to auth page is handled by AuthService
     } catch (error) {
       console.error('Error signing out:', error);
     }

@@ -105,7 +105,7 @@ export class SmartNavigationComponent implements OnInit, OnDestroy {
   async signOut() {
     try {
       await this.authService.signOut();
-      // Navigation will be handled by auth state change
+      // Navigation to auth page is handled by AuthService
     } catch (error) {
       console.error('Error signing out:', error);
     }

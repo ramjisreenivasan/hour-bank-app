@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { signUp, signIn, signOut, getCurrentUser, fetchAuthSession, confirmSignUp, resendSignUpCode } from 'aws-amplify/auth';
@@ -17,6 +18,7 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
+    private router: Router,
     private userMappingService: UserMappingService,
     private userService: UserService
   ) {
@@ -306,12 +308,18 @@ export class AuthService {
       this.currentUserSubject.next(null);
       this.isAuthenticatedSubject.next(false);
       this.userMappingService.clearUserMapping(); // Clear user mapping cache
+      
+      // Redirect to auth page after successful sign out
+      this.router.navigate(['/auth']);
     } catch (error) {
-      // Even if signOut fails, clear local state
+      // Even if signOut fails, clear local state and redirect
       this.currentUserSubject.next(null);
       this.isAuthenticatedSubject.next(false);
       this.userMappingService.clearUserMapping(); // Clear user mapping cache
       console.warn('Sign out error:', error);
+      
+      // Still redirect to auth page even if there was an error
+      this.router.navigate(['/auth']);
     }
   }
 
@@ -321,11 +329,17 @@ export class AuthService {
       await signOut({ global: true });
       this.currentUserSubject.next(null);
       this.isAuthenticatedSubject.next(false);
+      
+      // Redirect to auth page after successful force sign out
+      this.router.navigate(['/auth']);
     } catch (error) {
-      // Clear local state even if global sign out fails
+      // Clear local state even if global sign out fails and redirect
       this.currentUserSubject.next(null);
       this.isAuthenticatedSubject.next(false);
       console.warn('Force sign out error:', error);
+      
+      // Still redirect to auth page even if there was an error
+      this.router.navigate(['/auth']);
     }
   }
 
