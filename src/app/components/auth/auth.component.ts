@@ -16,6 +16,8 @@ export class AuthComponent {
   isSignUp = false;
   showVerification = false;
   email = '';
+  phoneNumber = '';
+  contactMethod: 'email' | 'phone' = 'email'; // Track selected contact method
   emailOrUsername = ''; // For sign-in, can be either email or username
   password = '';
   username = '';
@@ -36,9 +38,13 @@ export class AuthComponent {
     this.clearForm();
   }
 
+  get currentContactValue(): string {
+    return this.contactMethod === 'email' ? this.email : this.phoneNumber;
+  }
+
   async onSubmit(): Promise<void> {
     if (this.showVerification) {
-      await this.verifyEmail();
+      await this.verifyContact();
     } else if (!this.validateForm()) {
       return;
     } else {
@@ -53,16 +59,19 @@ export class AuthComponent {
 
     try {
       if (this.isSignUp) {
-        const result = await this.authService.signUp(this.email, this.password, this.username);
+        const contact = this.currentContactValue;
+        const result = await this.authService.signUp(contact, this.password, this.username, this.contactMethod);
         if (result.isSignUpComplete) {
-          // Sign up completed without verification (shouldn't happen with email verification enabled)
+          // Sign up completed without verification (shouldn't happen with verification enabled)
           this.successMessage = 'Account created successfully! You can now sign in.';
           this.isSignUp = false;
           this.clearForm();
         } else {
           // Verification required
           this.showVerification = true;
-          this.successMessage = `Verification code sent to ${this.email}. Please check your email and enter the code below.`;
+          const contactType = this.contactMethod === 'email' ? 'email' : 'phone number';
+          const checkMessage = this.contactMethod === 'email' ? 'check your email' : 'check your text messages';
+          this.successMessage = `Verification code sent to your ${contactType} (${contact}). Please ${checkMessage} and enter the code below.`;
         }
       } else {
         await this.authService.signIn(this.emailOrUsername, this.password);
@@ -75,7 +84,7 @@ export class AuthComponent {
     }
   }
 
-  private async verifyEmail(): Promise<void> {
+  private async verifyContact(): Promise<void> {
     if (!this.verificationCode.trim()) {
       this.error = 'Please enter the verification code.';
       return;
@@ -85,8 +94,10 @@ export class AuthComponent {
     this.error = '';
 
     try {
-      await this.authService.confirmSignUp(this.email, this.verificationCode.trim());
-      this.successMessage = 'Email verified successfully! You can now sign in.';
+      const contact = this.currentContactValue;
+      await this.authService.confirmSignUp(contact, this.verificationCode.trim());
+      const contactType = this.contactMethod === 'email' ? 'Email' : 'Phone number';
+      this.successMessage = `${contactType} verified successfully! You can now sign in.`;
       this.showVerification = false;
       this.isSignUp = false;
       this.clearForm();
@@ -108,8 +119,10 @@ export class AuthComponent {
     this.error = '';
 
     try {
-      await this.authService.resendConfirmationCode(this.email);
-      this.successMessage = `New verification code sent to ${this.email}`;
+      const contact = this.currentContactValue;
+      await this.authService.resendConfirmationCode(contact);
+      const contactType = this.contactMethod === 'email' ? 'email' : 'phone number';
+      this.successMessage = `New verification code sent to your ${contactType} (${contact})`;
     } catch (error: any) {
       this.error = error.message || 'Failed to resend code. Please try again.';
     } finally {
@@ -143,8 +156,21 @@ export class AuthComponent {
 
   private validateForm(): boolean {
     if (this.isSignUp) {
-      if (!this.email || !this.password) {
-        this.error = 'Email and password are required.';
+      // Validate contact method
+      if (this.contactMethod === 'email') {
+        if (!this.email || !this.email.includes('@')) {
+          this.error = 'Please enter a valid email address.';
+          return false;
+        }
+      } else {
+        if (!this.phoneNumber || this.phoneNumber.length < 10) {
+          this.error = 'Please enter a valid phone number (at least 10 digits).';
+          return false;
+        }
+      }
+      
+      if (!this.password) {
+        this.error = 'Password is required.';
         return false;
       }
       if (!this.username) {
@@ -171,6 +197,7 @@ export class AuthComponent {
 
   private clearForm(): void {
     this.email = '';
+    this.phoneNumber = '';
     this.emailOrUsername = '';
     this.password = '';
     this.username = '';

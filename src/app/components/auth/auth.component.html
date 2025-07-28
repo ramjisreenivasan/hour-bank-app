@@ -7,10 +7,10 @@
         </a>
       </div>
       <h2>
-        {{ showVerification ? 'Verify Your Email' : (isSignUp ? 'Create Account' : 'Welcome Back') }}
+        {{ showVerification ? 'Verify Your ' + (contactMethod === 'email' ? 'Email' : 'Phone Number') : (isSignUp ? 'Create Account' : 'Welcome Back') }}
       </h2>
       <p>
-        {{ showVerification ? 'Enter the verification code sent to your email' : 
+        {{ showVerification ? 'Enter the verification code sent to your ' + (contactMethod === 'email' ? 'email' : 'phone number') : 
            (isSignUp ? 'Join the skill exchange community' : 'Sign in to your account') }}
       </p>
     </div>
@@ -45,7 +45,7 @@
             class="verification-input"
           />
           <small class="form-hint">
-            Check your email ({{ email }}) for the verification code
+            Check your {{ contactMethod === 'email' ? 'email' : 'text messages' }} ({{ currentContactValue }}) for the verification code
           </small>
         </div>
 
@@ -56,7 +56,7 @@
             [disabled]="loading || !verificationCode || verificationCode.length !== 6"
           >
             <div class="loading-spinner" *ngIf="loading"></div>
-            {{ loading ? 'Verifying...' : 'Verify Email' }}
+            {{ loading ? 'Verifying...' : 'Verify ' + (contactMethod === 'email' ? 'Email' : 'Phone Number') }}
           </button>
 
           <button
@@ -95,16 +95,55 @@
             />
           </div>
 
+          <!-- Contact Method Selection -->
           <div class="form-group">
-            <label for="email">Email</label>
+            <label>How would you like to verify your account?</label>
+            <div class="contact-method-selector">
+              <button 
+                type="button" 
+                class="contact-method-btn" 
+                [class.active]="contactMethod === 'email'"
+                (click)="contactMethod = 'email'"
+              >
+                📧 Email
+              </button>
+              <button 
+                type="button" 
+                class="contact-method-btn" 
+                [class.active]="contactMethod === 'phone'"
+                (click)="contactMethod = 'phone'"
+              >
+                📱 Phone
+              </button>
+            </div>
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group" *ngIf="contactMethod === 'email'">
+            <label for="email">Email Address</label>
             <input
               type="email"
               id="email"
               name="email"
               [(ngModel)]="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email address"
               required
             />
+            <small class="form-hint">We'll send a verification code to this email</small>
+          </div>
+
+          <!-- Phone Input -->
+          <div class="form-group" *ngIf="contactMethod === 'phone'">
+            <label for="phoneNumber">Phone Number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              [(ngModel)]="phoneNumber"
+              placeholder="Enter your phone number (e.g., 5551234567)"
+              required
+            />
+            <small class="form-hint">We'll send a verification code via SMS to this number</small>
           </div>
         </div>
 

@@ -125,16 +125,24 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string, username: string): Promise<any> {
+  async signUp(contact: string, password: string, username: string, contactMethod: 'email' | 'phone' = 'email'): Promise<any> {
     try {
+      const userAttributes: any = {
+        preferred_username: username
+      };
+
+      // Set the appropriate attribute based on contact method
+      if (contactMethod === 'email') {
+        userAttributes.email = contact;
+      } else {
+        userAttributes.phone_number = contact.startsWith('+') ? contact : `+1${contact}`;
+      }
+
       const result = await signUp({
-        username: email,
+        username: contact, // Use contact (email or phone) as username
         password,
         options: {
-          userAttributes: {
-            email,
-            preferred_username: username
-          }
+          userAttributes
         }
       });
       return result;
@@ -143,11 +151,11 @@ export class AuthService {
     }
   }
 
-  async confirmSignUp(email: string, confirmationCode: string): Promise<any> {
+  async confirmSignUp(contact: string, confirmationCode: string): Promise<any> {
     try {
-      // Always use email for confirmation since that's what we used for sign up
+      // Use contact (email or phone) as username since that's what we used for sign up
       const result = await confirmSignUp({
-        username: email, // Email is used as username in Cognito
+        username: contact,
         confirmationCode
       });
       return result;
@@ -156,11 +164,11 @@ export class AuthService {
     }
   }
 
-  async resendConfirmationCode(email: string): Promise<any> {
+  async resendConfirmationCode(contact: string): Promise<any> {
     try {
-      // Always use email for resend since that's what we used for sign up
+      // Use contact (email or phone) as username since that's what we used for sign up
       const result = await resendSignUpCode({
-        username: email // Email is used as username in Cognito
+        username: contact
       });
       return result;
     } catch (error) {
