@@ -183,32 +183,47 @@ export class AuthService {
         // No user signed in, continue with sign in
       }
 
-      // Try to sign in with the provided input (could be email or username)
+      // Try to sign in with the provided input
       let signInResult;
       try {
-        // First attempt: try as-is (works for email or username)
+        // First attempt: try as-is (works for email or preferred_username)
         signInResult = await signIn({
           username: emailOrUsername,
           password
         });
       } catch (firstError: any) {
-        // If first attempt fails and input looks like a username (no @), 
-        // it might be that Cognito expects email format
-        if (!emailOrUsername.includes('@')) {
-          throw firstError; // Username failed, don't retry
-        }
-        
-        // If input is email format but failed, try without domain
-        // This handles cases where user enters email but system expects username
-        const possibleUsername = emailOrUsername.split('@')[0];
-        try {
-          signInResult = await signIn({
-            username: possibleUsername,
-            password
-          });
-        } catch (secondError) {
-          // Both attempts failed, throw the original error
-          throw firstError;
+        // If the first attempt fails, try different approaches
+        if (emailOrUsername.includes('@')) {
+          // If it's an email format, try extracting username part
+          const possibleUsername = emailOrUsername.split('@')[0];
+          try {
+            signInResult = await signIn({
+              username: possibleUsername,
+              password
+            });
+          } catch (secondError) {
+            // Both email and username part failed, throw original error
+            throw firstError;
+          }
+        } else {
+          // If it's not email format, it might be a preferred_username
+          // Try to find the user's email by their preferred_username
+          try {
+            // Look up user by preferred_username in our database
+            const userByUsername = await this.userMappingService.findUserByPreferredUsername(emailOrUsername);
+            if (userByUsername && userByUsername.email) {
+              // Try signing in with the found email
+              signInResult = await signIn({
+                username: userByUsername.email,
+                password
+              });
+            } else {
+              throw firstError;
+            }
+          } catch (lookupError) {
+            // Lookup failed, throw original error
+            throw firstError;
+          }
         }
       }
       

@@ -385,6 +385,27 @@ export class UserMappingService {
   }
 
   /**
+   * Find user by preferred username (for sign-in support)
+   */
+  async findUserByPreferredUsername(preferredUsername: string): Promise<any> {
+    try {
+      const result = await this.client.graphql({
+        query: queries.usersByUsername,
+        variables: { username: preferredUsername }
+      });
+      
+      const users = (result as any).data?.usersByUsername?.items || [];
+      return users.length > 0 ? users[0] : null;
+    } catch (error: any) {
+      errorLogger.logApiError('/graphql', 'POST', error, {
+        query: 'usersByUsername',
+        variables: { username: preferredUsername }
+      });
+      return null;
+    }
+  }
+
+  /**
    * Debug method to log current mapping state
    */
   debugMapping(): void {
