@@ -81,31 +81,49 @@
 
       <!-- Regular Auth Form (Sign Up / Sign In) -->
       <div *ngIf="!showVerification">
-        <div class="form-group" *ngIf="isSignUp">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            [(ngModel)]="username"
-            placeholder="Enter your username"
-            required
-          />
+        <!-- Sign Up Fields -->
+        <div *ngIf="isSignUp">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              [(ngModel)]="username"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="emailOrUsername">Email or Username</label>
-          <input
-            type="text"
-            id="emailOrUsername"
-            name="emailOrUsername"
-            [(ngModel)]="emailOrUsername"
-            placeholder="Enter your email or username"
-            required
-          />
-          <small class="form-hint">
-            You can sign in with either your email address or username
-          </small>
+        <!-- Sign In Fields -->
+        <div *ngIf="!isSignUp">
+          <div class="form-group">
+            <label for="emailOrUsername">Email or Username</label>
+            <input
+              type="text"
+              id="emailOrUsername"
+              name="emailOrUsername"
+              [(ngModel)]="emailOrUsername"
+              placeholder="Enter your email or username"
+              required
+            />
+            <small class="form-hint">
+              You can sign in with either your email address or username
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
