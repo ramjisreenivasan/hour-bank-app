@@ -61,13 +61,14 @@
       }
 
       p {
-        color: #555;
+        color: #444; /* Darker for better readability */
         line-height: 1.6;
         margin-bottom: 1rem;
+        font-size: 1rem; /* Ensure consistent size */
       }
 
       ul {
-        color: #555;
+        color: #444; /* Darker for better readability */
         line-height: 1.6;
         margin-left: 1.5rem;
 
@@ -94,6 +95,10 @@
         color: #3498db;
         margin-bottom: 1rem;
       }
+
+      p {
+        color: #444; /* Improved readability */
+      }
     }
   }
 
@@ -117,6 +122,10 @@
       h3 {
         color: #e74c3c;
         margin-bottom: 1rem;
+      }
+
+      p {
+        color: #444; /* Improved readability */
       }
     }
   }
@@ -155,6 +164,7 @@
       margin: 0;
       font-size: 1.1rem;
       color: #27ae60;
+      font-weight: 600; /* Make highlighted text more prominent */
     }
   }
 }

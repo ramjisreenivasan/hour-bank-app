@@ -21,7 +21,7 @@
     }
 
     p {
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.95); /* Improved contrast */
       font-weight: 500;
     }
   }
@@ -56,8 +56,9 @@
       }
 
       .stage {
-        color: #7f8c8d;
-        font-size: 0.9rem;
+        color: #5a6c7d; /* Darker grey for better visibility */
+        font-size: 0.95rem; /* Slightly larger */
+        font-weight: 500; /* Medium weight */
       }
     }
   }
@@ -174,7 +175,8 @@
     }
 
     p {
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.95); /* Improved contrast */
+      font-weight: 500;
     }
   }
 }
@@ -201,10 +203,12 @@
   }
 
   .contact-note {
-    color: #7f8c8d;
+    color: #5a6c7d; /* Darker grey for better visibility */
     font-style: italic;
     max-width: 500px;
     margin: 1rem auto 0;
+    font-size: 0.95rem; /* Slightly larger */
+    font-weight: 500; /* Medium weight */
   }
 }
 

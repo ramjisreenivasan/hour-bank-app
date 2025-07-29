@@ -23,9 +23,10 @@
 
     .note {
       font-style: italic;
-      color: #7f8c8d;
-      font-size: 0.9rem;
+      color: #5a6c7d; /* Darker grey for better visibility */
+      font-size: 0.95rem; /* Slightly larger font */
       margin-top: 1rem;
+      font-weight: 500; /* Medium weight for better readability */
     }
   }
 }
@@ -49,7 +50,8 @@
     }
 
     p {
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.95); /* Improved contrast */
+      font-weight: 500; /* Better readability */
     }
   }
 }
