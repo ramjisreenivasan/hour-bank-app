@@ -170,3 +170,6 @@ amplifytools.xcconfig
 # build-config.json - intentionally tracked
 
 #amplify-do-not-edit-end
+
+# Diagrams folder - contains generated architecture diagrams
+/diagrams
