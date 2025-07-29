@@ -1,0 +1,159 @@
+@import '../about/about.component.scss';
+
+.benefit-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .category {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #f39c12;
+
+    h3 {
+      color: #f39c12;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.use-case {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border-left: 4px solid #9b59b6;
+
+  h3 {
+    color: #9b59b6;
+    margin-bottom: 1rem;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .feature {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      color: #16a085;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.pricing-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .tier {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: #3498db;
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3498db;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.story {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  border-left: 4px solid #27ae60;
+  margin-top: 2rem;
+
+  blockquote {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+  }
+
+  cite {
+    color: #27ae60;
+    font-weight: 600;
+  }
+}
+
+.contact-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .contact {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+
+    h3 {
+      color: #e74c3c;
+      margin-bottom: 1rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: #e74c3c;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #c0392b;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .benefit-categories,
+  .feature-grid,
+  .pricing-tiers,
+  .contact-options {
+    grid-template-columns: 1fr;
+  }
+}

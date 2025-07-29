@@ -11,7 +11,19 @@ export const routes: Routes = [
   },
   { 
     path: 'about', 
-    loadComponent: () => import('./components/about/about.component').then(m => m.AboutComponent)
+    loadComponent: () => import('./components/info/about/about.component').then(m => m.AboutComponent)
+  },
+  { 
+    path: 'business', 
+    loadComponent: () => import('./components/info/business/business.component').then(m => m.BusinessComponent)
+  },
+  { 
+    path: 'organizations', 
+    loadComponent: () => import('./components/info/organizations/organizations.component').then(m => m.OrganizationsComponent)
+  },
+  { 
+    path: 'investors', 
+    loadComponent: () => import('./components/info/investors/investors.component').then(m => m.InvestorsComponent)
   },
   { 
     path: 'donate', 

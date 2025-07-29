@@ -2,6 +2,26 @@
 
 HourBank is an Angular application where individuals can exchange skills and services using a time-based currency system. Service providers accumulate bank-hours while consumers spend bank-hours to access services.
 
+## 🌟 Vision & Mission
+
+**Vision**: Create equitable communities where everyone's time has equal value, fostering mutual aid and social connection.
+
+**Mission**: Build a platform that democratizes access to services by using time as currency, ensuring that a lawyer's hour equals a gardener's hour in community value.
+
+## 🚀 Business Model
+
+HourBank operates on a **freemium community model** where the core time-banking system remains completely free, while premium features and business services generate sustainable revenue.
+
+### Core Value Propositions
+- **For Users**: Free, equitable access to community services using time as currency
+- **For Communities**: Stronger social connections and reduced inequality
+- **For Businesses**: Employee engagement and corporate social responsibility tools
+- **For Investors**: Scalable SaaS model with strong network effects and social impact
+
+**📊 Revenue Projections**: $1M ARR at 100K users → $14M ARR at 1M users → $80M ARR at 5M users
+
+*See [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for detailed monetization strategy and financial projections.*
+
 ## Features
 
 - **Time-Based Currency**: Exchange services using hours as currency
@@ -10,14 +30,63 @@ HourBank is an Angular application where individuals can exchange skills and ser
 - **Profile Management**: Manage personal information and offered services
 - **Transaction History**: Track all service exchanges and ratings
 - **Rating System**: Rate completed services and build reputation
+- **Advanced Scheduling**: Book time slots and manage availability
+- **Real-time Messaging**: Communicate with service providers and consumers
+- **Mobile Support**: Full-featured iOS and Android applications
 
 ## Technology Stack
 
 - **Frontend**: Angular 19 with TypeScript
+- **Mobile**: Ionic with Capacitor for iOS/Android
 - **Styling**: SCSS with custom design system
-- **Authentication**: AWS Amplify Auth
+- **Authentication**: AWS Amplify Auth (Cognito)
+- **Backend**: AWS Amplify with GraphQL API
+- **Database**: DynamoDB with 13 optimized tables
+- **Real-time**: GraphQL Subscriptions
+- **Hosting**: AWS Amplify Hosting with CI/CD
 - **State Management**: RxJS Observables
-- **Deployment**: AWS Amplify Hosting
+
+## 📋 Documentation
+
+Comprehensive documentation is organized in the [`docs/`](./docs/) folder:
+
+### Quick Links
+- **💼 For Investors**: [Investor Pitch](./docs/business/INVESTOR_PITCH.md) | [Business Model](./docs/business/BUSINESS_MODEL.md)
+- **👩‍💻 For Developers**: [Implementation Guide](./docs/technical/IMPLEMENTATION_GUIDE.md) | [Database Schema](./docs/technical/DYNAMODB_TABLES_ANALYSIS.md)
+- **🎯 For Presentations**: [Presentation Guide](./docs/guides/PRESENTATION_GUIDE.md)
+- **📊 Complete Index**: [All Documentation](./docs/README.md)
+
+### Documentation Categories
+- **[Business](./docs/business/)** - Business model, market analysis, investor materials
+- **[Technical](./docs/technical/)** - Architecture, database design, implementation guides
+- **[Guides](./docs/guides/)** - Presentation materials and quick references
+- **[Legal](./docs/legal/)** - Privacy policies and compliance documentation
+- **[Development](./docs/development/)** - Testing, simulation, and development tools
+
+## Database Schema
+
+### Core Tables (3)
+- **User** (11 fields) - User profiles and account information
+- **Service** (13 fields) - Services offered by users
+- **Transaction** (11 fields) - Service exchange records
+
+### Scheduling Tables (3)
+- **Booking** (16 fields) - Time slot reservations
+- **ServiceSchedule** (7 fields) - Service availability schedules
+- **ScheduleException** (8 fields) - Schedule modifications
+
+### Social & Communication Tables (4)
+- **Rating** (7 fields) - User ratings and reviews
+- **Message** (7 fields) - Direct messages between users
+- **Conversation** (5 fields) - Message threads
+- **Notification** (7 fields) - System notifications
+
+### Metadata & Moderation Tables (3)
+- **Category** (6 fields) - Service categories
+- **Skill** (5 fields) - Predefined skill definitions
+- **Report** (9 fields) - User reports for moderation
+
+**Total**: 13 tables with 34 relationships mapped through GraphQL
 
 ## Project Structure
 
@@ -28,13 +97,19 @@ src/
 │   │   ├── auth/           # Authentication component
 │   │   ├── dashboard/      # Main dashboard
 │   │   ├── profile/        # User profile management
-│   │   └── transaction/    # Transaction management
+│   │   ├── services/       # Service management
+│   │   ├── transactions/   # Transaction handling
+│   │   ├── booking/        # Scheduling system
+│   │   └── messaging/      # Communication features
 │   ├── services/
 │   │   ├── auth.service.ts      # Authentication service
 │   │   ├── user.service.ts      # User management
-│   │   └── transaction.service.ts # Transaction handling
+│   │   ├── service.service.ts   # Service management
+│   │   ├── transaction.service.ts # Transaction handling
+│   │   ├── booking.service.ts   # Scheduling service
+│   │   └── messaging.service.ts # Real-time messaging
 │   ├── models/
-│   │   └── user.model.ts   # Data models and interfaces
+│   │   └── *.model.ts      # TypeScript interfaces for all data models
 │   └── app.routes.ts       # Application routing
 ├── styles.scss             # Global styles
 └── amplifyconfiguration.json # AWS Amplify configuration
