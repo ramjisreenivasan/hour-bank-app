@@ -340,13 +340,14 @@
     
     .explore-buttons {
       display: flex;
-      gap: var(--spacing-md);
+      gap: var(--spacing-xl);
       justify-content: center;
       margin-top: var(--spacing-xl);
       
       @media (max-width: 480px) {
         flex-direction: column;
         align-items: center;
+        gap: var(--spacing-lg);
       }
     }
     
