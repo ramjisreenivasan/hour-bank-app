@@ -89,7 +89,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   
-  // Admin routes (require admin privileges)
+  // Admin routes (require admin privileges) - DISABLED FOR PRE-RELEASE
+  /*
   { 
     path: 'admin', 
     loadComponent: () => import('./components/admin/admin-dashboard.component').then(m => m.AdminDashboardComponent),
@@ -105,6 +106,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/admin/transaction-simulation.component').then(m => m.TransactionSimulationComponent),
     canActivate: [AdminGuard]
   },
+  */
   
   { path: '**', redirectTo: '/' }
 ];

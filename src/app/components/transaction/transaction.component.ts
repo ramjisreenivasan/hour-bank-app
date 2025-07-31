@@ -8,10 +8,11 @@ import { TransactionGraphQLService } from '../../services/transaction-graphql.se
 import { TransactionService } from '../../services/transaction.service';
 import { UserDisplayService } from '../../services/user-display.service';
 import { User, Transaction, TransactionStatus } from '../../models/user.model';
+import { SampleDataWatermarkComponent } from '../sample-data-watermark/sample-data-watermark.component';
 
 @Component({
   selector: 'app-transaction',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SampleDataWatermarkComponent],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
 })

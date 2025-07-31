@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { SampleDataWatermarkComponent } from '../sample-data-watermark/sample-data-watermark.component';
 
 interface Service {
   id: string;
@@ -32,9 +33,12 @@ interface Service {
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SampleDataWatermarkComponent],
   template: `
     <div class="service-detail" *ngIf="service">
+      <!-- Sample Data Watermark -->
+      <app-sample-data-watermark position="corner"></app-sample-data-watermark>
+      
       <!-- Breadcrumb -->
       <div class="breadcrumb">
         <div class="container">

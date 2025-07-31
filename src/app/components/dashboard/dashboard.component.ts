@@ -10,10 +10,11 @@ import { UserMappingService } from '../../services/user-mapping.service';
 import { RatingService } from '../../services/rating.service';
 import { User, Service, Transaction } from '../../models/user.model';
 import { environment } from '../../../environments/environment';
+import { SampleDataWatermarkComponent } from '../sample-data-watermark/sample-data-watermark.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SampleDataWatermarkComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ScheduleManagementComponent } from '../schedule-management/schedule-management.component';
 import { normalizeHourlyDuration } from '../../utils/service-utils';
+import { SampleDataWatermarkComponent } from '../sample-data-watermark/sample-data-watermark.component';
 
 interface Service {
   id: string;
@@ -29,9 +30,12 @@ interface Service {
 @Component({
   selector: 'app-my-services',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScheduleManagementComponent],
+  imports: [CommonModule, FormsModule, ScheduleManagementComponent, SampleDataWatermarkComponent],
   template: `
     <div class="my-services-container">
+      <!-- Sample Data Watermark -->
+      <app-sample-data-watermark position="corner"></app-sample-data-watermark>
+      
       <!-- Header Section -->
       <div class="page-header">
         <div class="header-content">
