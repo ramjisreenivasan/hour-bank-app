@@ -12,26 +12,29 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .sample-data-watermark {
-      position: absolute;
+      position: fixed;
       font-weight: 700;
-      color: rgba(255, 0, 0, 0.15);
+      color: rgba(220, 38, 127, 0.9);
       pointer-events: none;
       user-select: none;
-      z-index: 10;
+      z-index: 1000;
       letter-spacing: 0.1em;
       
       &.corner {
         top: 20px;
         right: 20px;
-        font-size: 1.2rem;
-        background: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.95);
         padding: 8px 16px;
         border-radius: 20px;
-        color: rgba(255, 0, 0, 0.7);
-        border: 2px solid rgba(255, 0, 0, 0.3);
+        color: rgba(220, 38, 127, 0.9);
+        border: 2px solid rgba(220, 38, 127, 0.6);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-weight: 800;
+        text-transform: uppercase;
         
         @media (max-width: 768px) {
-          font-size: 0.9rem;
+          font-size: 0.8rem;
           padding: 6px 12px;
           top: 10px;
           right: 10px;
@@ -42,11 +45,13 @@ import { CommonModule } from '@angular/common';
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(-45deg);
-        font-size: 3rem;
-        color: rgba(255, 0, 0, 0.1);
+        font-size: 4rem;
+        color: rgba(220, 38, 127, 0.15);
+        font-weight: 900;
+        text-transform: uppercase;
         
         @media (max-width: 768px) {
-          font-size: 2rem;
+          font-size: 2.5rem;
         }
       }
     }

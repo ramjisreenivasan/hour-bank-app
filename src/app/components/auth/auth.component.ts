@@ -8,7 +8,7 @@ import { SocialLoginComponent } from '../social-login/social-login.component';
 
 @Component({
   selector: 'app-auth',
-  imports: [CommonModule, FormsModule, LogoComponent, SocialLoginComponent],
+  imports: [CommonModule, FormsModule, LogoComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
