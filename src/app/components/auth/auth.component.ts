@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LogoComponent } from '../logo/logo.component';
 import { SocialLoginComponent } from '../social-login/social-login.component';
 
 @Component({
   selector: 'app-auth',
-  imports: [CommonModule, FormsModule, LogoComponent],
+  imports: [CommonModule, FormsModule, LogoComponent, RouterModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })

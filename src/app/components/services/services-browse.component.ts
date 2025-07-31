@@ -8,7 +8,6 @@ import { Service, User } from '../../models/user.model';
 import { getAppConfig } from '../../config/app-config';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { SampleDataWatermarkComponent } from '../sample-data-watermark/sample-data-watermark.component';
 
 interface ServiceWithProvider extends Omit<Service, 'provider'> {
   provider?: {
@@ -22,17 +21,17 @@ interface ServiceWithProvider extends Omit<Service, 'provider'> {
 @Component({
   selector: 'app-services-browse',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, SampleDataWatermarkComponent],
+  imports: [CommonModule, RouterModule, FormsModule],
   template: `
     <div class="services-browse">
-      <!-- Sample Data Watermark -->
-      <app-sample-data-watermark position="corner"></app-sample-data-watermark>
-      
       <!-- Hero Header -->
       <div class="hero-header">
         <div class="container">
           <div class="hero-content">
-            <h1 class="hero-title">Discover Amazing Services</h1>
+            <div class="hero-title-section">
+              <h1 class="hero-title">Discover Amazing Services</h1>
+              <span class="sample-data-badge">SAMPLE DATA</span>
+            </div>
             <p class="hero-subtitle">
               Connect with skilled professionals in our time-based marketplace
             </p>
