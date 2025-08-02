@@ -62,8 +62,8 @@ export class DataSimulationService {
       firstName: 'David',
       lastName: 'Thompson',
       bankHours: this.config.simulation.testUserBankHours,
-      skills: ['Home Repair', 'Plumbing', 'Electrical', 'Carpentry'],
-      bio: 'Experienced handyman ready to help with your home improvement projects.',
+      skills: ['Garden Maintenance', 'Landscaping', 'Lawn Care', 'Outdoor Services'],
+      bio: 'Experienced landscaper ready to help with your outdoor garden and lawn care needs.',
       rating: 4.6,
       totalTransactions: 0,
       role: 'user',
@@ -77,8 +77,8 @@ export class DataSimulationService {
       firstName: 'Emma',
       lastName: 'Wilson',
       bankHours: this.config.simulation.testUserBankHours,
-      skills: ['Cooking Lessons', 'Baking', 'Meal Planning', 'Nutrition'],
-      bio: 'Professional chef offering cooking lessons and meal planning services.',
+      skills: ['Cooking Workshops', 'Community Teaching', 'Meal Planning', 'Nutrition'],
+      bio: 'Professional chef offering cooking workshops in community kitchens and group settings.',
       rating: 4.9,
       totalTransactions: 0,
       role: 'user',
@@ -92,8 +92,8 @@ export class DataSimulationService {
       firstName: 'Alex',
       lastName: 'Kumar',
       bankHours: this.config.simulation.testUserBankHours,
-      skills: ['Personal Training', 'Yoga', 'Nutrition Coaching', 'Wellness'],
-      bio: 'Certified personal trainer and wellness coach. Let\'s achieve your fitness goals!',
+      skills: ['Outdoor Fitness', 'Group Training', 'Wellness Coaching', 'Park Workouts'],
+      bio: 'Certified fitness trainer specializing in outdoor group workouts and wellness coaching.',
       rating: 4.8,
       totalTransactions: 0,
       role: 'user',
@@ -107,8 +107,8 @@ export class DataSimulationService {
       firstName: 'Maria',
       lastName: 'Garcia',
       bankHours: this.config.simulation.testUserBankHours,
-      skills: ['Music Lessons', 'Piano', 'Guitar', 'Music Theory'],
-      bio: 'Music teacher with 10+ years experience. All skill levels welcome!',
+      skills: ['Music Theory', 'Composition', 'Digital Music Production', 'Group Teaching'],
+      bio: 'Music theory instructor with 10+ years experience. Specializing in composition and digital music production.',
       rating: 4.9,
       totalTransactions: 0,
       role: 'user',
@@ -214,14 +214,14 @@ export class DataSimulationService {
     {
       id: 'service-004',
       userId: 'user-004',
-      title: 'Home Plumbing Repairs',
-      description: 'Fix leaky faucets, unclog drains, and handle basic plumbing issues.',
-      category: 'Home Services',
+      title: 'Outdoor Garden Maintenance',
+      description: 'Professional garden maintenance, lawn care, and outdoor landscaping services.',
+      category: 'Outdoor Services',
       hourlyDuration: 2,
       isActive: true,
-      tags: ['Plumbing', 'Home Repair', 'Maintenance', 'Handyman'],
+      tags: ['Garden Maintenance', 'Lawn Care', 'Landscaping', 'Outdoor Work'],
       requiresScheduling: true,
-      minBookingHours: 1,
+      minBookingHours: 2,
       maxBookingHours: 6,
       advanceBookingDays: 1,
       cancellationHours: 4,
@@ -231,14 +231,14 @@ export class DataSimulationService {
     {
       id: 'service-005',
       userId: 'user-005',
-      title: 'Italian Cooking Class',
-      description: 'Learn to cook authentic Italian dishes from scratch. Ingredients provided.',
+      title: 'Cooking Workshop at Community Center',
+      description: 'Learn to cook authentic Italian dishes in a community kitchen setting. All ingredients provided.',
       category: 'Culinary',
       hourlyDuration: 3,
       isActive: true,
-      tags: ['Cooking', 'Italian Cuisine', 'Culinary Skills', 'Food'],
+      tags: ['Cooking Workshop', 'Italian Cuisine', 'Community Kitchen', 'Group Learning'],
       requiresScheduling: true,
-      minBookingHours: 2,
+      minBookingHours: 3,
       maxBookingHours: 4,
       advanceBookingDays: 3,
       cancellationHours: 48,
@@ -248,12 +248,12 @@ export class DataSimulationService {
     {
       id: 'service-006',
       userId: 'user-006',
-      title: 'Personal Fitness Training',
-      description: 'One-on-one fitness training sessions tailored to your goals and fitness level.',
+      title: 'Outdoor Fitness Training',
+      description: 'Group fitness training sessions in parks and outdoor spaces. Fresh air workouts tailored to all fitness levels.',
       category: 'Health & Fitness',
       hourlyDuration: 1,
       isActive: true,
-      tags: ['Personal Training', 'Fitness', 'Health', 'Exercise'],
+      tags: ['Outdoor Fitness', 'Group Training', 'Park Workouts', 'Fresh Air Exercise'],
       requiresScheduling: true,
       minBookingHours: 1,
       maxBookingHours: 2,
@@ -265,12 +265,12 @@ export class DataSimulationService {
     {
       id: 'service-007',
       userId: 'user-007',
-      title: 'Piano Lessons for Beginners',
-      description: 'Learn piano fundamentals, music theory, and play your favorite songs.',
+      title: 'Music Theory & Composition Tutoring',
+      description: 'Learn music theory, composition, and digital music production in a library or community center setting.',
       category: 'Arts & Music',
       hourlyDuration: 1,
       isActive: true,
-      tags: ['Piano', 'Music Lessons', 'Music Theory', 'Beginner Friendly'],
+      tags: ['Music Theory', 'Composition', 'Digital Music', 'Public Space Learning'],
       requiresScheduling: true,
       minBookingHours: 1,
       maxBookingHours: 2,
@@ -458,11 +458,11 @@ export class DataSimulationService {
         'Brand guidelines provided',
         'Multiple concepts presented'
       ],
-      'Home Services': [
-        'Tools and materials included',
-        'Safety assessment first',
-        'Clean-up included',
-        'Warranty on work provided'
+      'Outdoor Services': [
+        'Tools and equipment provided',
+        'Weather-dependent scheduling',
+        'Site assessment included',
+        'Eco-friendly practices used'
       ],
       'Culinary': [
         'All ingredients provided',
@@ -539,12 +539,12 @@ export class DataSimulationService {
         'Professional quality work at great value.',
         'Creative solutions and attention to detail.'
       ],
-      'Home Services': [
-        'Fixed the problem quickly and efficiently!',
-        'Professional, clean, and reliable service.',
-        'Explained the issue and how to prevent it.',
-        'Fair pricing and quality workmanship.',
-        'Punctual and well-prepared with tools.'
+      'Outdoor Services': [
+        'Transformed our garden beautifully and efficiently!',
+        'Professional, knowledgeable, and eco-friendly approach.',
+        'Great advice on plant selection and maintenance.',
+        'Reliable service with attention to detail.',
+        'Punctual and well-prepared with quality tools.'
       ],
       'Culinary': [
         'Learned so much! The food was delicious.',
@@ -612,13 +612,13 @@ export class DataSimulationService {
       ['Programming', 'Web Development', 'JavaScript'],
       ['Design', 'Photoshop', 'UI/UX'],
       ['Writing', 'Content Creation', 'Editing'],
-      ['Music', 'Guitar', 'Piano'],
-      ['Fitness', 'Personal Training', 'Yoga'],
-      ['Cooking', 'Baking', 'Meal Planning'],
+      ['Music Theory', 'Composition', 'Digital Music'],
+      ['Outdoor Fitness', 'Group Training', 'Wellness'],
+      ['Cooking Workshops', 'Community Teaching', 'Nutrition'],
       ['Photography', 'Photo Editing', 'Portraits'],
       ['Tutoring', 'Math', 'Science'],
       ['Language', 'Spanish', 'French'],
-      ['Handyman', 'Repair', 'Maintenance']
+      ['Landscaping', 'Garden Maintenance', 'Outdoor Work']
     ];
 
     for (let i = 0; i < count; i++) {
@@ -655,13 +655,13 @@ export class DataSimulationService {
       { title: 'Web Development', category: 'Technology', duration: 2, description: 'Build responsive websites' },
       { title: 'Logo Design', category: 'Design', duration: 1, description: 'Create professional logos' },
       { title: 'Content Writing', category: 'Writing', duration: 1, description: 'Write engaging content' },
-      { title: 'Guitar Lessons', category: 'Music', duration: 1, description: 'Learn to play guitar' },
-      { title: 'Personal Training', category: 'Fitness', duration: 1, description: 'Get fit with personal trainer' },
-      { title: 'Cooking Class', category: 'Food', duration: 2, description: 'Learn to cook delicious meals' },
+      { title: 'Music Theory Tutoring', category: 'Music', duration: 1, description: 'Learn music theory and composition' },
+      { title: 'Outdoor Group Fitness', category: 'Fitness', duration: 1, description: 'Get fit with outdoor group training' },
+      { title: 'Community Cooking Workshop', category: 'Food', duration: 2, description: 'Learn to cook in community kitchen' },
       { title: 'Photo Session', category: 'Photography', duration: 2, description: 'Professional photo session' },
       { title: 'Math Tutoring', category: 'Education', duration: 1, description: 'Improve your math skills' },
       { title: 'Spanish Lessons', category: 'Language', duration: 1, description: 'Learn Spanish conversation' },
-      { title: 'Home Repair', category: 'Handyman', duration: 3, description: 'Fix things around your home' }
+      { title: 'Garden Maintenance', category: 'Outdoor', duration: 3, description: 'Professional garden and lawn care' }
     ];
 
     for (let i = 0; i < count; i++) {
